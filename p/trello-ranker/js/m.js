@@ -1,4 +1,5 @@
 /* global TrelloPowerUp */
+var GRAY_ICON = './images/icon-gray.svg';
 
 var cardButtonCallback = function(t){
   return t.popup({

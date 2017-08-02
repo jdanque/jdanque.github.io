@@ -2,8 +2,7 @@ var t = TrelloPowerUp.iframe();
 
 t.get('card','shared','rank')
 	.then(function(data){
-	console.log(data);
-//		window.rankcurrent.value = data;
+	window.rankcurrent.value = data;
 });
 
 

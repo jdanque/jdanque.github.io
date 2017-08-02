@@ -1,7 +1,7 @@
 {
-  "name": "Trello Calc",
+  "name": "Trello Ranker",
   "description": "",
-  "details": "Trello Powerup to add calc and math functions.",
+  "details": "Trello Powerup to add ranking to cards",
   "icon": {
     "url": "./images/logo.png"
   },

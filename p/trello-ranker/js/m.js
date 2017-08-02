@@ -16,10 +16,13 @@ var reOrderCards = function(t){
 	var newBoardCards = [];
 
 	var context = t.getContext();
-	console.log("TRELLO!!!!!");
-	console.log(context);
 
-	//window.Trello.boards.get(id[, params], success, error)
+	//Valid Values
+	//for card filters: all, closed, none, open, visible.
+	window.Trello.boards.get(context.board+"/cards/open", function(d){
+		console.log(d);
+	}, function(){
+	})
 
 };
 

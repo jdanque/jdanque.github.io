@@ -9,7 +9,7 @@ window.rankcard.addEventListener('submit',function(ev){
 });
 
 window.rankup.addEventListener('click',function(ev){
-	window.rankcurrent.value = parseInt(window.rankcurrent.value) + 1;
+	window.rankcurrent.value = 1 + parseInt(window.rankcurrent.value);
 });
 
 window.rankdown.addEventListener('click',function(ev){

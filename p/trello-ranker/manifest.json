@@ -1,0 +1,29 @@
+{
+  "name": "Trello Calc",
+  "description": "",
+  "details": "Trello Powerup to add calc and math functions.",
+  "icon": {
+    "url": "./images/logo.png"
+  },
+  "author": "Jobo Danque",
+  "capabilities": [
+    "attachment-sections",
+    "attachment-thumbnail",
+    "board-buttons",
+    "callback",
+    "card-badges",
+    "card-buttons",
+    "card-detail-badges",
+    "card-from-url",
+    "format-url",
+    "show-settings"
+  ],
+  "connectors": {
+    "iframe": {
+      "url": "./index.html"
+    }
+  },
+  "recommend": {
+    "urls": []
+  }
+}

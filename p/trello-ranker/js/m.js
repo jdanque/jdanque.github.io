@@ -26,7 +26,7 @@ TrelloPowerUp.initialize({
           icon: RANK_ICON,
           color: RANK_COLOR,
           text: rank ? 'Rank: '+ rank || 'Rank: 0'
-        }];
+        }]
      });
   },
 	'card-detail-badges': function(t, options) {

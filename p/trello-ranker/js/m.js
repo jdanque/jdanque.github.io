@@ -24,7 +24,7 @@ TrelloPowerUp.initialize({
       .then(function(rank) {
         return [{
           color: RANK_COLOR,
-          text: rank ? ('Rank: '+ rank) : 'Rank: 0' && t.set('card','shared','rank', 0)
+          text: rank ? ('Rank: '+ rank) : 'Rank: 0'
         }]
      });
   },
@@ -33,7 +33,7 @@ TrelloPowerUp.initialize({
 	  .then(function(rank) {
 	    return [{
 	      icon: RANK_ICON,
-	      text: rank ? ('Rank: '+ rank) : 'Rank: 0' && t.set('card','shared','rank', 0),
+	      text: rank ? ('Rank: '+ rank) : 'Rank: 0',
 	      color: RANK_COLOR,
 	      callback: cardButtonCallback
 	    }]

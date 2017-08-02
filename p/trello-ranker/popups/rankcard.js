@@ -1,6 +1,11 @@
 var t = TrelloPowerUp.iframe();
 
-window.rankcurrent.value = t.get('card','shared','rank');
+t.get('card','shared','rank')
+	.then(function(data){
+	console.log(data);
+//		window.rankcurrent.value = data;
+});
+
 
 window.rankcard.addEventListener('submit',function(ev){
 	ev.preventDefault();

@@ -5,9 +5,8 @@ t.get('card','shared','rank').then(function(data){
 });
 
 t.cards('all').then(function(data){
-              	console.log(data);
+	window.rcards = data;
 });
-
 
 
 window.rankcard.addEventListener('submit',function(ev){
@@ -19,11 +18,13 @@ window.rankcard.addEventListener('submit',function(ev){
 });
 
 window.rankup.addEventListener('click',function(ev){
-	window.rankcurrent.value = 1 + parseInt(window.rankcurrent.value);
+	var v = 1 + parseInt(window.rankcurrent.value);
+	if(v<=window.rcards.length)
+		window.rankcurrent.value = v;
 });
 
 window.rankdown.addEventListener('click',function(ev){
-	var v = parseInt(window.rankcurrent.value) - 1;
+	var v = 1 - parseInt(window.rankcurrent.value);
 	if(v>-1)
-		window.rankcurrent.value = 1 - parseInt(window.rankcurrent.value);
+		window.rankcurrent.value = v;
 });

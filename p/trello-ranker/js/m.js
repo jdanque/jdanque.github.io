@@ -6,8 +6,22 @@ var RANK_ICON = 'https://cdn.glitch.com/c69415fd-f70e-4e03-b43b-98b8960cd616%2Fr
 var cardButtonCallback = function(t){
   return t.popup({
     title: 'Rank this card',
-    url: './popups/rank-card-popup.html'
+    url: './popups/rank-card-popup.html',
+    calback :reOrderCards
   });
+};
+
+var reOrderCards = function(t){
+	var boardCards = t.cards('all');
+	var newBoardCards = [];
+
+	var context = t.getContext();
+	console.log("TRELLO!!!!!");
+	console.log(Trello);
+	console.log(context);
+
+	//window.Trello.boards.get(id[, params], success, error)
+
 };
 
 TrelloPowerUp.initialize({

@@ -4,6 +4,11 @@ t.get('card','shared','rank').then(function(data){
 	window.rankcurrent.value = data || 0;
 });
 
+t.cards('all').then(function(data){
+              	console.log(data);
+});
+
+
 
 window.rankcard.addEventListener('submit',function(ev){
 	ev.preventDefault();

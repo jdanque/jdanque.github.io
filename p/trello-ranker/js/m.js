@@ -19,10 +19,10 @@ var reOrderCards = function(t){
 
 	//Valid Values
 	//for card filters: all, closed, none, open, visible.
-	window.Trello.boards.get(context.board+"/cards/open", function(d){
-		console.log(d);
-	}, function(){
-	})
+//	window.Trello.boards.get(context.board+"/cards/open", function(d){
+//		console.log(d);
+//	}, function(){
+//	})
 
 };
 

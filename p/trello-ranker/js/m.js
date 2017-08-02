@@ -7,7 +7,7 @@ var cardButtonCallback = function(t){
   return t.popup({
     title: 'Rank this card',
     url: './popups/rank-card-popup.html',
-    calback :reOrderCards
+    callback :reOrderCards
   });
 };
 

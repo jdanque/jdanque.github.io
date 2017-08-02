@@ -23,7 +23,6 @@ TrelloPowerUp.initialize({
     return t.get('card', 'shared', 'rank')
       .then(function(rank) {
         return [{
-          icon: RANK_ICON,
           color: RANK_COLOR,
           text: rank ? ('Rank: '+ rank) : 'Rank: 0'
         }]

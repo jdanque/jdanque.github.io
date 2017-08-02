@@ -17,7 +17,6 @@ var reOrderCards = function(t){
 
 	var context = t.getContext();
 	console.log("TRELLO!!!!!");
-	console.log(Trello);
 	console.log(context);
 
 	//window.Trello.boards.get(id[, params], success, error)

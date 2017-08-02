@@ -1,14 +1,20 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://trello.com/power-ups/power-up.css">
+    <script src="https://trello.com/power-ups/power-up.min.js"></script>
+    <style>
+      rankcurrent { width: 30%; }
+    </style>
 </head>
 <body>
     <div>
-        <div>
-            <button class="rank r-up">Up</button>
-            <input class="rank r-curr" type="text" value="1"/>
-            <button class="rank r-down">Down</button>
-        </div>
+        <form id="rankcard">
+            <button id="rankup">Up</button>
+            <input id="rankcurrent" type="text" value="1"/>
+            <button id="rankdown">Down</button>
+            <button type="submit" class="mod-primary">Save</button>
+        </form>
     </div>
+    <script src="./js/rankcard.js"></script>
 </body>
 </html>

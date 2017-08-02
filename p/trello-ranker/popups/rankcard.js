@@ -13,5 +13,7 @@ window.rankup.addEventListener('click',function(ev){
 });
 
 window.rankdown.addEventListener('click',function(ev){
-	window.rankcurrent.value = parseInt(window.rankcurrent.value) - 1;
+	var v = parseInt(window.rankcurrent.value) - 1;
+	if(v>-1)
+		window.rankcurrent.value = parseInt(window.rankcurrent.value) - 1;
 });

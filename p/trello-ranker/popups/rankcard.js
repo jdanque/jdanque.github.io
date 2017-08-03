@@ -19,12 +19,12 @@ window.rankcard.addEventListener('submit',function(ev){
 
 window.rankup.addEventListener('click',function(ev){
 	var v = 1 + parseInt(window.rankcurrent.value);
-	if(v<=window.rcards.length)
+//	if(v<=window.rcards.length)
 		window.rankcurrent.value = v;
 });
 
 window.rankdown.addEventListener('click',function(ev){
 	var v = 1 - parseInt(window.rankcurrent.value);
-	if(v>-1)
+//	if(v>-1)
 		window.rankcurrent.value = v;
 });

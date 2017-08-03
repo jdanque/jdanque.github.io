@@ -42,6 +42,8 @@ var getCardId = function(t){
 
 var reOrderCards = function(t){
 console.log('passed here');
+console.log(t.get('member', 'private', 'token'));
+console.log(t.card('id'));
 	return getMemberToken(t)
 		.then(function(v){
 			console.log(v);

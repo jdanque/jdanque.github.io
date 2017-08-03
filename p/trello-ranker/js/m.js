@@ -16,10 +16,17 @@ var reOrderCards = function(t){
 	var newBoardCards = [];
 
 	var context = t.getContext();
+	var filter = "open";
+	var url = context.board+"/cards/" +
+			filter;
+
+	t.get('organization', 'private', 'token').then(function(d){
+	console.log(d);
+	})
 
 	//Valid Values
 	//for card filters: all, closed, none, open, visible.
-	window.Trello.boards.get(context.board+"/cards/open", function(d){
+	window.Trello.boards.get(url, function(d){
 		console.log(d);
 	}, function(){
 	})

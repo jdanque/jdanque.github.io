@@ -10,7 +10,7 @@ var oauthUrl = 'https://trello.com/1/authorize?'+
 'scope=read,write'+'&'+
 'expiration=never'+'&'+
 'name='+encodeURIComponent(APP_NAME)+'&'+
-'key'+KEY+
+'key='+KEY+
 '';
 
 var tokenLooksValid = function(token) {
@@ -47,7 +47,7 @@ authBtn.addEventListener('click', function() {
 //	  success: authenticationSuccess,
 //	  error: authenticationFailure
 //	});
-console.log(oauthUrl);
+
   t.authorize(oauthUrl, authorizeOpts)
   .then(function(token) {
     return t.set('organization', 'private', 'token', token)

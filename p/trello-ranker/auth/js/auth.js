@@ -4,11 +4,7 @@ var t = TrelloPowerUp.iframe();
 var APP_NAME = 'Trello Ranker';
 var KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 
-// When constructing the URL, remember that you'll need to encode your
-// APPNAME and RETURNURL
-// You can do that with the encodeURIComponent(string) function
-// encodeURIComponent('Hello World') -> "Hello%20World"
-var oauthUrl = 'https://trello.com/1/authorize?+
+var oauthUrl = 'https://trello.com/1/authorize?'+
 'callback_method=postMessage'+'&'+
 'return_url='+encodeURIComponent('https://jdanque.github.io')+'&'+
 'scope=read,write'+'&'+

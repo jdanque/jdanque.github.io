@@ -13,8 +13,8 @@ t.cards('all').then(function(data){
 window.rankcard.addEventListener('submit',function(ev){
 	ev.preventDefault();
 	return t.set('card','shared','rank', window.rankcurrent.value)
+	.then(reOrderCards)
 	.then(function(){
-		reOrderCards(t);
 		t.closePopup();
 	});
 });
@@ -41,7 +41,8 @@ var getCardId = function(t){
 }
 
 var reOrderCards = function(t){
-	getMemberToken(t)
+console.log('passed here');
+	return getMemberToken(t)
 		.then(function(t){
 			console.log(t);
 			return getCardId(t);

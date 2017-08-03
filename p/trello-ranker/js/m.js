@@ -7,7 +7,7 @@ var API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 var cardButtonCallback = function(t){
   return t.popup({
     title: 'Rank this card',
-    url: './popups/rank-card-popup.html'
+    url: './popups/rank-card-popup.html',
     callback: function (t, opts) {
 		reOrderCards(t);
     }

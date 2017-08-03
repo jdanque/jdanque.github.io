@@ -20,11 +20,11 @@ var reOrderCards = function(t){
 	var filter = "open";
 
 	t.get('member', 'private', 'token').then(function(token){
+	console.log(token);
 		var url = context.board+'/cards/' +
         			filter +
         			+'?'+
-        			'key='+API_KEY+
-        			'&token='+token
+        			'token='+token
 
 	//Valid Values
 	//for card filters: all, closed, none, open, visible.

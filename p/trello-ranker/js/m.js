@@ -17,14 +17,15 @@ var reOrderCards = function(t){
 	var newBoardCards = [];
 
 	var context = t.getContext();
-	var filter = "open";
+	var filter = 'open';
 
 	t.get('member', 'private', 'token').then(function(token){
 	console.log(token);
 		var url = context.board+'/cards/' +
         			filter +
         			+'?'+
-        			'token='+token
+        			'token='+token+''+
+        			'&key='+API_KEY;
 
 	//Valid Values
 	//for card filters: all, closed, none, open, visible.

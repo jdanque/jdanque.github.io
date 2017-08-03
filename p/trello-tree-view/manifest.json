@@ -1,0 +1,25 @@
+{
+  "name": "Tree View for Trello",
+  "description": "",
+  "details": "Displays Trello lists and cards in a tree view for easier visualization.",
+  "icon": {
+    "url": "./images/logo.png"
+  },
+  "author": "Jobo Danque",
+  "capabilities": [
+    "board-buttons",
+    "callback",
+    "card-detail-badges",
+    "show-settings",
+    "authorization-status",
+    "show-authorization"
+  ],
+  "connectors": {
+    "iframe": {
+      "url": "./index.html"
+    }
+  },
+  "recommend": {
+    "urls": []
+  }
+}

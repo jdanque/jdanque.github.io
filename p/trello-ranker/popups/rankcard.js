@@ -80,4 +80,4 @@ var reOrderCards = function(t){
 //        });
 //	});
 
-};
+//};

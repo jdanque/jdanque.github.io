@@ -2,7 +2,7 @@ var Promise = TrelloPowerUp.Promise;
 var t = TrelloPowerUp.iframe();
 
 var APP_NAME = 'Trello Ranker';
-var KEY = 'a6394dd0e3edbb531ad4d143c6a11ed5a0c3dd466c4e79ed2a62f8ca405ac99b';
+var KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 
 // When constructing the URL, remember that you'll need to encode your
 // APPNAME and RETURNURL
@@ -35,6 +35,7 @@ var authBtn = document.getElementById('authorize');
 authBtn.addEventListener('click', function() {
 
 	window.Trello.authorize({
+	  key : KEY,
 	  type: 'popup',
 	  name: 'Trello Ranker',
 	  scope: {

@@ -1,21 +1,21 @@
-var t = TrelloPowerUp.iframe();
+var T = TrelloPowerUp.iframe();
 var Promise = window.TrelloPowerUp.Promise;
 
-t.get('card','shared','rank').then(function(data){
+T.get('card','shared','rank').then(function(data){
 	window.rankcurrent.value = data || 0;
 });
 
-t.cards('all').then(function(data){
+T.cards('all').then(function(data){
 	window.rcards = data;
 });
 
 
 window.rankcard.addEventListener('submit',function(ev){
 	ev.preventDefault();
-	return t.set('card','shared','rank', window.rankcurrent.value)
-	.then(reOrderCards)
+	return T.set('card','shared','rank', window.rankcurrent.value)
 	.then(function(){
-		t.closePopup();
+		reOrderCards(T);
+		T.closePopup();
 	});
 });
 
@@ -43,9 +43,9 @@ var getCardId = function(t){
 var reOrderCards = function(t){
 console.log('passed here');
 	return getMemberToken(t)
-		.then(function(t){
-			console.log(t);
-			return getCardId(t);
+		.then(function(v){
+			console.log(v);
+			return getCardId(v);
 		})
 		.then(function(v){
 			console.log(v);

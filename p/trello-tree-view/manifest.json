@@ -3,7 +3,7 @@
   "description": "",
   "details": "Displays Trello lists and cards in a tree view for easier visualization.",
   "icon": {
-    "url": "./img/treeviewlogo.svg"
+    "url": "./img/logo.svg"
   },
   "author": "Jobo Danque",
   "capabilities": [

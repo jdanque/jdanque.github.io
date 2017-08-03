@@ -22,7 +22,8 @@ var reOrderCards = function(t){
 	t.get('member', 'private', 'token').then(function(token){
 		var url = context.board+"/cards/" +
         			filter+
-        			'&key='+API_KEY+
+        			+'?'+
+        			'key='+API_KEY+
         			'&token='+token
 
 	//Valid Values

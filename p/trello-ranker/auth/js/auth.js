@@ -34,19 +34,6 @@ var authenticationFailure = function() {
 
 var authBtn = document.getElementById('authorize');
 authBtn.addEventListener('click', function() {
-
-//	window.Trello.authorize({
-//	  key : KEY,
-//	  type: 'popup',
-//	  name: 'Trello Ranker',
-//	  scope: {
-//	    read: 'true',
-//	    write: 'true' },
-//	  expiration: 'never',
-//	  success: authenticationSuccess,
-//	  error: authenticationFailure
-//	});
-
   t.authorize(oauthUrl, authorizeOpts)
   .then(function(token) {
     return t.set('member', 'private', 'token', token)

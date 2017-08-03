@@ -12,8 +12,29 @@
 <body>
 <div id="content">
     <p>Please authorize your account</p>
-    <button id="authorize" type="submit" class="mod-primary">Authorize</button>
 </div>
+<button id="auth-btn" type="submit" class="mod-primary">Authorize Trello Ranker</button>
+<script>
+      var Promise = TrelloPowerUp.Promise;
+      var t = TrelloPowerUp.iframe();
+
+      var trelloAuthUrl = 'https://trello.com/1/authorize?expiration=never&name=Trello%20Ranker&scope=read,write&key=e3e4df7f95e0b1942c0b82a9a2c301f6&callback_method=fragment&return_url=https%3A%2F%2F' + window.location.host + '%2Fauth-success.html';
+
+      var tokenLooksValid = function(token) {
+        return /^[0-9a-f]{64}$/.test(token);
+      }
+
+      document.getElementById('auth-btn').addEventListener('click', function(){
+        t.authorize(trelloAuthUrl, { height: 680, width: 580, validToken: tokenLooksValid })
+        .then(function(token){
+          // store the token in Trello private Power-Up storage
+          return t.set('member', 'private', 'token', token)
+        })
+        .then(function(){
+          // now that we have the token we needed
+          return t.closePopup();
+        });
+      });
+    </script>
 </body>
-<script src="./js/auth.js"></script>
 </html>

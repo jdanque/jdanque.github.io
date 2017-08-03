@@ -40,17 +40,22 @@ var getCardId = function(t){
 	return t.card('id');
 }
 
+var token;
+var cardid;
+
 var reOrderCards = function(t){
 console.log('passed here');
 console.log(t.get('member', 'private', 'token'));
 console.log(t.card('id'));
 	return getMemberToken(t)
 		.then(function(v){
-			console.log(v);
+			token = v;
+			console.log(token);
 			return getCardId(v);
 		})
 		.then(function(v){
-			console.log(v);
+			cardid = v;
+			console.log(cardid);
 		});
 };
 

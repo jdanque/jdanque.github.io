@@ -20,7 +20,7 @@ var reOrderCards = function(t){
 	var url = context.board+"/cards/" +
 			filter;
 
-	t.get('organization', 'private', 'token').then(function(d){
+	t.get('member', 'private', 'authToken').then(function(d){
 	console.log(d);
 	})
 

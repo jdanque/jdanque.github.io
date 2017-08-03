@@ -6,7 +6,7 @@ var KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 
 var oauthUrl = 'https://trello.com/1/authorize?'+
 'callback_method=postMessage'+'&'+
-'return_url='+encodeURIComponent('https://jdanque.github.io')+'&'+
+//'return_url='+encodeURIComponent('https://jdanque.github.io')+'&'+
 'scope=read,write'+'&'+
 'expiration=never'+'&'+
 'name='+encodeURIComponent(APP_NAME)+'&'+

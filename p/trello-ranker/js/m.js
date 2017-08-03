@@ -18,21 +18,22 @@ var reOrderCards = function(t){
 
 	var context = t.getContext();
 	var filter = "open";
-	var url = context.board+"/cards/" +
-			filter;
-//			&key=
-//			&token={AN-OAUTH-TOKEN}
 
-	t.get('member', 'private', 'token').then(function(d){
-		console.log(d);
-	})
+	t.get('member', 'private', 'token').then(function(token){
+		var url = context.board+"/cards/" +
+        			filter+
+        			'&key='+API_KEY+
+        			'&token='+token
 
 	//Valid Values
 	//for card filters: all, closed, none, open, visible.
-	window.Trello.boards.get(url, function(d){
-		console.log(d);
-	}, function(){
-	})
+		window.Trello.boards.get(url,
+		    function(d){
+        		console.log(d);
+        	},
+        	function(){
+        });
+	});
 
 };
 

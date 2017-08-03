@@ -1,40 +1,35 @@
 var T = TrelloPowerUp.iframe(),
     Promise = TrelloPowerUp.Promise,
     authToken = null,
-    cardID = null,
-    cardCurrentPosition = null
+    card = null
     ;
 
 T.get('member', 'private', 'token').then(function(val){
 	authToken = val;
 });
 
-T.card('id').then(function(val){
-	cardID = val;
-});
-
-T.card('pos').then(function(val){
-	cardCurrentPosition = val;
+T.card('all').then(function(val){
+	card = val;
 });
 
 T.get('card','shared','rank').then(function(data){
 	window.rankcurrent.value = data || 0;
 });
 
-T.cards('all').then(function(data){
-	window.rcards = data;
-});
-
 window.rankcard.addEventListener('submit',function(ev){
 	ev.preventDefault();
 	return T.set('card','shared','rank', window.rankcurrent.value)
-	.then(function(v){
-	console.log(v);
+	.then(function(){
 		reOrderCards(T);
-		console.log('cardCurrentPosition');
-		console.log(cardCurrentPosition);
-		console.log('new position');
-		console.log(window.rankcurrent.value);
+
+		var path = '';
+
+//		Trello.rest('GET', path[, params], success, error)
+
+		console.log('card');
+		console.log(card);
+//		console.log('new position');
+//		console.log(window.rankcurrent.value);
 		T.closePopup();
 	});
 });

@@ -42,7 +42,10 @@ var getCardId = function(t){
 
 var reOrderCards = function(t){
 	getMemberToken(t)
-		.then(getCardId)
+		.then(function(t){
+			console.log(t);
+			return getCardId(t);
+		})
 		.then(function(v){
 			console.log(v);
 		});
@@ -75,6 +78,6 @@ var reOrderCards = function(t){
 //        	},
 //        	function(){
 //        });
-	});
+//	});
 
 };

@@ -5,10 +5,12 @@ var RANK_ICON = 'https://cdn.glitch.com/c69415fd-f70e-4e03-b43b-98b8960cd616%2Fr
 var API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 
 var cardButtonCallback = function(t){
-	reOrderCards(t);
   return t.popup({
     title: 'Rank this card',
     url: './popups/rank-card-popup.html'
+    callback: function (t, opts) {
+		reOrderCards(t);
+    }
   });
 };
 
@@ -17,23 +19,23 @@ var reOrderCards = function(t){
 	var newBoardCards = [];
 
 	var context = t.getContext();
-	var filter = "open";
-
+	var filters = "open";
+	console.log(context);
 	t.get('member', 'private', 'token').then(function(token){
-	console.log(token);
-		var url = context.board+"/cards/" +
-        			filter +
-        			"?token="+ token+
-        			"&key="+API_KEY;
+	var url = context.board+"/cards/" +
+                filters +
+                "?"+
+                "token=" + token +
+                "&key=" + API_KEY;
 
-	//Valid Values
-	//for card filters: all, closed, none, open, visible.
-		window.Trello.boards.get(url,
-		    function(d){
-        		console.log(d);
-        	},
-        	function(){
-        });
+		//Valid Values
+		//for card filters: all, closed, none, open, visible.
+//		window.Trello.lists.get(url,
+//		    function(d){
+//        		console.log(d);
+//        	},
+//        	function(){
+//        });
 	});
 
 };

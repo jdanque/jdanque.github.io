@@ -24,7 +24,7 @@ window.rankup.addEventListener('click',function(ev){
 });
 
 window.rankdown.addEventListener('click',function(ev){
-	var v = 1 - parseInt(window.rankcurrent.value);
+	var v = parseInt(window.rankcurrent.value) - 1;
 //	if(v>-1)
 		window.rankcurrent.value = v;
 });

@@ -50,19 +50,15 @@ authBtn.addEventListener('click', function() {
 
   t.authorize(oauthUrl, authorizeOpts)
   .then(function(token) {
-    return t.set('member', 'private', 'authToken', token)
+    return t.set('member', 'private', 'token', token)
     .catch(t.NotHandled, function() {
       // fall back to storing at board level
       return t.set('board', 'private', 'token', token);
     });
   })
-  .then(function(response) {
-     const token = response.token;
-     if (window.opener && typeof window.opener.authorize === 'function') {
-       window.opener.authorize(token);
-     } else {
-       localStorage.setItem('token', token);
-     }
-     setTimeout(function(){ window.close(); }, (1 * 1000));
-   })
+  .then(function() {
+    // now that the token is stored, we can close this popup
+    // you might alternatively choose to open a new popup
+    return t.closePopup();
+  });
 });

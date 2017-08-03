@@ -4,6 +4,7 @@ var RANK_COLOR = 'green';
 var RANK_ICON = 'https://cdn.glitch.com/c69415fd-f70e-4e03-b43b-98b8960cd616%2Frocket-ship-grey.png?1496162964717';
 
 var cardButtonCallback = function(t){
+console.log('boardid:'+t.getContext().board);
 	reOrderCards(t);
   return t.popup({
     title: 'Rank this card',
@@ -63,7 +64,7 @@ TrelloPowerUp.initialize({
 	  });
 	},
 	'authorization-status': function(t, options){
-      return t.get('member', 'private', 'authToken')
+      return t.get('member', 'private', 'token')
       .then(function(authToken) {
         return { authorized: authToken != null }
       });

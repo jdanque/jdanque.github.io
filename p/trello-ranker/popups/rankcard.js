@@ -25,9 +25,6 @@ window.rankcard.addEventListener('submit',function(ev){
 		var path = '';
 
 //		Trello.rest('GET', path[, params], success, error)
-
-		console.log('card');
-		console.log(card);
 //		console.log('new position');
 //		console.log(window.rankcurrent.value);
 		T.closePopup();

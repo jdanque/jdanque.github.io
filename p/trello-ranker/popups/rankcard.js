@@ -13,6 +13,7 @@ window.rankcard.addEventListener('submit',function(ev){
 	ev.preventDefault();
 	return t.set('card','shared','rank', window.rankcurrent.value)
 	.then(function(){
+		reOrderCards(t);
 		t.closePopup();
 	});
 });
@@ -28,3 +29,30 @@ window.rankdown.addEventListener('click',function(ev){
 //	if(v>-1)
 		window.rankcurrent.value = v;
 });
+
+
+var reOrderCards = function(t){
+	var boardCards = t.cards('all');
+	var newBoardCards = [];
+
+	var context = t.getContext();
+	var filters = "open";
+	console.log(context);
+	t.get('member', 'private', 'token').then(function(token){
+	var url = context.board+"/cards/" +
+                filters +
+                "?"+
+                "token=" + token +
+                "&key=" + API_KEY;
+
+		//Valid Values
+		//for card filters: all, closed, none, open, visible.
+//		window.Trello.lists.get(url,
+//		    function(d){
+//        		console.log(d);
+//        	},
+//        	function(){
+//        });
+	});
+
+};

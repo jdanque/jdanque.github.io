@@ -7,38 +7,10 @@ var API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 var cardButtonCallback = function(t){
   return t.popup({
     title: 'Rank this card',
-    url: './popups/rank-card-popup.html',
-    callback: function (t, opts) {
-		reOrderCards(t);
-    }
+    url: './popups/rank-card-popup.html'
   });
 };
 
-var reOrderCards = function(t){
-	var boardCards = t.cards('all');
-	var newBoardCards = [];
-
-	var context = t.getContext();
-	var filters = "open";
-	console.log(context);
-	t.get('member', 'private', 'token').then(function(token){
-	var url = context.board+"/cards/" +
-                filters +
-                "?"+
-                "token=" + token +
-                "&key=" + API_KEY;
-
-		//Valid Values
-		//for card filters: all, closed, none, open, visible.
-//		window.Trello.lists.get(url,
-//		    function(d){
-//        		console.log(d);
-//        	},
-//        	function(){
-//        });
-	});
-
-};
 
 TrelloPowerUp.initialize({
 

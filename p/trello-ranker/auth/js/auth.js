@@ -51,7 +51,7 @@ authBtn.addEventListener('click', function() {
 //	  success: authenticationSuccess,
 //	  error: authenticationFailure
 //	});
-
+console.log(oauthUrl);
   t.authorize(oauthUrl, authorizeOpts)
   .then(function(token) {
     return t.set('organization', 'private', 'token', token)

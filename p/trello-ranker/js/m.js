@@ -2,9 +2,9 @@
 var GRAY_ICON = './images/icon-gray.svg';
 var RANK_COLOR = 'green';
 var RANK_ICON = 'https://cdn.glitch.com/c69415fd-f70e-4e03-b43b-98b8960cd616%2Frocket-ship-grey.png?1496162964717';
+var API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 
 var cardButtonCallback = function(t){
-console.log('boardid:'+t.getContext().board);
 	reOrderCards(t);
   return t.popup({
     title: 'Rank this card',
@@ -20,9 +20,11 @@ var reOrderCards = function(t){
 	var filter = "open";
 	var url = context.board+"/cards/" +
 			filter;
+//			&key=
+//			&token={AN-OAUTH-TOKEN}
 
-	t.get('member', 'private', 'authToken').then(function(d){
-	console.log(d);
+	t.get('member', 'private', 'token').then(function(d){
+		console.log(d);
 	})
 
 	//Valid Values

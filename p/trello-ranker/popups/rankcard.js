@@ -31,32 +31,21 @@ window.rankdown.addEventListener('click',function(ev){
 		window.rankcurrent.value = v-1;
 });
 
-
-var getMemberToken = function(t){
-	return t.get('member', 'private', 'token');
-};
-
 var getCardId = function(t){
 	return t.card('id');
 }
 
-var token;
-var cardid;
-
 var reOrderCards = function(t){
-console.log('passed here');
-console.log(t.get('member', 'private', 'token'));
-console.log(t.card('id'));
-	return getMemberToken(t)
-		.then(function(v){
-			token = v;
-			console.log(token);
-			return getCardId(v);
-		})
-		.then(function(v){
-			cardid = v;
-			console.log(cardid);
-		});
+	t.get('member', 'private', 'token')
+	.then(function(token){
+		console.log(token);
+		return t.card('id');
+	})
+	.then(function(cardId){
+		console.log(cardId);
+		alert('a');
+	});
+//	return "";
 };
 
 

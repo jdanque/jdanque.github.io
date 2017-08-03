@@ -20,8 +20,8 @@ var reOrderCards = function(t){
 	var filter = "open";
 
 	t.get('member', 'private', 'token').then(function(token){
-		var url = context.board+"/cards/" +
-        			filter+
+		var url = context.board+'/cards/' +
+        			filter +
         			+'?'+
         			'key='+API_KEY+
         			'&token='+token

@@ -1,5 +1,5 @@
 var T = TrelloPowerUp.iframe();
-var Promise = window.TrelloPowerUp.Promise;
+var Promise = TrelloPowerUp.Promise;
 
 T.get('card','shared','rank').then(function(data){
 	window.rankcurrent.value = data || 0;
@@ -14,7 +14,7 @@ window.rankcard.addEventListener('submit',function(ev){
 	ev.preventDefault();
 	return T.set('card','shared','rank', window.rankcurrent.value)
 	.then(function(){
-		reOrderCards(T);
+		reOrderCards.build(T);
 		T.closePopup();
 	});
 });
@@ -31,23 +31,20 @@ window.rankdown.addEventListener('click',function(ev){
 		window.rankcurrent.value = v-1;
 });
 
-var getCardId = function(t){
-	return t.card('id');
-}
-
 var reOrderCards = function(t){
 	t.get('member', 'private', 'token')
 	.then(function(token){
-		console.log(token);
-		return t.card('id');
-	})
-	.then(function(cardId){
-		console.log(cardId);
-		alert('a');
+			return T.card('id');
+		},function(reason){
+     		console.log(reason);
+    })
+	.then(function(cardID){
+			console.log(cardID);
+		},function(reason){
+			console.log(reason);
 	});
-//	return "";
-};
 
+};
 
 
 //var reOrderCards = function(t){

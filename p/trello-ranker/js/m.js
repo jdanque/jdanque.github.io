@@ -23,8 +23,7 @@ var reOrderCards = function(t){
 	console.log(token);
 		var url = context.board+"/cards/" +
         			filter +
-        			+"?"+
-        			"token="+token+
+        			"?token="+ token+
         			"&key="+API_KEY;
 
 	//Valid Values

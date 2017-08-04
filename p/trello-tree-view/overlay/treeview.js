@@ -136,18 +136,22 @@ var T = TrelloPowerUp.iframe();
 	var setCardOpenHandler = function(){
 		$('body').on('click','a.nodelink.node-type-card',function(e){
             e.preventDefault();
-            T.card('all')
-                .then(function(card){
-                    if(card.closed){
-						T.navigate({
-							url : card.url
-						});
-                    }else{
-                        T.showCard(card.id);
-                    }
-                }).catch(function(er){
-                    console.log(er);
-                });
+            T.lists('all').then(function(e){
+                console.log(e);
+                return T.card('all')
+                                       .then(function(card){
+                                           if(card.closed){
+                       						T.navigate({
+                       							url : card.url
+                       						});
+                                           }else{
+                                               T.showCard(card.id);
+                                           }
+                                       }).catch(function(er){
+                                           console.log(er);
+                                       });
+            });
+
         });
 	};
 

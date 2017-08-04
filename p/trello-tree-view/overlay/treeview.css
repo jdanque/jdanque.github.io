@@ -62,7 +62,7 @@ li.nodecontainer {
     display: block;
     z-index: 200;
     text-overflow: ellipsis;
-    max-height: 3.3em;
+    max-height: 3.7em;
     overflow: hidden;
     line-height: 1.1em;
     color: #000; }

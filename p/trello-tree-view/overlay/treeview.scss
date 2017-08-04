@@ -40,12 +40,22 @@ ul.subnodelist{
     padding: 0.3em 0 1em 1em;
 }
 
+span.nodename{
+	font-weight: bold;
+        font-size: 1em;
+}
+
 li.nodecontainer {
 	list-style: none;
 	position: relative;
 
 	&>a{
 		position: relative;
+		text-decoration: none;
+
+		&:hover, &:focus{
+			text-decoration: none;
+		}
 	}
 
 	&>.expando{

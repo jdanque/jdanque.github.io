@@ -137,6 +137,16 @@ var T = TrelloPowerUp.iframe();
 	};
 
 	/*
+		Because you're on this current board
+		but todo for future, if planning to include other boards
+	*/
+	var disableBoardOpenHandler = function(){
+		$('body').on('click','a.nodelink.node-type-board',function(e){
+			e.preventDefault();
+		});
+	};
+
+	/*
 		Because Lists don't have links lol
 	*/
 	var disableListOpenHandler = function(){
@@ -165,11 +175,23 @@ var T = TrelloPowerUp.iframe();
         });
 	};
 
+	var setHoverHandler = function(){
+		$('body').on('hover','.nodecontainer',function(){
+			var _this = $(this);
+
+			$('.hovercontainer').remove();
+			var html = '<span class="hovercontainer"></span>';
+			_this.prepend(html);
+		})
+	};
+
 	me.init = function(){
 		createTreeView();
 		setExpandoHandler();
+		disableBoardOpenHandler();
 		disableListOpenHandler();
 		setCardOpenHandler();
+		setHoverHandler();
 		me.status.init = true;
 	};
 

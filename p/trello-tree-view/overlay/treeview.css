@@ -35,11 +35,18 @@ ul.subnodelist {
   margin: 0;
   padding: 0.3em 0 1em 1em; }
 
+span.nodename {
+  font-weight: bold;
+  font-size: 1em; }
+
 li.nodecontainer {
   list-style: none;
   position: relative; }
   li.nodecontainer > a {
-    position: relative; }
+    position: relative;
+    text-decoration: none; }
+    li.nodecontainer > a:hover, li.nodecontainer > a:focus {
+      text-decoration: none; }
   li.nodecontainer > .expando.expanded {
     content: "\A";
     border-style: solid;

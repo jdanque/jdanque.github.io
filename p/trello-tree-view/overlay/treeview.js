@@ -277,7 +277,7 @@ var T = TrelloPowerUp.iframe();
 		disableListOpenHandler();
 		setCardOpenHandler();
 		setHoverHandler();
-		setKeyboardShortcuts();
+//		setKeyboardShortcuts();
 		me.status.init = true;
 	};
 

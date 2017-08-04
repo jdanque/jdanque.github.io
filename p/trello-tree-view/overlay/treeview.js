@@ -80,7 +80,7 @@ var T = TrelloPowerUp.iframe();
 					root.add(listNode);
 				}
 
-				$('body').find('#treeviewmain').html(root);
+				$('body').find('#treeviewmain').html(root.toHtml());
 			})
 			;
 

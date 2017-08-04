@@ -79,7 +79,7 @@ var T = TrelloPowerUp.iframe();
 
 					root.add(listNode);
 				}
-				$(body).find('.treeviewmain').html(root);
+				jQuery(body).find('.treeviewmain').html(root);
 			})
 			;
 

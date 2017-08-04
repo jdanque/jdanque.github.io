@@ -193,12 +193,24 @@ var T = TrelloPowerUp.iframe();
 	};
 
 	var setHoverHandler = function(){
+		/*set initial hover to board root*/
+		$('.hovermenu').remove();
+        var html = '<span style="height:'+$('.nodelink.node-type-board').height()+'px" class="hovermenu"></span>';
+        $('.nodelink.node-type-board').before(html);
+
+
 		$('body').on('hover','.nodelink',function(){
 			var _this = $(this);
 
 			$('.hovermenu').remove();
 			var html = '<span style="height:'+_this.height()+'px" class="hovermenu"></span>';
 			_this.before(html);
+		});
+	};
+
+	var setKeyboardShortcuts = function(){
+		$('body').on('keyup',function(ev){
+			console.log(keyup);
 		});
 	};
 
@@ -209,6 +221,7 @@ var T = TrelloPowerUp.iframe();
 		disableListOpenHandler();
 		setCardOpenHandler();
 		setHoverHandler();
+		setKeyboardShortcuts();
 		me.status.init = true;
 	};
 

@@ -108,17 +108,17 @@ var T = TrelloPowerUp.iframe();
 	var appendClickHandlers = function(){
 		$('body').on('click','.expando',function(){
 			var _this = $(this),
-				_subNodesList = _this.find('subnodelist:first')
+				_subNodesList = _this.find('.subnodelist:first')
 				;
 
 			if(_this.hasClass('expanded')){
 				_subNodesList.slideUp();
 				_this.toggleClass('expanded',false);
-				_this.toggleClass('collapse',true);
+				_this.toggleClass('collapsed',true);
 			}else{
 				_subNodesList.slideDown();
 				_this.toggleClass('expanded',true);
-                _this.toggleClass('collapse',false);
+                _this.toggleClass('collapsed',false);
 			}
 
 		});

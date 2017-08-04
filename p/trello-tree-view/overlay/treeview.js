@@ -136,8 +136,10 @@ var T = TrelloPowerUp.iframe();
 	var setCardOpenHandler = function(){
 		$('body').on('click','a.nodelink.node-type-card',function(e){
             e.preventDefault();
+            $(this).attr('data-trello-closed');
             T.card('all')
                 .then(function(card){
+                    console.log(card);
                     if(card.closed){
 						T.navigate({
 							url : card.url

@@ -210,7 +210,7 @@ var T = TrelloPowerUp.iframe();
 
 	var setKeyboardShortcuts = function(){
 		$('body').on('keyup',function(ev){
-			var h = $('.hovermenu');
+			var h = '.hovermenu';
 			var n = '.nodecontainer';
 			var l = 'a.nodelink';
 			var p = '';
@@ -218,9 +218,9 @@ var T = TrelloPowerUp.iframe();
 				//up
 				case 38 :
 					ev.preventDefault();
-					p = h.closest(n).prev(n);
+					p = $(h).closest(n).prev(n);
 					if(p.length == 0){
-						h.closest(n).closest(n).children(l).trigger('mouseover');
+						$(h).closest(n).closest(n).children(l).trigger('mouseover');
 					}else{
 						p.children(l).trigger('mouseover');
 					}
@@ -229,33 +229,33 @@ var T = TrelloPowerUp.iframe();
 				//right
 				case 39 :
 					ev.preventDefault();
-					if(h.closest(n).children('.expando.collapsed').length>0){
-						h.closest(n).children(l).click();
+					if($(h).closest(n).children('.expando.collapsed').length>0){
+						$(h).closest(n).children(l).click();
 					}
 				break;
 
 				//down
 				case 40 :
 					ev.preventDefault();
-                    p = h.closest(n).next(n);
+                    p = $(h).closest(n).next(n);
                     if(p.length == 0){
-                        h.closest(n).closest(n).children(l).trigger('mouseover');
+                        $(h).closest(n).closest(n).children(l).trigger('mouseover');
                     }else{
-                        p.children(l).trigger('mouseover');
+                        $(h).children(l).trigger('mouseover');
                     }
 				break;
 
 				//left
 				case 37 :
 					ev.preventDefault();
-                    if(h.closest(n).children('.expando.expanded').length>0){
-                        h.closest(n).children(l).click();
+                    if($(h).closest(n).children('.expando.expanded').length>0){
+                        $(h).closest(n).children(l).click();
                     }
 				break;
 
 				//enter
 				case 13 :
-					h.siblings(l).click();
+					$(h).siblings(l).click();
 				break;
 
 				default:break;

@@ -201,7 +201,7 @@ var T = TrelloPowerUp.iframe();
 
 		$('body').on('hover','.nodelink',function(){
 			var _this = $(this);
-
+				_this.focus();
 			$('.hovermenu').remove();
 			var html = '<span style="height:'+_this.height()+'px" class="hovermenu"></span>';
 			_this.before(html);

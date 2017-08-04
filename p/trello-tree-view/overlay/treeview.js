@@ -50,11 +50,19 @@ var T = TrelloPowerUp.iframe();
 
 				return T.lists('all');
 			}).then(function(lists){
-				for(var i=0; i<lists.length; i++){
-					var list = lists[i];
+				for(var list of lists){
 					var listNode = new Node(list.name)
 						.withId(list.id)
 						;
+
+					for(var card of list.cards){
+						var cardNode = new Node(card.name)
+							.withId(card.id)
+							.withUrl(card.url)
+							;
+
+						listNode.add(cardNode);
+					}
 
 					root.add(listNode);
 				}

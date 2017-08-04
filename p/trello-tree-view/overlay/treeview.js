@@ -13,6 +13,12 @@ var T = TrelloPowerUp.iframe();
 		this.nodes = [];
 		this.url = '';
 		this.type = '';
+		this.isClosed = '';
+
+		this.withIsClosed = function(v){
+			this.isClosed = v;
+			return this;
+		};
 
 		this.withType = function(v){
 			this.type = v;
@@ -42,7 +48,8 @@ var T = TrelloPowerUp.iframe();
 
 			var subnodes = '',
 				nodeTypeClass = 'node-type-'+this.type,
-				expando = ''
+				expando = '',
+				closedAttr = ''
 				;
 
 			if(this.nodes.length>0){
@@ -54,9 +61,13 @@ var T = TrelloPowerUp.iframe();
 				expando = '<span class="expando expanded"></span>';
 			}
 
+			if(this.isClosed.length > 0){
+				closedAttr = 'data-trello-isClosed="'+this.closed;
+			}
+
 			var html = '<li class="nodecontainer ">'
 					+ expando
-                    +'<a class="nodelink '+nodeTypeClass+'" href="'+this.url+'" data-trello-id="'+this.id+'" data-trello-url="'+this.url+'"><span class="node_name">'+this.name+'</span></a>'
+                    +'<a class="nodelink '+nodeTypeClass+'" href="'+this.url+'" data-trello-id="'+this.id+'" data-trello-url="'+this.url+'" '+closedAttr+' "><span class="node_name">'+this.name+'</span></a>'
 					+subnodes
 					+'</li>'
 					;
@@ -136,21 +147,15 @@ var T = TrelloPowerUp.iframe();
 	var setCardOpenHandler = function(){
 		$('body').on('click','a.nodelink.node-type-card',function(e){
             e.preventDefault();
-            T.lists('all').then(function(e){
-                console.log(e);
-                return T.card('all')
-                                       .then(function(card){
-                                           if(card.closed){
-                       						T.navigate({
-                       							url : card.url
-                       						});
-                                           }else{
-                                               T.showCard(card.id);
-                                           }
-                                       }).catch(function(er){
-                                           console.log(er);
-                                       });
-            });
+            var _this = $(this);
+
+			if(_this.attr('data-trello-isClosed')){
+				T.navigate({
+					url : card.url
+				});
+			}else{
+				T.showCard(card.id);
+			}
 
         });
 	};

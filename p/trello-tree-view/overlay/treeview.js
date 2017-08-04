@@ -6,17 +6,21 @@ var T = TrelloPowerUp.iframe();
 		init: false
 	}
 
-	var getBoardLists = function(){
-
-	return T.lists('all')
-		.then(function(lists){
-			console.log(JSON.stringify(lists,null,2));
-		});
+	var getBoardLists = function(boardID){
+		return T.lists('all')
+			.then(function(lists){
+				console.log(JSON.stringify(lists,null,2));
+			});
 	};
 
 
 	var createTreeView = function(){
-		return getBoardLists();
+
+		
+
+
+//		return T.getBoardLists()
+//			.then(getBoardLists);
 	};
 
 	me.init = function(){

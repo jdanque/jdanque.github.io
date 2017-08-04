@@ -202,7 +202,7 @@ var T = TrelloPowerUp.iframe();
 		$('body').on('hover','.nodelink',function(){
 			var _this = $(this);
 			$('.hovermenu').remove();
-			var html = '<span style="height:'+(_this.outerHeight()+6)+'px" class="hovermenu"></span>';
+			var html = '<span style="height:'+_this.outerHeight()+'px" class="hovermenu"></span>';
 			_this.before(html);
 		});
 	};

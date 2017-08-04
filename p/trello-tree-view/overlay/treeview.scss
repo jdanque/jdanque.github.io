@@ -56,8 +56,8 @@ span.node_desc{
     display: block;
     background-color: #fff;
     padding: 3px;
-    border-radius: 2px
-
+    border-radius: 2px;
+	line-height: 1.1;
 
 }
 
@@ -129,7 +129,7 @@ span.hovermenu {
     left: -100%;
 	width: 100%;
     background: #BCD9EA;
-    padding: 0.45em 100%;
+    padding: 0.2em 100%;
     height: 1em;
     z-index: 100;
 }

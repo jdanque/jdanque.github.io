@@ -106,7 +106,7 @@ var T = TrelloPowerUp.iframe();
 	};
 
 	var appendClickHandlers = function(){
-		$('body').find('.nodecontainer').on('click','.expando',function(){
+		$('body').on('click','.expando',function(){
 			var _this = $(this),
 				_subNodesList = _this.find('subnodelist:first')
 				;
@@ -120,7 +120,7 @@ var T = TrelloPowerUp.iframe();
 				_this.toggleClass('expanded',true);
                 _this.toggleClass('collapse',false);
 			}
-			
+
 		});
 	};
 

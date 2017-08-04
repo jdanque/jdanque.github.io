@@ -244,7 +244,7 @@ var T = TrelloPowerUp.iframe();
                     if(p.length == 0){
                         $(h).closest(n).closest(n).children(l).trigger('mouseover');
                     }else{
-                        $(h).children(l).trigger('mouseover');
+                        p.children(l).trigger('mouseover');
                     }
 				break;
 

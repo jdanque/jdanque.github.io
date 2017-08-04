@@ -33,7 +33,8 @@ var T = TrelloPowerUp.iframe();
 
 	var createTreeView = function(){
 		var context = T.getContext(),
-		var root = new Node();
+			root = new Node()
+			;
 
 		T.board('all')
 			.then(function(v){

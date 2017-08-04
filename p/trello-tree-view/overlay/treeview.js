@@ -152,11 +152,10 @@ var T = TrelloPowerUp.iframe();
 
 			if(_this.attr('data-trello-isClosed')){
 				T.navigate({ url : _this.attr('data-trello-url') })
-					.then(T.closeOverlay)};
+					.then(T.closeOverlay);
 			}else{
 				T.showCard(_this.attr('data-trello-id'))
-					.then(T.closeOverlay)}
-				;
+					.then(T.closeOverlay);
 			}
 
         });

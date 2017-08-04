@@ -210,7 +210,7 @@ var T = TrelloPowerUp.iframe();
 
 	var setKeyboardShortcuts = function(){
 		$('body').on('keyup',function(ev){
-			console.log(keyup);
+			console.log(ev);
 		});
 	};
 

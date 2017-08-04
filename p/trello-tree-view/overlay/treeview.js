@@ -150,21 +150,25 @@ var T = TrelloPowerUp.iframe();
 	};
 
 	/*
+		disable board link open handler instead expando
 		Because you're on this current board
 		but todo for future, if planning to include other boards
 	*/
 	var disableBoardOpenHandler = function(){
 		$('body').on('click','a.nodelink.node-type-board',function(e){
 			e.preventDefault();
+			$(this).siblings('.expando').click();
 		});
 	};
 
 	/*
+		disable list link open handler instead expando
 		Because Lists don't have links lol
 	*/
 	var disableListOpenHandler = function(){
 		$('body').on('click','a.nodelink.node-type-list',function(e){
 			e.preventDefault();
+			$(this).siblings('.expando').click();
 		});
 	};
 

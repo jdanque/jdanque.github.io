@@ -223,8 +223,10 @@ var T = TrelloPowerUp.iframe();
 
 					if(p.length == 0){
 						$(h).closest(n).prev(n).children(l).trigger('mouseover');
-					}else{
+					}else if(p.children(l).length == 0){
 						p.children(l).trigger('mouseover');
+					}else{
+						$(h).closest(n).parents(n+':first').children(l).trigger('mouseover');
 					}
 				break;
 
@@ -246,8 +248,10 @@ var T = TrelloPowerUp.iframe();
 
                     if(p.length == 0){
 						$(h).closest(n).next(n).children(l).trigger('mouseover');
-                    }else{
+                    }else if(p.children(l).length == 0){
                         p.children(l).trigger('mouseover');
+                    }else{
+                       $(h).closest(n).parents(n+':first').next().children(l).trigger('mouseover');
                     }
 				break;
 

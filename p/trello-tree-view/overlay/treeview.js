@@ -210,7 +210,57 @@ var T = TrelloPowerUp.iframe();
 
 	var setKeyboardShortcuts = function(){
 		$('body').on('keyup',function(ev){
-			console.log(ev);
+			var h = $('.hovermenu');
+			var n = '.nodecontainer';
+			var l = 'a.nodelink';
+			var p = '';
+			switch(ev.keyCode){
+				//up
+				case 38 :
+					ev.preventDefault();
+					p = h.closest(n).prev(n);
+					if(p.length == 0){
+						h.closest(n).closest(n).children(l).trigger('mouseover');
+					}else{
+						p.children(l).trigger('mouseover');
+					}
+				break;
+
+				//right
+				case 39 :
+					ev.preventDefault();
+					if(h.closest(n).children('.expando.collapsed').length>0){
+						h.closest(n).children(l).click();
+					}
+				break;
+
+				//down
+				case 40 :
+					ev.preventDefault();
+                    p = h.closest(n).next(n);
+                    if(p.length == 0){
+                        h.closest(n).closest(n).children(l).trigger('mouseover');
+                    }else{
+                        p.children(l).trigger('mouseover');
+                    }
+				break;
+
+				//left
+				case 37 :
+					ev.preventDefault();
+                    if(h.closest(n).children('.expando.expanded').length>0){
+                        h.closest(n).children(l).click();
+                    }
+				break;
+
+				//enter
+				case 13 :
+					h.siblings(l).click();
+				break;
+
+				default:break;
+			}
+
 		});
 	};
 

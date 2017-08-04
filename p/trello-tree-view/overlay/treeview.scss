@@ -68,9 +68,11 @@ li.nodecontainer {
 		max-height: 3.3em;
         overflow: hidden;
         line-height: 1.1em;
+        color: #000;
 
 
-		&:hover, &:focus{
+		&:hover, &:focus, &:visited{
+			color: #000;
 			text-decoration: none;
 		}
 

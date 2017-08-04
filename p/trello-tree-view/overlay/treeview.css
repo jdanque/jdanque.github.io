@@ -59,8 +59,10 @@ li.nodecontainer {
     text-overflow: ellipsis;
     max-height: 3.3em;
     overflow: hidden;
-    line-height: 1.1em; }
-    li.nodecontainer > a.nodelink:hover, li.nodecontainer > a.nodelink:focus {
+    line-height: 1.1em;
+    color: #000; }
+    li.nodecontainer > a.nodelink:hover, li.nodecontainer > a.nodelink:focus, li.nodecontainer > a.nodelink:visited {
+      color: #000;
       text-decoration: none; }
   li.nodecontainer > .expando {
     z-index: 200; }

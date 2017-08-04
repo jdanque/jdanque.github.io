@@ -102,6 +102,7 @@ var T = TrelloPowerUp.iframe();
 							.withId(card.id)
 							.withUrl(card.url)
 							.withType('card')
+							.withIsClosed(card.closed)
 							;
 
 						listNode.add(cardNode);

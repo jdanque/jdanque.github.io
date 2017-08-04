@@ -42,20 +42,23 @@ ul.subnodelist{
 
 span.nodename{
 	font-weight: bold;
-        font-size: 1em;
+    font-size: 1em;
+    text-decoration: none;
 }
 
 li.nodecontainer {
 	list-style: none;
 	position: relative;
 
-	&>a{
+	&>a.nodelink{
 		position: relative;
 		text-decoration: none;
 
 		&:hover, &:focus{
 			text-decoration: none;
 		}
+
+
 	}
 
 	&>.expando{
@@ -80,4 +83,13 @@ li.nodecontainer {
             cursor: pointer;
 		}
 	}
+}
+
+span.hovermenu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: red;
+    height: 1em;
 }

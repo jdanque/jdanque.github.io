@@ -37,15 +37,16 @@ ul.subnodelist {
 
 span.nodename {
   font-weight: bold;
-  font-size: 1em; }
+  font-size: 1em;
+  text-decoration: none; }
 
 li.nodecontainer {
   list-style: none;
   position: relative; }
-  li.nodecontainer > a {
+  li.nodecontainer > a.nodelink {
     position: relative;
     text-decoration: none; }
-    li.nodecontainer > a:hover, li.nodecontainer > a:focus {
+    li.nodecontainer > a.nodelink:hover, li.nodecontainer > a.nodelink:focus {
       text-decoration: none; }
   li.nodecontainer > .expando.expanded {
     content: "\A";
@@ -65,5 +66,13 @@ li.nodecontainer {
     left: -0.9em;
     top: 0.3em;
     cursor: pointer; }
+
+span.hovermenu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: red;
+  height: 1em; }
 
 /*# sourceMappingURL=treeview.css.map */

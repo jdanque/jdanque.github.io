@@ -175,12 +175,23 @@ var T = TrelloPowerUp.iframe();
         });
 	};
 
+	var setHoverHandler = function(){
+		$('body').on('hover','.nodelink',function(){
+			var _this = $(this);
+
+			$('.hovermenu').remove();
+			var html = '<span class="hovermenu"></span>';
+			_this.prepend(html);
+		});
+	};
+
 	me.init = function(){
 		createTreeView();
 		setExpandoHandler();
 		disableBoardOpenHandler();
 		disableListOpenHandler();
 		setCardOpenHandler();
+		setHoverHandler();
 		me.status.init = true;
 	};
 

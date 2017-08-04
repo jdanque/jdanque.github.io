@@ -108,7 +108,7 @@ var T = TrelloPowerUp.iframe();
 	var appendClickHandlers = function(){
 		$('body').on('click','.expando',function(){
 			var _this = $(this),
-				_subNodesList = _this.find('.subnodelist:first')
+				_subNodesList = _this.closest('.nodecontainer').find('.subnodelist:first')
 				;
 
 			if(_this.hasClass('expanded')){

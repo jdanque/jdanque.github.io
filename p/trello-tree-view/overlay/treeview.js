@@ -13,7 +13,7 @@ var T = TrelloPowerUp.iframe();
 		this.nodes = [];
 		this.url = '';
 		this.type = '';
-		this.isClosed = '';
+		this.isClosed = null;
 
 		this.withIsClosed = function(v){
 			this.isClosed = v;
@@ -61,8 +61,8 @@ var T = TrelloPowerUp.iframe();
 				expando = '<span class="expando expanded"></span>';
 			}
 
-			if(this.isClosed.length > 0){
-				closedAttr = 'data-trello-isClosed="'+this.closed;
+			if(this.isClosed !== null){
+				closedAttr = 'data-trello-isClosed='+this.closed;
 			}
 
 			var html = '<li class="nodecontainer ">'
@@ -152,10 +152,10 @@ var T = TrelloPowerUp.iframe();
 
 			if(_this.attr('data-trello-isClosed')){
 				T.navigate({
-					url : card.url
+					url : _this.attr('data-trello-url')
 				});
 			}else{
-				T.showCard(card.id);
+				T.showCard(_this.attr('data-trello-id'));
 			}
 
         });

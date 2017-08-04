@@ -36,19 +36,29 @@ ul.subnodelist {
   margin: 0;
   padding: 0.3em 0 1em 1em; }
 
-span.nodename {
+span.node_name {
   font-weight: bold;
   font-size: 1em;
   text-decoration: none; }
 
+span.node_desc {
+  font-weight: normal;
+  font-size: .9em;
+  text-decoration: none; }
+
 li.nodecontainer {
   list-style: none;
-  position: relative; }
+  position: relative;
+  padding-top: 0.2em; }
   li.nodecontainer > a.nodelink {
     position: relative;
     text-decoration: none;
     display: block;
-    z-index: 200; }
+    z-index: 200;
+    text-overflow: ellipsis;
+    max-height: 3em;
+    overflow: hidden;
+    line-height: 1.1em; }
     li.nodecontainer > a.nodelink:hover, li.nodecontainer > a.nodelink:focus {
       text-decoration: none; }
   li.nodecontainer > .expando {
@@ -74,7 +84,7 @@ li.nodecontainer {
 
 span.hovermenu {
   position: absolute;
-  top: -.1em;
+  top: 0;
   left: -100%;
   width: 100%;
   background: #BCD9EA;

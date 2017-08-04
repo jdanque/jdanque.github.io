@@ -10,16 +10,20 @@ body {
   width: 80%;
   max-width: 600px;
   max-height: 80%;
-  border-radius: 0.4em;
-  border: 1px solid #fff; }
+  border-radius: 0.4em; }
 
 h1.mainheader {
   background: #026AA7;
   color: white;
   text-align: center;
   padding: .5em 1em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0em;
   border-top-left-radius: 0.2em;
   border-top-right-radius: 0.2em; }
+
+.treeviewmain {
+  padding: 0.5em;
+  border-bottom-left-radius: 0.2em;
+  border-bottom-right-radius: 0.2em; }
 
 /*# sourceMappingURL=treeview.css.map */

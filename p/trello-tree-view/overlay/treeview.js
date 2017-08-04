@@ -33,6 +33,19 @@ var T = TrelloPowerUp.iframe();
 		};
 
 		this.toHtml = function(){
+			var html = '<li class="nodecontainer">';
+				html += '<a href="'+this.url+'"><span class="node_name">'+this.name+'</span></a>';
+			if(this.nodes.length>0){
+				html += '<ul class="subnodelist">';
+				for(var i = 0 ; i < this.nodes.length; i++){
+					html += this.nodes[i].toHtml();
+				}
+				html += '</ul>';
+			}
+
+			html += '</li>';
+
+			return html;
 		};
 	};
 
@@ -66,7 +79,7 @@ var T = TrelloPowerUp.iframe();
 
 					root.add(listNode);
 				}
-				console.log('done');
+				$(body).find('.treeviewmain').html(root);
 			})
 			;
 

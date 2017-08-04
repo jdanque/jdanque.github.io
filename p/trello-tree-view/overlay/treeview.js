@@ -213,21 +213,19 @@ var T = TrelloPowerUp.iframe();
 			var n = '.nodecontainer';
 			var l = 'a.nodelink';
 			var p = '';
+			var i = '';
 			switch(ev.keyCode){
 				//up
 				case 38 :
 					ev.preventDefault();
 					ev.stopPropagation();
 
-					p = $(h).closest(n).prev(n).find(n+':last');
+					i = $(h).closest(n).index(n);
 
-					if(p.length == 0){
-						$(h).closest(n).prev(n).children(l).trigger('mouseover');
-					}else if(p.children(l).length == 0){
-						p.children(l).trigger('mouseover');
-					}else{
-						$(h).closest(n).parents(n+':first').children(l).trigger('mouseover');
+					if(i-1>=0){
+						$(n).eq(i-1).children(l).trigger('mouseover');
 					}
+
 				break;
 
 				//right
@@ -244,15 +242,12 @@ var T = TrelloPowerUp.iframe();
 					ev.preventDefault();
 					ev.stopPropagation();
 
-					p = $(h).closest(n).find(n+':first');
 
-                    if(p.length == 0){
-						$(h).closest(n).next(n).children(l).trigger('mouseover');
-                    }else if(p.children(l).length == 0){
-                        p.children(l).trigger('mouseover');
-                    }else{
-                       $(h).closest(n).parents(n+':first').next().children(l).trigger('mouseover');
-                    }
+					i = $(h).closest(n).index(n);
+
+					if(i+1<=$(n).length){
+						$(n).eq(i+1).children(l).trigger('mouseover');
+					}
 				break;
 
 				//left

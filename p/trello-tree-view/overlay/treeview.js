@@ -54,9 +54,9 @@ var T = TrelloPowerUp.iframe();
 				expando = '<span class="expando expanded"></span>';
 			}
 
-			var html = '<li class="nodecontainer '+nodeTypeClass+'">'
+			var html = '<li class="nodecontainer ">'
 					+ expando
-                    +'<a class="nodelink" href="'+this.url+'"><span class="node_name">'+this.name+'</span></a>'
+                    +'<a class="nodelink '+nodeTypeClass+'" href="'+this.url+'" data-trello-id="'+this.id+'" data-trello-url="'+this.url+'"><span class="node_name">'+this.name+'</span></a>'
 					+subnodes
 					+'</li>'
 					;
@@ -105,7 +105,7 @@ var T = TrelloPowerUp.iframe();
 
 	};
 
-	var appendClickHandlers = function(){
+	var setExpandoHandler = function(){
 		$('body').on('click','.expando',function(){
 			var _this = $(this),
 				_subNodesList = _this.closest('.nodecontainer').find('.subnodelist:first')
@@ -124,9 +124,36 @@ var T = TrelloPowerUp.iframe();
 		});
 	};
 
+	/*
+		Because Lists don't have links lol
+	*/
+	var disableListOpenHandler = function(){
+		$('body').on('click','a.nodelink.node-type-list',function(e){
+			e.preventDefault();
+		});
+	};
+
+	var setCardOpenHandler = function(){
+		$('body').on('click','a.nodelink.node-type-card',function(e){
+            e.preventDefault();
+            T.card('all')
+                .then(function(card){
+                    if(card.closed){
+						T.navigate({
+							url : card.url
+						});
+                    }else{
+                        T.showCard(card.id);
+                    }
+                });
+        });
+	};
+
 	me.init = function(){
 		createTreeView();
-		appendClickHandlers();
+		setExpandoHandler();
+		disableListOpenHandler();
+		setCardOpenHandler();
 		me.status.init = true;
 	};
 

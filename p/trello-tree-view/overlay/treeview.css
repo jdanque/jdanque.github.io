@@ -9,7 +9,7 @@ body {
   padding: .5em;
   width: 80%;
   max-width: 600px;
-  max-height: 80%;
+  max-height: 100%;
   border-radius: 0.4em; }
 
 h1.mainheader {
@@ -27,6 +27,7 @@ h1.mainheader {
   border-bottom-left-radius: 0.2em;
   border-bottom-right-radius: 0.2em;
   overflow: auto;
-  height: calc(100% - (.5em + .5em + 1.3em)); }
+  /*height: 70%;*/
+  max-height: 70%; }
 
 /*# sourceMappingURL=treeview.css.map */

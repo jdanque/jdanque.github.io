@@ -181,7 +181,7 @@ var T = TrelloPowerUp.iframe();
 
 			$('.hovermenu').remove();
 			var html = '<span class="hovermenu"></span>';
-			_this.prepend(html);
+			_this.before(html);
 		});
 	};
 

@@ -51,7 +51,14 @@ span.node_desc{
 	font-weight: normal;
     font-size: 0.9em;
     text-decoration: none;
+    margin-top: 5px;
     margin-left: 0.5em;
+    display: block;
+    background-color: #fff;
+    padding: 3px;
+    border-radius: 2px
+
+
 }
 
 li.nodecontainer {
@@ -71,10 +78,14 @@ li.nodecontainer {
         color: #000;
 
         &.node-type-card {
-            background-color: #fff;
+            background-color: #e2e4e6;
             border: 1px solid #ccc;
             border-radius: 3px;
             padding: 3px;
+
+			span.node_name{
+                background-color: #e2e4e6
+			}
         }
 
 

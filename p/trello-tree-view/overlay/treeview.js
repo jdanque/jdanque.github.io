@@ -218,9 +218,9 @@ var T = TrelloPowerUp.iframe();
 				case 38 :
 					ev.preventDefault();
 					ev.stopPropagation();
-					p = $(h).closest(n).closest(n);
+					p = $(h).closest(n).prev(n);
 					if(p.length == 0){
-						$(h).closest(n).prev(n).children(l).trigger('mouseover');
+						$(h).closest(n).parents(n+':first').children(l).trigger('mouseover');
 					}else{
 						p.children(l).trigger('mouseover');
 					}
@@ -240,9 +240,9 @@ var T = TrelloPowerUp.iframe();
 					ev.preventDefault();
 					ev.stopPropagation();
 
-                    p = $(h).closest(n).find(n+':first');
+					p = $(h).closest(n).next(n);
                     if(p.length == 0){
-						$(h).closest(n).next(n).children(l).trigger('mouseover');
+						$(h).closest(n).find(n+':first').children(l).trigger('mouseover');
                     }else{
                         p.children(l).trigger('mouseover');
                     }

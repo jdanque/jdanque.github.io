@@ -14,6 +14,12 @@ var T = TrelloPowerUp.iframe();
 		this.url = '';
 		this.type = '';
 		this.isClosed = null;
+		this.desc = '';
+
+		this.withDesc = function(v){
+			this.desc = v;
+			return this;
+		};
 
 		this.withIsClosed = function(v){
 			this.isClosed = v;
@@ -49,7 +55,8 @@ var T = TrelloPowerUp.iframe();
 			var subnodes = '',
 				nodeTypeClass = 'node-type-'+this.type,
 				expando = '',
-				closedAttr = ''
+				closedAttr = '',
+				nodeDesc = ''
 				;
 
 			if(this.nodes.length>0){
@@ -65,10 +72,17 @@ var T = TrelloPowerUp.iframe();
 				closedAttr = 'data-trello-isClosed='+this.closed;
 			}
 
+			if(this.desc.length>0){
+				nodeDesc = '<span class="node_desc">'+this.desc+'</span>';
+			}
+
 			var html = '<li class="nodecontainer ">'
 					+ expando
-                    +'<a class="nodelink '+nodeTypeClass+'" href="'+this.url+'" data-trello-id="'+this.id+'" data-trello-url="'+this.url+'" '+closedAttr+' "><span class="node_name">'+this.name+'</span></a>'
-					+subnodes
+                    +'<a class="nodelink '+nodeTypeClass+'" href="'+this.url+'" data-trello-id="'+this.id+'" data-trello-url="'+this.url+'" '+closedAttr+' ">'
+                    +'<span class="node_name">'+this.name+'</span>'
+                    + nodeDesc
+                    +'</a>'
+					+ subnodes
 					+'</li>'
 					;
 
@@ -77,9 +91,7 @@ var T = TrelloPowerUp.iframe();
 	};
 
 	var createTreeView = function(){
-		var context = T.getContext(),
-			root = null
-			;
+			var root = null;
 
 		return T.board('all')
 			.then(function(board){
@@ -103,6 +115,7 @@ var T = TrelloPowerUp.iframe();
 							.withUrl(card.url)
 							.withType('card')
 							.withIsClosed(card.closed)
+							.withDesc(card.desc)
 							;
 
 						listNode.add(cardNode);

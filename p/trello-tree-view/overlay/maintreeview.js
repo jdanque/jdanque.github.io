@@ -10,6 +10,11 @@ t.render(function(){
   // and then called each time something changes that
   // you might want to react to, such as new data being
   // stored with t.set()
+
+  if(!TreeView.status.init){
+    TreeView.init();
+  }
+
 });
 
 // close overlay if user clicks outside our content
@@ -25,7 +30,3 @@ document.addEventListener('keyup', function(e) {
     t.closeOverlay().done();
   }
 });
-
-$( window ).on( "load", function() {
-
-})

@@ -177,7 +177,7 @@ var T = TrelloPowerUp.iframe();
 	};
 
 	var openLinkInNode = function(nodelink){
-		 if(_this.hasClass('node-type-card')){
+		 if(nodelink.hasClass('node-type-card')){
 			 if(nodelink.attr('data-trello-isClosed')){
 		         T.navigate({ url : nodelink.attr('data-trello-url') })
 		             .then(function(){

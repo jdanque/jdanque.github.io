@@ -1,5 +1,5 @@
 .idea/
 .DS_Store
-.sass_cache
+.sass_cache/
 *.scss
 *.css.map

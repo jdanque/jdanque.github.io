@@ -6,6 +6,13 @@ var T = TrelloPowerUp.iframe();
 		init: false
 	};
 
+	me.options = {
+		expando : {
+			expandDuration : 100,
+			collapseDuration : 100,
+		}
+	};
+
 
 	var Node = function(name){
 		this.id = '';
@@ -91,18 +98,18 @@ var T = TrelloPowerUp.iframe();
 	};
 
 	var createTreeView = function(){
-			var root = null;
+		var root = null;
 
 		return T.board('all')
-			.then(function(board){
-				root = new Node(board.name)
-					.withId(board.id)
-					.withUrl(board.url)
-					.withType('board')
-					;
+            .then(function(board){
+                root = new Node(board.name)
+                    .withId(board.id)
+                    .withUrl(board.url)
+                    .withType('board')
+                    ;
 
-				return T.lists('all');
-			}).then(function(lists){
+                return T.lists('all');
+            }).then(function(lists){
 				for(var list of lists){
 					var listNode = new Node(list.name)
 						.withId(list.id)
@@ -124,7 +131,8 @@ var T = TrelloPowerUp.iframe();
 					root.add(listNode);
 				}
 
-				$('body').find('#treeviewmain').html(root.toHtml());
+				document.getElementById('treeviewmain').innerHTML = root.toHtml();
+
 			})
 			;
 
@@ -132,152 +140,189 @@ var T = TrelloPowerUp.iframe();
 
 	var setExpandoHandler = function(){
 		$('body').on('click','.expando',function(){
-			var _this = $(this),
-				_subNodesList = _this.closest('.nodecontainer').find('.subnodelist:first')
-				;
+            var _this = $(this),
+                _subNodesList = _this.closest('.nodecontainer').find('.subnodelist:first'),
+                _nodeLink = _this.closest('.nodecontainer').find('a.nodelink:first')
+                ;
 
-			if(_this.hasClass('expanded')){
-				_subNodesList.slideUp();
-				_this.toggleClass('expanded',false);
-				_this.toggleClass('collapsed',true);
-			}else{
-				_subNodesList.slideDown();
-				_this.toggleClass('expanded',true);
+            if(_this.hasClass('expanded')){
+                _subNodesList.slideUp(me.options.expando.collapseDuration);
+                _subNodesList.find('.nodecontainer').toggleClass('hidden-node',true);
+                _this.toggleClass('expanded',false);
+                _this.toggleClass('collapsed',true);
+				_nodeLink.prepend('<span class="subnodes-count">['+_subNodesList.children('.nodecontainer').length+']</span>');
+            }else{
+                _subNodesList.slideDown(me.options.expando.expandDuration);
+                _subNodesList.find('.nodecontainer').toggleClass('hidden-node',false);
+                _this.toggleClass('expanded',true);
                 _this.toggleClass('collapsed',false);
-			}
-
-		});
-	};
-
-	/*
-		disable board link open handler instead expando
-		Because you're on this current board
-		but todo for future, if planning to include other boards
-	*/
-	var disableBoardOpenHandler = function(){
-		$('body').on('click','a.nodelink.node-type-board',function(e){
-			e.preventDefault();
-			$(this).siblings('.expando').click();
-		});
-	};
-
-	/*
-		disable list link open handler instead expando
-		Because Lists don't have links lol
-	*/
-	var disableListOpenHandler = function(){
-		$('body').on('click','a.nodelink.node-type-list',function(e){
-			e.preventDefault();
-			$(this).siblings('.expando').click();
-		});
-	};
-
-	var setCardOpenHandler = function(){
-		$('body').on('click','a.nodelink.node-type-card',function(e){
-            e.preventDefault();
-            var _this = $(this);
-
-			if(_this.attr('data-trello-isClosed')){
-				T.navigate({ url : _this.attr('data-trello-url') })
-					.then(function(){
-						T.closeOverlay();
-					});
-			}else{
-				T.showCard(_this.attr('data-trello-id'))
-					.then(function(){
-                        T.closeOverlay();
-                    });
-			}
+                _nodeLink.children('.subnodes-count').remove();
+            }
 
         });
 	};
 
-	var setHoverHandler = function(){
-		/*set initial hover to board root*/
-		$('.hovermenu').remove();
-        var html = '<span style="height:'+$('.nodelink.node-type-board').height()+'px" class="hovermenu"></span>';
-        $('.nodelink.node-type-board').before(html);
-
-
-		$('body').on('hover','.nodelink',function(){
+	var nodelinkClickHandler = function(){
+		$('body').on('click','a.nodelink',function(e){
 			var _this = $(this);
-			$('.hovermenu').remove();
-			var html = '<span style="height:'+_this.outerHeight()+'px" class="hovermenu"></span>';
-			_this.before(html);
+			e.preventDefault();
+
+			if(!_this.hasClass('currentNode')){
+				setCurrentNode(_this);
+			}else {
+                openLinkInNode(_this);
+            }
+
 		});
+	};
+
+	var openLinkInNode = function(nodelink){
+		 if(_this.hasClass('node-type-card')){
+			 if(nodelink.attr('data-trello-isClosed')){
+		         T.navigate({ url : nodelink.attr('data-trello-url') })
+		             .then(function(){
+		                 T.closeOverlay();
+		             });
+		     }else{
+		         T.showCard(nodelink.attr('data-trello-id'))
+		             .then(function(){
+		                 T.closeOverlay();
+		             });
+		     }
+         }
+	};
+
+	var setCurrentNode = function(nodeLink){
+	     $('.nodeLink.currentNode').removeClass('currentNode');
+	     nodeLink.toggleClass('currentNode',true);
+	};
+
+	var setRootAsCurrentNode = function(){
+		setCurrentNode($('.nodelink.node-type-board'));
+	};
+
+	var setHoverHandler = function(){
+        $('body').on('mouseover','.nodelink',function(){
+			var _this = $(this);
+			var hovermenu = 'hovermenu';
+            var html = '<span style="height:'+_this.outerHeight()+'px" id="'+hovermenu+'"></span>';
+
+            Utils.removeElemById(hovermenu);
+            _this.before(html);
+        });
+
+        $('body').on('mouseout','.nodelink',function(){
+            Utils.removeElemById('hovermenu');
+        });
 	};
 
 	var setKeyboardShortcuts = function(){
-		$('body').on('keyup',function(ev){
-			var h = '.hovermenu';
-			var n = '.nodecontainer';
-			var l = 'a.nodelink';
-			var p = '';
-			var i = '';
-			switch(ev.keyCode){
-				//up
-				case 38 :
-					ev.preventDefault();
-					ev.stopPropagation();
+			var h = '.nodeLink.currentNode',
+	            n = '.nodecontainer',
+	            l = 'a.nodelink',
+	            i = ''
+            ;
 
-					i = $(h).closest(n).index(n);
+		document.addEventListener('keyup', function(ev) {
+          switch(ev.keyCode) {
+           case 27 :
+                T.closeOverlay().done();
+                break;
+           //up
+           case 38 :
+                ev.preventDefault();
+                ev.stopPropagation();
 
-					if(i-1>=0){
-						$(n).eq(i-1).children(l).trigger('mouseover');
-					}
+                i = $(h).closest(n).index(n);
 
-				break;
+                if(i-1>=0){
+                    if($(n).eq(i-1).hasClass('hidden-node')){
+                        do{
+							i--;
+                        }while(i-1>=0 && $(n).eq(i-1).hasClass('hidden-node'));
 
-				//right
-				case 39 :
-					ev.preventDefault();
-					ev.stopPropagation();
-					if($(h).closest(n).children('.expando.collapsed').length>0){
-						$(h).closest(n).children(l).click();
-					}
-				break;
-
-				//down
-				case 40 :
-					ev.preventDefault();
-					ev.stopPropagation();
-
-
-					i = $(h).closest(n).index(n);
-
-					if(i+1<=$(n).length){
-						$(n).eq(i+1).children(l).trigger('mouseover');
-					}
-				break;
-
-				//left
-				case 37 :
-					ev.preventDefault();
-					ev.stopPropagation();
-                    if($(h).closest(n).children('.expando.expanded').length>0){
-                        $(h).closest(n).children(l).click();
+                        setCurrentNode($(n).eq(i-1).children(l));
+                    }else{
+                        setCurrentNode($(n).eq(i-1).children(l));
                     }
-				break;
+                }
 
-				//enter
-				case 13 :
-					$(h).siblings(l).click();
-				break;
+                break;
 
-				default:break;
-			}
+            //right
+            case 39 :
+                ev.preventDefault();
+                ev.stopPropagation();
+                if($(h).closest(n).children('.expando.collapsed').length>0){
+                    $(h).closest(n).children('.expando').click();
+                }
+                 break;
 
-		});
+            //down
+            case 40 :
+                ev.preventDefault();
+                ev.stopPropagation();
+
+                i = $(h).closest(n).index(n);
+
+                if(i+1<=$(n).length){
+					if($(n).eq(i+1).hasClass('hidden-node')){
+                        do{
+                            i++;
+                        }while(i+1<=$(n).length && $(n).eq(i+1).hasClass('hidden-node'));
+                    }
+
+                    if($(n).eq(i+1).length > 0){
+                        setCurrentNode($(n).eq(i+1).children(l));
+                    }
+                }
+
+
+                break;
+
+            //left
+            case 37 :
+                ev.preventDefault();
+                ev.stopPropagation();
+                   if($(h).closest(n).children('.expando.expanded').length>0){
+                       $(h).closest(n).children('.expando').click();
+                   }
+                break;
+
+            //enter
+            case 13 :
+                ev.preventDefault();
+                ev.stopPropagation();
+                openLinkInNode($(h));
+                break;
+
+            default:break;
+          }
+        });
+
+
+
 	};
 
+	var Utils = {
+		removeElemById : function(id){
+			var x = document.getElementById(id);
+			if(x)
+				x.parentNode.removeChild(x);
+		}
+	};
+
+
 	me.init = function(){
-		createTreeView();
-		setExpandoHandler();
-		disableBoardOpenHandler();
-		disableListOpenHandler();
-		setCardOpenHandler();
-		setHoverHandler();
-//		setKeyboardShortcuts();
+
+		createTreeView().then(function(){
+			setExpandoHandler();
+			nodelinkClickHandler();
+			setRootAsCurrentNode();
+			setHoverHandler();
+			setKeyboardShortcuts();
+		});
+
 		me.status.init = true;
 	};
 

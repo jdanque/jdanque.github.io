@@ -74,6 +74,9 @@ li.nodecontainer {
       padding: 3px; }
       li.nodecontainer > a.nodelink.node-type-card span.node_name {
         background-color: #e2e4e6; }
+    li.nodecontainer > a.nodelink.currentNode {
+      border: 1px solid #055A8C;
+      border-radius: 3px; }
     li.nodecontainer > a.nodelink:hover, li.nodecontainer > a.nodelink:focus, li.nodecontainer > a.nodelink:visited {
       color: #000;
       text-decoration: none; }
@@ -98,7 +101,7 @@ li.nodecontainer {
       top: 0.3em;
       cursor: pointer; }
 
-span.hovermenu {
+span#hovermenu {
   position: absolute;
   top: 0;
   left: -100%;
@@ -106,6 +109,15 @@ span.hovermenu {
   background: #BCD9EA;
   padding: 0.2em 100%;
   height: 1em;
-  z-index: 100; }
+  z-index: 100;
+  opacity: 0.4; }
+
+span.subnodes-count {
+  font-size: 0.6em;
+  position: relative;
+  top: -0.2em;
+  left: 0;
+  font-weight: bold;
+  margin: 0 0.5em; }
 
 /*# sourceMappingURL=treeview.css.map */

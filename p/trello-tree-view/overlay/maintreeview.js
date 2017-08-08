@@ -23,11 +23,3 @@ document.addEventListener('click', function(e) {
     t.closeOverlay().done();
   }
 });
-
-// close overlay if user presses escape key
-document.addEventListener('keyup', function(e) {
-  if(e.keyCode == 27) {
-    t.closeOverlay().done();
-  }
-});
-

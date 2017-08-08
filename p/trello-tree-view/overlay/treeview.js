@@ -150,7 +150,7 @@ var T = TrelloPowerUp.iframe();
                 _subNodesList.find('.nodecontainer').toggleClass('hidden-node',true);
                 _this.toggleClass('expanded',false);
                 _this.toggleClass('collapsed',true);
-				_nodeLink.prepend('<span class="subnodes-count">['+_subNodesList.children('.nodecontainer').length+']</span>');
+				_nodeLink.prepend('<span class="subnodes-count">'+_subNodesList.children('.nodecontainer').length+'</span>');
             }else{
                 _subNodesList.slideDown(me.options.expando.expandDuration);
                 _subNodesList.find('.nodecontainer').toggleClass('hidden-node',false);

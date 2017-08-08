@@ -300,7 +300,13 @@ var T = TrelloPowerUp.iframe();
           }
         });
 
+	};
 
+	var setCloseOverlay = function(){
+		$('#closetreeview').on('click',function(e){
+			e.preventDefault();
+			T.closeOverlay().done();
+		});
 
 	};
 
@@ -321,6 +327,7 @@ var T = TrelloPowerUp.iframe();
 			setRootAsCurrentNode();
 			setHoverHandler();
 			setKeyboardShortcuts();
+			setCloseOverlay();
 		});
 
 		me.status.init = true;

@@ -120,4 +120,19 @@ span.subnodes-count {
   font-weight: bold;
   margin: 0 0.5em; }
 
+div#closetreeview {
+  position: absolute;
+  font-size: 1.6em;
+  background: #026aa7;
+  border-radius: 50%;
+  color: #fff;
+  border: 2px solid #fff;
+  height: 2em;
+  line-height: 1.9;
+  text-align: center;
+  width: 2em;
+  right: -1em;
+  top: -1em;
+  cursor: pointer; }
+
 /*# sourceMappingURL=treeview.css.map */

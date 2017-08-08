@@ -73,10 +73,8 @@ li.nodecontainer {
       border: 1px solid #ccc;
       border-radius: 3px;
       padding: 3px; }
-      li.nodecontainer > a.nodelink.node-type-card span.node_name {
-        background-color: #e2e4e6; }
     li.nodecontainer > a.nodelink.currentNode {
-      border: 1px solid #055A8C;
+      backgroun-color: #BCD9EA;
       border-radius: 3px; }
     li.nodecontainer > a.nodelink:hover, li.nodecontainer > a.nodelink:focus, li.nodecontainer > a.nodelink:visited {
       color: #000;

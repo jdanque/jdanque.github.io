@@ -303,7 +303,6 @@ var T = TrelloPowerUp.iframe();
 	};
 
 	var setCloseOverlay = function(){
-		$('#maincontent').focus();
 
 		$('#closetreeview').on('click',function(e){
 			e.preventDefault();

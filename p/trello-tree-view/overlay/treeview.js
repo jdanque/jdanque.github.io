@@ -361,11 +361,13 @@ var T = TrelloPowerUp.iframe();
 	};
 
 	var updateCardPosition = function(card){
-		var newList = card.parents('.nodecontainer.node-type-list:first').find('.nodelink.node-type-list:first').attr('data-trello-id'),
-			cardsInList = card.parents('.nodecontainer.node-type-list:first').find('.nodecontainer.node-type-card'),
+		var
+			container = card.parents('.nodecontainer.node-type-list:first'),
+			newList = container.find('.nodelink.node-type-list:first').attr('data-trello-id'),
+			cardsInList = container.find('.nodecontainer.node-type-card'),
 			newPos = cardsInList.index(card),
 			leftCardID = newPos > 0 ? cardsInList.eq(newPos-1).find('.nodelink.node-type-card:first').attr('data-trello-id') : -1,
-			rightCardID = (cardsInList.length-1) == (newPost+1) ? -1 : cardsInList.eq(newPos+1).find('.nodelink.node-type-card:first').attr('data-trello-id'),
+			rightCardID = (cardsInList.length-1) == (newPos+1) ? -1 : cardsInList.eq(newPos+1).find('.nodelink.node-type-card:first').attr('data-trello-id'),
 			cardID = card.find('.nodelink.node-type-card:first').attr('data-trello-id')
 			;
 

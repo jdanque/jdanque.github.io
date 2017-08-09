@@ -367,7 +367,7 @@ var T = TrelloPowerUp.iframe();
 			cardsInList = container.find('.nodecontainer.node-type-card'),
 			newPos = cardsInList.index(card),
 			leftCardID = newPos > 0 ? cardsInList.eq(newPos-1).find('.nodelink.node-type-card:first').attr('data-trello-id') : -1,
-			rightCardID = (cardsInList.length-1) == (newPos+1) ? -1 : cardsInList.eq(newPos+1).find('.nodelink.node-type-card:first').attr('data-trello-id'),
+			rightCardID = (ardsInList.length === (newPos+1) ? -1 : cardsInList.eq(newPos+1).find('.nodelink.node-type-card:first').attr('data-trello-id'),
 			cardID = card.find('.nodelink.node-type-card:first').attr('data-trello-id')
 			;
 

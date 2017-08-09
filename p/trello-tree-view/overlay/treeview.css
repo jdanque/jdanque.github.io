@@ -149,4 +149,13 @@ div#closetreeview {
   margin: 2px 0;
   border-radius: 3px; }
 
+.grabbing {
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  cursor: grabbing; }
+
+.ui-sortable-helper {
+  -webkit-transform: rotate(4deg);
+  transform: rotate(4deg); }
+
 /*# sourceMappingURL=treeview.css.map */

@@ -67,7 +67,7 @@ var T = TrelloPowerUp.iframe();
 				;
 
 			if(this.nodes.length>0){
-				subnodes += '<ul class="subnodelist">';
+				subnodes += '<ul class="subnodelist '+nodeTypeClass+'">';
 				for(var i = 0 ; i < this.nodes.length; i++){
 					subnodes += this.nodes[i].toHtml();
 				}
@@ -313,10 +313,14 @@ var T = TrelloPowerUp.iframe();
 
 	var setDragAndDropCards = function(){
 		$('.subnodelist').sortable({
-	        placeholder: "list-card placeholder nodecontainer",
-	        connectWith: ".subnodelist",
-	        start: function( event, ui ) {
-	            ui.placeholder.height(ui.item.height())
+            placeholder: "list-card placeholder nodecontainer",
+            connectWith: ".subnodelist",
+            start: function( event, ui ) {
+                ui.placeholder.height(ui.item.height());
+	            ui.item.toggleClass('grabbing',true);
+            },
+	        stop: function( event, ui ) {
+	            ui.item.toggleClass('grabbing',false);
 	        }
         });
 	};

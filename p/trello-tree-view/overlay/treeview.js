@@ -373,24 +373,33 @@ var T = TrelloPowerUp.iframe();
 
 		Utils.getCardPos(leftCardID).then(function(leftCardPos){
 			leftCardPos = leftCardPos != -1 ? leftCardPos._value : -1;
-			
+
 			Utils.getCardPos(rightCardID).then(function(rightCardPos){
 					rightCardPos = rightCardPos != -1 ? rightCardPos._value : -1;
-
+					cardID = card.find('.nodelink.node-type-card:first').attr('data-trello-id')
 					newPos = calcPos(newPos,leftCardPos, rightCardPos);
 
-					window.Trello.put("cards/" + cardID+ "/?idList="+newList+"&pos="+newPos+"&token=" + authToken,
-			            //success
-			            function(data){
-			                return data;
-			            },
-			            //error
-			            function(reason){
-			                return reason;
-			            }
-			        );
-                });
+					return new Promise((resolve, reject) => {
+						resolve({
+							'cardID' : cardID,
+							'newList' : newList,
+							'newPos' : newPos
+						});
+					});
+
+            }).then(function(d){
+                window.Trello.put("cards/" + d.cardID+ "/?idList="+d.newList+"&pos="+d.newPos+"&token=" + authToken,
+                    //success
+                    function(data){
+                        return data;
+                    },
+                    //error
+                    function(reason){
+                        return reason;
+                    }
+                );
             });
+        });
 
 
 

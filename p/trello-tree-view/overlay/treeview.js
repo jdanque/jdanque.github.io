@@ -362,7 +362,7 @@ var T = TrelloPowerUp.iframe();
 			a = 65536
 			;
 
-		return (newPos==0) ? r/2 : (newPos == -1) ? l+a : (l+r)/2 ;
+		return (newPos==0) ? r/2 : (newPos == -1) ? l+a : (r==0) ? r+a : (l+r)/2 ;
 	};
 
 	var updateCardPosition = function(card){

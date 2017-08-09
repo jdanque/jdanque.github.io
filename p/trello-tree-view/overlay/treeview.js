@@ -3,6 +3,7 @@ var T = TrelloPowerUp.iframe();
 
 (function($, me){
 	me.API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
+
 	var authToken = '';
 
 	me.status = {
@@ -149,16 +150,16 @@ var T = TrelloPowerUp.iframe();
                 ;
 
             if(_this.hasClass('expanded')){
-                _subNodesList.slideUp(me.options.expando.collapseDuration);
-                _subNodesList.find('.nodecontainer').toggleClass('hidden-node',true);
-                _this.toggleClass('expanded',false);
-                _this.toggleClass('collapsed',true);
+                _subNodesList.slideUp(me.options.expando.collapseDuration)
+                    .find('.nodecontainer').toggleClass('hidden-node',true);
+                _this.toggleClass('expanded',false)
+                    .toggleClass('collapsed',true);
 				_nodeLink.prepend('<span class="subnodes-count">'+_subNodesList.children('.nodecontainer').length+'</span>');
             }else{
-                _subNodesList.slideDown(me.options.expando.expandDuration);
-                _subNodesList.find('.nodecontainer').toggleClass('hidden-node',false);
-                _this.toggleClass('expanded',true);
-                _this.toggleClass('collapsed',false);
+                _subNodesList.slideDown(me.options.expando.expandDuration)
+                    .find('.nodecontainer').toggleClass('hidden-node',false);
+                _this.toggleClass('expanded',true)
+                    .toggleClass('collapsed',false);
                 _nodeLink.children('.subnodes-count').remove();
             }
 
@@ -326,10 +327,10 @@ var T = TrelloPowerUp.iframe();
             tolerance: "pointer",
             start: function( event, ui ) {
                 ui.placeholder.height(ui.item.height());
-	            ui.item.toggleClass('grabbing',true);
 	            var p  = ui.item.parents('.nodecontainer.node-type-list').eq(0);
-	            ui.item.data("prevPos",p.find('.nodecontainer.node-type-card').index(ui.item));
-	            ui.item.data("prevListID",Utils.getListDataTrelloId(p));
+	            ui.item.toggleClass('grabbing',true)
+	                .data("prevPos",p.find('.nodecontainer.node-type-card').index(ui.item))
+	                .data("prevListID",Utils.getListDataTrelloId(p));
             },
 	        stop: function( event, ui ) {
 	            ui.item.toggleClass('grabbing',false);
@@ -373,48 +374,49 @@ var T = TrelloPowerUp.iframe();
 			newList = Utils.getListDataTrelloId(container)
 			;
 
-		if(card.data("prevPos") == newPos &&
-			card.data("prevListID") == newList)
+		if(card.data("prevPos") == newPos && card.data("prevListID") == newList)
 			return;
 
 		var
 			leftCardID = newPos > 0 ? Utils.getCardDataTrelloId(cardsInList.eq(newPos-1)) : -1,
 			rightCardID = cardsInList.length === (newPos+1) ? -1 : Utils.getCardDataTrelloId(cardsInList.eq(newPos+1)),
-			cardID = Utils.getCardDataTrelloId(card)
+			cardID = Utils.getCardDataTrelloId(card),
+			leftCardPos = -1,
+			rightCardPos = -1,
 			;
 
 
-		Utils.getCardPos(leftCardID).then(function(leftCardPos){
-			leftCardPos = leftCardPos != -1 ? leftCardPos._value : -1;
+		Utils.getCardPos(leftCardID)
+		.then(function(pos){
 
-			Utils.getCardPos(rightCardID).then(function(rightCardPos){
-					rightCardPos = rightCardPos != -1 ? rightCardPos._value : -1;
-					cardID = Utils.getCardDataTrelloId(card)
-					newPos = calcPos(newPos,leftCardPos, rightCardPos);
+			leftCardPos = pos != -1 ? pos._value : -1;
 
-					return new Promise((resolve, reject) => {
-						resolve({
-							'cardID' : cardID,
-							'newList' : newList,
-							'newPos' : newPos
-						});
-					});
+			return Utils.getCardPos(rightCardID);
+		}).then(function(pos){
+			rightCardPos = pos != -1 ? pos._value : -1;
+			cardID = Utils.getCardDataTrelloId(card)
+			newPos = calcPos(newPos,leftCardPos, rightCardPos);
 
-            }).then(function(d){
-                window.Trello.put("cards/" + d.cardID+ "/?idList="+d.newList+"&pos="+d.newPos+"&token=" + authToken,
-                    //success
-                    function(data){
-                        return data;
-                    },
-                    //error
-                    function(reason){
-                        return reason;
-                    }
-                );
-            });
-        });
-
-
+			return new Promise((resolve, reject) => {
+				resolve({
+					'cardID' : cardID,
+					'newList' : newList,
+					'newPos' : newPos
+				});
+			});
+		}).then(function(d){
+		  window.Trello.put("cards/" + d.cardID+ "/?idList="+d.newList+"&pos="+d.newPos+"&token=" + authToken,
+		      //success
+		      function(data){
+		          return data;
+		      },
+		      //error
+		      function(reason){
+		          return reason;
+		      }
+		  );
+		});
+		;
 
 	};
 

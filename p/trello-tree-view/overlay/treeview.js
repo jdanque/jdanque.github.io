@@ -4,6 +4,10 @@ var T = TrelloPowerUp.iframe();
 (function($, me){
 	me.API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 	var authToken = '';
+	var BOARD = {
+		CARDS : [],
+		LISTS : []
+	};
 
 	me.status = {
 		init: false
@@ -111,6 +115,8 @@ var T = TrelloPowerUp.iframe();
                     .withType('board')
                     ;
 
+                BOARD.details = board;
+
                 return T.lists('all');
             }).then(function(lists){
 				for(var list of lists){
@@ -135,10 +141,28 @@ var T = TrelloPowerUp.iframe();
 				}
 
 				document.getElementById('treeviewmain').innerHTML = root.toHtml();
-
 			})
 			;
 
+	};
+
+	var getAllCardDetails = function(){
+		return new Promise((resolve, reject) => {
+			var url = "boards/"+BOARD.details.id+"/cards/"+
+				"?token=" + authToken;
+
+			window.Trello.get(url,
+				//success
+				function(data){
+					BOARD.CARDS = data;
+					resolve(data);
+				},
+				//error
+				function(reason){
+					reject(reason);
+				}
+			);
+        });
 	};
 
 	var setExpandoHandler = function(){
@@ -351,6 +375,21 @@ var T = TrelloPowerUp.iframe();
         });
 	};
 
+//	var calcCardPosition = function(newPos){
+//		var r = 0,
+//			l = 0,
+//			a = 65536
+//			;
+//		if(newPos<0){
+//			r = getRightPos();
+//		}
+//		if(newPos > lengthOfCards){
+//			l = getLeftPos();
+//		}
+//
+//		return (newPos==0) ? r/2 : (newPos == lengthOfCards) l+a ? : (l+r)/2 ;
+//	};
+
 	var updateCardPosition = function(card){
 		var newList = card.parents('.nodecontainer.node-type-list:first').find('.nodelink.node-type-list:first').attr('data-trello-id'),
 			newPos = card.parents('.nodecontainer.node-type-list:first').find('.nodecontainer.node-type-card').index(card),
@@ -388,13 +427,14 @@ var T = TrelloPowerUp.iframe();
 	};
 
 
-
 	me.init = function(){
 		T.get('member', 'private', 'token').then(function(token){
 
 			authToken = token;
 
-			createTreeView().then(function(){
+			createTreeView()
+			.then(getAllCardDetails)
+			.then(function(){
 				setExpandoHandler();
 				nodelinkClickHandler();
 				setRootAsCurrentNode();

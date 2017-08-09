@@ -382,7 +382,7 @@ var T = TrelloPowerUp.iframe();
 			rightCardID = cardsInList.length === (newPos+1) ? -1 : Utils.getCardDataTrelloId(cardsInList.eq(newPos+1)),
 			cardID = Utils.getCardDataTrelloId(card),
 			leftCardPos = -1,
-			rightCardPos = -1,
+			rightCardPos = -1
 			;
 
 

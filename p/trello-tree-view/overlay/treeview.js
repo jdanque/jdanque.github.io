@@ -329,7 +329,7 @@ var T = TrelloPowerUp.iframe();
             },
 	        stop: function( event, ui ) {
 	            ui.item.toggleClass('grabbing',false);
-	            //updateCardsList(ui.item.find('.nodelink.node-type-card:first').attr('data-trello-id')));
+	            updateCardsList(ui.item.find('.nodelink.node-type-card:first').attr('data-trello-id')));
 	        }
         });
 	};
@@ -350,7 +350,7 @@ var T = TrelloPowerUp.iframe();
         });
 	};
 
-	me.updateCardPosition = function(cardID){
+	var updateCardPosition = function(cardID){
 		var context = t.getContext();
 
 		T.get('member', 'private', 'token')
@@ -363,13 +363,16 @@ var T = TrelloPowerUp.iframe();
                     "&key=" + me.API_KEY;
 
 
-			window.Trello.get(url,
-			//success
-			function(){
-			},
-			//error
-			function(){
-			});
+			window.Trello.put(url,
+				//success
+				function(data){
+
+				},
+				//error
+				function(reason){
+					//todo
+				}
+			);
         });
 	};
 

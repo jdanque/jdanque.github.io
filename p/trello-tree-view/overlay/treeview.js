@@ -327,7 +327,7 @@ var T = TrelloPowerUp.iframe();
                 ui.placeholder.height(ui.item.height());
 	            ui.item.toggleClass('grabbing',true);
 	            ui.item.data("prevPos",ui.item.parents('.nodecontainer.node-type-list:first').find('.nodecontainer.node-type-card').index(ui.item));
-	            ui.item.data("prevListID",ui.item.parents('.nodecontainer.node-type-list:first').find('.nodelink.node-type-list:first').attr('data-trello-id');
+	            ui.item.data("prevListID",ui.item.parents('.nodecontainer.node-type-list:first').find('.nodelink.node-type-list:first').attr('data-trello-id'));
             },
 	        stop: function( event, ui ) {
 	            ui.item.toggleClass('grabbing',false);

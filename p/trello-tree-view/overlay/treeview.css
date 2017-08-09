@@ -143,4 +143,10 @@ div#closetreeview {
     box-shadow: 1px 1px 5px #000 inset;
     text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px -1px 0px rgba(0, 0, 0, 0.7); }
 
+.list-card.placeholder {
+  background-color: #C4C9CC;
+  min-height: 1em;
+  margin: 2px 0;
+  border-radius: 3px; }
+
 /*# sourceMappingURL=treeview.css.map */

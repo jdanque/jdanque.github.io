@@ -83,7 +83,7 @@ var T = TrelloPowerUp.iframe();
 				nodeDesc = '<span class="node_desc">'+this.desc+'</span>';
 			}
 
-			var html = '<li class="nodecontainer ">'
+			var html = '<li class="nodecontainer '+nodeTypeClass+'">'
 					+ expando
                     +'<a class="nodelink '+nodeTypeClass+'" href="'+this.url+'" data-trello-id="'+this.id+'" data-trello-url="'+this.url+'" '+closedAttr+' ">'
                     +'<span class="node_name">'+this.name+'</span>'
@@ -311,6 +311,28 @@ var T = TrelloPowerUp.iframe();
 
 	};
 
+	var setDragAndDropCards = function(){
+		$('.subnodelist').sortable({
+	        placeholder: "list-card placeholder nodecontainer",
+	        connectWith: ".subnodelist",
+	        start: function( event, ui ) {
+	            ui.placeholder.height(ui.item.height())
+	        }
+        });
+	};
+
+
+	var setDragAndDropLists = function(){
+		$('.subnodelist').sortable({
+	        placeholder: "list-card placeholder nodecontainer",
+	        connectWith: ".subnodelist",
+	        start: function( event, ui ) {
+	            ui.placeholder.height(ui.item.height())
+	        }
+        });
+	};
+
+
 	var Utils = {
 		removeElemById : function(id){
 			var x = document.getElementById(id);
@@ -318,6 +340,7 @@ var T = TrelloPowerUp.iframe();
 				x.parentNode.removeChild(x);
 		}
 	};
+
 
 
 	me.init = function(){
@@ -329,6 +352,8 @@ var T = TrelloPowerUp.iframe();
 			setHoverHandler();
 			setKeyboardShortcuts();
 			setCloseOverlay();
+//			setDragAndDropCards();
+//			setDragAndDropLists();
 		});
 
 		me.status.init = true;

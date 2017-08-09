@@ -353,7 +353,7 @@ var T = TrelloPowerUp.iframe();
 
 	var updateCardPosition = function(card){
 		var newList = card.parents('.nodecontainer.node-type-list:first').find('.nodelink.node-type-list:first').attr('data-trello-id'),
-			newPos = card.parents('.nodecontainer.node-type-list:first').find('.nodecontainer.node-type-card').index(card)),
+			newPos = card.parents('.nodecontainer.node-type-list:first').find('.nodecontainer.node-type-card').index(card),
 			cardID = card.find('.nodelink.node-type-card:first').attr('data-trello-id')
 			;
 

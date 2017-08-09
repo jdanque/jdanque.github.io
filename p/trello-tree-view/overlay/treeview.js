@@ -363,26 +363,31 @@ var T = TrelloPowerUp.iframe();
 	};
 
 	var updateCardPosition = function(card){
+
 		var
-			container = card.parents('.nodecontainer.node-type-list:first'),
-			newList = container.find('.nodelink.node-type-list:first').attr('data-trello-id'),
+			container = card.parents('.nodecontainer.node-type-list').eq(0),
 			cardsInList = container.find('.nodecontainer.node-type-card'),
 			newPos = cardsInList.index(card),
-			leftCardID = newPos > 0 ? cardsInList.eq(newPos-1).find('.nodelink.node-type-card:first').attr('data-trello-id') : -1,
-			rightCardID = cardsInList.length === (newPos+1) ? -1 : cardsInList.eq(newPos+1).find('.nodelink.node-type-card:first').attr('data-trello-id'),
-			cardID = card.find('.nodelink.node-type-card:first').attr('data-trello-id')
+			newList = container.find('.nodelink.node-type-list').eq(0).attr('data-trello-id')
 			;
 
 		if(card.data("prevPos") == newPos &&
 			card.data("prevListID") == newList)
 			return;
 
+		var
+			leftCardID = newPos > 0 ? cardsInList.eq(newPos-1).find('.nodelink.node-type-card').eq(0).attr('data-trello-id') : -1,
+			rightCardID = cardsInList.length === (newPos+1) ? -1 : cardsInList.eq(newPos+1).find('.nodelink.node-type-card').eq(0).attr('data-trello-id'),
+			cardID = card.find('.nodelink.node-type-card').eq(0).attr('data-trello-id')
+			;
+
+
 		Utils.getCardPos(leftCardID).then(function(leftCardPos){
 			leftCardPos = leftCardPos != -1 ? leftCardPos._value : -1;
 
 			Utils.getCardPos(rightCardID).then(function(rightCardPos){
 					rightCardPos = rightCardPos != -1 ? rightCardPos._value : -1;
-					cardID = card.find('.nodelink.node-type-card:first').attr('data-trello-id')
+					cardID = card.find('.nodelink.node-type-card').eq(0).attr('data-trello-id')
 					newPos = calcPos(newPos,leftCardPos, rightCardPos);
 
 					return new Promise((resolve, reject) => {

@@ -4,7 +4,8 @@ var T = TrelloPowerUp.iframe();
 (function($, me){
 	me.API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 	var authToken = '';
-	var BOARD = {
+
+	me.BOARD = {
 		CARDS : [],
 		LISTS : []
 	};
@@ -115,7 +116,7 @@ var T = TrelloPowerUp.iframe();
                     .withType('board')
                     ;
 
-                BOARD.details = board;
+                me.BOARD.details = board;
 
                 return T.lists('all');
             }).then(function(lists){
@@ -148,13 +149,13 @@ var T = TrelloPowerUp.iframe();
 
 	var getAllCardDetails = function(){
 		return new Promise((resolve, reject) => {
-			var url = "boards/"+BOARD.details.id+"/cards/"+
+			var urls = "boards/"+BOARD.details.id+"/cards/"+
 				"?token=" + authToken;
 
 			window.Trello.get(url,
 				//success
 				function(data){
-					BOARD.CARDS = data;
+					me.BOARD.CARDS = data;
 					resolve(data);
 				},
 				//error
@@ -434,7 +435,8 @@ var T = TrelloPowerUp.iframe();
 
 			createTreeView()
 			.then(getAllCardDetails)
-			.then(function(){
+			.then(function(data){
+				console.log(data);
 				setExpandoHandler();
 				nodelinkClickHandler();
 				setRootAsCurrentNode();

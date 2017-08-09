@@ -375,12 +375,11 @@ var T = TrelloPowerUp.iframe();
 //		var leftCardPos = leftCardID != -1 ? Utils.getCardPos(leftCardID) : -1;
 //		var rightCardPos = rightCardID != -1 ? Utils.getCardPos(rightCardID) : -1;
 
-		Utils.getCardPos(leftCardID)
-			.then(function(leftCardPos){
-				Utils.getCardPos(rightCardID).then(function(rightCardPos){
-					console.log(calcPos(newPos,leftCardPos, rightCardPos));
-				});
-			});
+		Utils.getCardPos(leftCardID).then(function(leftCardPos){
+			Utils.getCardPos(rightCardID).then(function(rightCardPos){
+           				console.log(calcPos(newPos,leftCardPos._value, rightCardPos._value));
+           			});
+           		});
 
 
 //		window.Trello.put("cards/" + id+ "/pos"+ "?"+ "&token=" + authToken,

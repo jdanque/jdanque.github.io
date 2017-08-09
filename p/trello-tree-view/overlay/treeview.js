@@ -352,12 +352,12 @@ var T = TrelloPowerUp.iframe();
 
 	var calcPos = function(newPos,leftPos,rightPos){
 		var
-			r = rightPos === null ? 0 : rightPos;
-			l = leftPos === null ? 0 : leftPos;
+			r = rightPos === null ? 0 : rightPos,
+			l = leftPos === null ? 0 : leftPos,
 			a = 65536
 			;
 
-		return (newPos==0) ? r/2 : (newPos == -1) l+a ? : (l+r)/2 ;
+		return (newPos==0) ? r/2 : (newPos == -1) ? l+a : (l+r)/2 ;
 	};
 
 	var updateCardPosition = function(card){

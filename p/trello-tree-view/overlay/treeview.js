@@ -329,7 +329,7 @@ var T = TrelloPowerUp.iframe();
             },
 	        stop: function( event, ui ) {
 	            ui.item.toggleClass('grabbing',false);
-	            updateCardsList(ui.item.find('.nodelink.node-type-card:first').attr('data-trello-id')));
+	            updateCardsList(ui.item.find('.nodelink.node-type-card:first').attr('data-trello-id'));
 	        }
         });
 	};

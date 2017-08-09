@@ -3,6 +3,7 @@ var T = TrelloPowerUp.iframe();
 
 (function($, me){
 	me.API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
+	var authToken = '';
 
 	me.status = {
 		init: false
@@ -329,7 +330,7 @@ var T = TrelloPowerUp.iframe();
             },
 	        stop: function( event, ui ) {
 	            ui.item.toggleClass('grabbing',false);
-	            updateCardsList(ui.item.find('.nodelink.node-type-card:first').attr('data-trello-id'));
+	            updateCardPosition(ui.item);
 	        }
         });
 	};
@@ -350,18 +351,20 @@ var T = TrelloPowerUp.iframe();
         });
 	};
 
-	var updateCardPosition = function(cardID){
-		var context = t.getContext();
+	var updateCardPosition = function(card){
+		var newList = card.parents('.nodecontainer.node-type-list:first').find('.nodelink.node-type-list:first').attr('data-trello-id'),
+			newPos = card.parents('.nodecontainer.node-type-list:first').find('.nodecontainer.node-type-card').index(card)),
+			cardID = card.find('.nodelink.node-type-card:first').attr('data-trello-id')
+			;
 
-		T.get('member', 'private', 'token')
-            .then(function(token){
-            var url = "cards/" +
+        var url = "cards/" +
                     cardID+
                     "/"+
                     "?"+
-                    "token=" + token +
+                    "&idList="+ newList +
+                    "&pos="+ newPos +
+                    "&token=" + authToken +
                     "&key=" + me.API_KEY;
-
 
 			window.Trello.put(url,
 				//success
@@ -373,7 +376,6 @@ var T = TrelloPowerUp.iframe();
 					//todo
 				}
 			);
-        });
 	};
 
 
@@ -388,16 +390,22 @@ var T = TrelloPowerUp.iframe();
 
 
 	me.init = function(){
+		T.get('member', 'private', 'token').then(function(token){
 
-		createTreeView().then(function(){
-			setExpandoHandler();
-			nodelinkClickHandler();
-			setRootAsCurrentNode();
-			setHoverHandler();
-			setKeyboardShortcuts();
-			setCloseOverlay();
-//			setDragAndDropCards();
-//			setDragAndDropLists();
+			authToken = token;
+
+			createTreeView().then(function(){
+				setExpandoHandler();
+				nodelinkClickHandler();
+				setRootAsCurrentNode();
+				setHoverHandler();
+				setKeyboardShortcuts();
+				setCloseOverlay();
+				if(authToken != null && authToken.length != 0){
+					setDragAndDropCards();
+		//			setDragAndDropLists();
+				}
+			});
 		});
 
 		me.status.init = true;

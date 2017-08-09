@@ -373,8 +373,8 @@ var T = TrelloPowerUp.iframe();
 			cardID = card.find('.nodelink.node-type-card:first').attr('data-trello-id')
 			;
 
-		if(ui.item.data("prevPos") == newPos &&
-			ui.item.data("prevListID") == newList)
+		if(card.data("prevPos") == newPos &&
+			card.data("prevListID") == newList)
 			return;
 
 		Utils.getCardPos(leftCardID).then(function(leftCardPos){

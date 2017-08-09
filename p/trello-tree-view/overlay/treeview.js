@@ -149,16 +149,22 @@ var T = TrelloPowerUp.iframe();
 
 	var getDetails = function(){
 		return new Promise((resolve, reject) => {
-			var urls = ["boards/"+me.BOARD.details.id+"/cards/?token"+authToken
-				,"boards/"+me.BOARD.details.id+"/lists/?token"+authToken
-				];
 
-			window.Trello.get("/batch?token"+authToken+"&urls="+urls.toString(),
+			window.Trello.get("boards/"+me.BOARD.details.id+"/cards/?token"+authToken,
 				//success
 				function(data){
-					console.log(data);
 					me.BOARD.CARDS = data;
-					resolve(data);
+				},
+				//error
+				function(reason){
+					reject(reason);
+				}
+			);
+
+			window.Trello.get("boards/"+me.BOARD.details.id+"/lists/?token"+authToken,
+				//success
+				function(data){
+					me.BOARD.LISTS = data;
 				},
 				//error
 				function(reason){

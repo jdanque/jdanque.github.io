@@ -149,28 +149,27 @@ var T = TrelloPowerUp.iframe();
 
 	var getDetails = function(){
 		return new Promise((resolve, reject) => {
+			window.Trello.get("boards/"+me.BOARD.details.id+"/cards/?token="+authToken,
+                //success
+                function(data){
+                    me.BOARD.CARDS = data;
+                },
+                //error
+                function(reason){
+                    reject(reason);
+                }
+            );
 
-			window.Trello.get("boards/"+me.BOARD.details.id+"/cards/?token"+authToken,
-				//success
-				function(data){
-					me.BOARD.CARDS = data;
-				},
-				//error
-				function(reason){
-					reject(reason);
-				}
-			);
-
-			window.Trello.get("boards/"+me.BOARD.details.id+"/lists/?token"+authToken,
-				//success
-				function(data){
-					me.BOARD.LISTS = data;
-				},
-				//error
-				function(reason){
-					reject(reason);
-				}
-			);
+            window.Trello.get("boards/"+me.BOARD.details.id+"/lists/?token="+authToken,
+                //success
+                function(data){
+                    me.BOARD.LISTS = data;
+                },
+                //error
+                function(reason){
+                    reject(reason);
+                }
+            );
         });
 	};
 
@@ -443,7 +442,7 @@ var T = TrelloPowerUp.iframe();
 
 			createTreeView()
 			.then(getDetails)
-			.then(function(data){
+			.then(function(){
 				setExpandoHandler();
 				nodelinkClickHandler();
 				setRootAsCurrentNode();

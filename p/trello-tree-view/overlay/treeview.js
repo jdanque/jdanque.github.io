@@ -147,14 +147,16 @@ var T = TrelloPowerUp.iframe();
 
 	};
 
-	var getAllCardDetails = function(){
+	var getDetails = function(){
 		return new Promise((resolve, reject) => {
-			var urls = "boards/"+BOARD.details.id+"/cards/"+
-				"?token=" + authToken;
+			var urls = ["boards/"+me.BOARD.details.id+"/cards/?token"+authToken
+				,"boards/"+me.BOARD.details.id+"/lists/?token"+authToken
+				];
 
-			window.Trello.get(url,
+			window.Trello.get("/batch?token"+authToken+"&urls="+urls.toString(),
 				//success
 				function(data){
+					console.log(data);
 					me.BOARD.CARDS = data;
 					resolve(data);
 				},
@@ -434,9 +436,8 @@ var T = TrelloPowerUp.iframe();
 			authToken = token;
 
 			createTreeView()
-			.then(getAllCardDetails)
+			.then(getDetails)
 			.then(function(data){
-				console.log(data);
 				setExpandoHandler();
 				nodelinkClickHandler();
 				setRootAsCurrentNode();

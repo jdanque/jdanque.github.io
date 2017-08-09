@@ -364,15 +364,15 @@ var T = TrelloPowerUp.iframe();
 		var newList = card.parents('.nodecontainer.node-type-list:first').find('.nodelink.node-type-list:first').attr('data-trello-id'),
 			cardsInList = card.parents('.nodecontainer.node-type-list:first').find('.nodecontainer.node-type-card'),
 			newPos = cardsInList.index(card),
-			leftCard = cardsInList.eq(newPos-1),
-			rightCard = cardsInList.eq(newPos+1),
+			leftCardID = newPos > 0 ? cardsInList.eq(newPos-1).find('.nodelink.node-type-card:first').attr('data-trello-id') : -1,
+			rightCardID = (cardsInList.length-1) == (newPost+1) ? -1 : cardsInList.eq(newPos+1).find('.nodelink.node-type-card:first').attr('data-trello-id'),
 			cardID = card.find('.nodelink.node-type-card:first').attr('data-trello-id')
 			;
 
-//		var x  = calcPos(newPos, );
-		console.log(cardsInList);
-		console.log(leftCard);
-		console.log(rightCard);
+
+		var leftCardPos = leftCardID != -1 ? Utils.getCardPos(leftCardID) : -1;
+		var rightCardPos = rightCardID != -1 ? Utils.getCardPos(rightCardID) : -1;
+		console.log(calcPos(newPos,leftCardPos, rightCardPos));
 
 	};
 

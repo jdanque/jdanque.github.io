@@ -402,7 +402,7 @@ var T = TrelloPowerUp.iframe();
 				setKeyboardShortcuts();
 				setCloseOverlay();
 				if(authToken != null && authToken.length != 0){
-					setDragAndDropCards();
+//					setDragAndDropCards();
 		//			setDragAndDropLists();
 				}
 			});

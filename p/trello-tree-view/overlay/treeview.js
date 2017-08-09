@@ -327,7 +327,7 @@ var T = TrelloPowerUp.iframe();
                 ui.placeholder.height(ui.item.height());
 	            ui.item.toggleClass('grabbing',true);
             },
-	        stop: function( event, ui ) {
+	        recieve: function( event, ui ) {
 	            ui.item.toggleClass('grabbing',false);
 	            updateCardPosition(ui.item);
 	        }

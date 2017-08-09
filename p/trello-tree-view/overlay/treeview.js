@@ -5,11 +5,6 @@ var T = TrelloPowerUp.iframe();
 	me.API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 	var authToken = '';
 
-	me.BOARD = {
-		CARDS : [],
-		LISTS : []
-	};
-
 	me.status = {
 		init: false
 	};
@@ -116,8 +111,6 @@ var T = TrelloPowerUp.iframe();
                     .withType('board')
                     ;
 
-                me.BOARD.details = board;
-
                 return T.lists('all');
             }).then(function(lists){
 				for(var list of lists){
@@ -145,32 +138,6 @@ var T = TrelloPowerUp.iframe();
 			})
 			;
 
-	};
-
-	var getDetails = function(){
-		return new Promise((resolve, reject) => {
-			window.Trello.get("boards/"+me.BOARD.details.id+"/cards/?token="+authToken,
-                //success
-                function(data){
-                    me.BOARD.CARDS = data;
-                },
-                //error
-                function(reason){
-                    reject(reason);
-                }
-            );
-
-            window.Trello.get("boards/"+me.BOARD.details.id+"/lists/?token="+authToken,
-                //success
-                function(data){
-                    me.BOARD.LISTS = data;
-                },
-                //error
-                function(reason){
-                    reject(reason);
-                }
-            );
-        });
 	};
 
 	var setExpandoHandler = function(){
@@ -383,46 +350,30 @@ var T = TrelloPowerUp.iframe();
         });
 	};
 
-//	var calcCardPosition = function(newPos){
-//		var r = 0,
-//			l = 0,
-//			a = 65536
-//			;
-//		if(newPos<0){
-//			r = getRightPos();
-//		}
-//		if(newPos > lengthOfCards){
-//			l = getLeftPos();
-//		}
-//
-//		return (newPos==0) ? r/2 : (newPos == lengthOfCards) l+a ? : (l+r)/2 ;
-//	};
+	var calcPos = function(newPos,leftPos,rightPos){
+		var
+			r = rightPos === null ? 0 : rightPos;
+			l = leftPos === null ? 0 : leftPos;
+			a = 65536
+			;
+
+		return (newPos==0) ? r/2 : (newPos == -1) l+a ? : (l+r)/2 ;
+	};
 
 	var updateCardPosition = function(card){
 		var newList = card.parents('.nodecontainer.node-type-list:first').find('.nodelink.node-type-list:first').attr('data-trello-id'),
-			newPos = card.parents('.nodecontainer.node-type-list:first').find('.nodecontainer.node-type-card').index(card),
+			cardsInList = card.parents('.nodecontainer.node-type-list:first').find('.nodecontainer.node-type-card'),
+			newPos = cardsInList.index(card),
+			leftCard = cardsInList.eq(newPos-1),
+			rightCard = cardsInList.eq(newPos+1),
 			cardID = card.find('.nodelink.node-type-card:first').attr('data-trello-id')
 			;
 
-        var url = "cards/" +
-                    cardID+
-                    "/"+
-                    "?"+
-                    "&idList="+ newList +
-                    "&pos="+ newPos +
-                    "&token=" + authToken +
-                    "&key=" + me.API_KEY;
+//		var x  = calcPos(newPos, );
+		console.log(cardsInList);
+		console.log(leftCard);
+		console.log(rightCard);
 
-			window.Trello.put(url,
-				//success
-				function(data){
-
-				},
-				//error
-				function(reason){
-					//todo
-				}
-			);
 	};
 
 
@@ -431,6 +382,19 @@ var T = TrelloPowerUp.iframe();
 			var x = document.getElementById(id);
 			if(x)
 				x.parentNode.removeChild(x);
+		},
+		getCardPos : function(id){
+
+            window.Trello.get("cards/" + id+ "/pos"+ "?"+ "&token=" + authToken,
+                //success
+                function(data){
+                    return data;
+                },
+                //error
+                function(reason){
+                    return reason;
+                }
+            );
 		}
 	};
 
@@ -441,16 +405,16 @@ var T = TrelloPowerUp.iframe();
 			authToken = token;
 
 			createTreeView()
-			.then(getDetails)
 			.then(function(){
 				setExpandoHandler();
-				nodelinkClickHandler();
-				setRootAsCurrentNode();
-				setHoverHandler();
-				setKeyboardShortcuts();
-				setCloseOverlay();
+	            nodelinkClickHandler();
+	            setRootAsCurrentNode();
+	            setHoverHandler();
+	            setKeyboardShortcuts();
+	            setCloseOverlay();
+
 				if(authToken != null && authToken.length != 0){
-//					setDragAndDropCards();
+					setDragAndDropCards();
 		//			setDragAndDropLists();
 				}
 			});

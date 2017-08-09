@@ -2,6 +2,8 @@ var TreeView = {};
 var T = TrelloPowerUp.iframe();
 
 (function($, me){
+	me.API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
+
 	me.status = {
 		init: false
 	};
@@ -203,12 +205,16 @@ var T = TrelloPowerUp.iframe();
 
 	var setHoverHandler = function(){
         $('body').on('mouseover','.nodelink',function(){
-			var _this = $(this);
-			var hovermenu = 'hovermenu';
-            var html = '<span style="height:'+_this.outerHeight()+'px" id="'+hovermenu+'"></span>';
-
             Utils.removeElemById(hovermenu);
-            _this.before(html);
+
+            if($('.grabbing').length < 1){
+				var _this = $(this);
+				var hovermenu = 'hovermenu';
+	            var html = '<span style="height:'+_this.outerHeight()+'px" id="'+hovermenu+'"></span>';
+
+	            _this.before(html);
+            }
+
         });
 
         $('body').on('mouseout','.nodelink',function(){
@@ -312,27 +318,58 @@ var T = TrelloPowerUp.iframe();
 	};
 
 	var setDragAndDropCards = function(){
-		$('.subnodelist').sortable({
+		$('.subnodelist.node-type-list').sortable({
             placeholder: "list-card placeholder nodecontainer",
-            connectWith: ".subnodelist",
+            connectWith: ".subnodelist.node-type-list",
+            cursor: "move",
+            tolerance: "pointer",
             start: function( event, ui ) {
                 ui.placeholder.height(ui.item.height());
 	            ui.item.toggleClass('grabbing',true);
             },
 	        stop: function( event, ui ) {
 	            ui.item.toggleClass('grabbing',false);
+	            //updateCardsList(ui.item.find('.nodelink.node-type-card:first').attr('data-trello-id')));
 	        }
         });
 	};
 
-
 	var setDragAndDropLists = function(){
-		$('.subnodelist').sortable({
-	        placeholder: "list-card placeholder nodecontainer",
-	        connectWith: ".subnodelist",
-	        start: function( event, ui ) {
-	            ui.placeholder.height(ui.item.height())
-	        }
+
+		$('.subnodelist.node-type-board').sortable({
+            placeholder: "list-card placeholder nodecontainer",
+	        connectWith: ".subnodelist.node-type-board",
+	        cursor: "move",
+            start: function( event, ui ) {
+                ui.placeholder.height(ui.item.height());
+                ui.item.toggleClass('grabbing',true);
+            },
+            stop: function( event, ui ) {
+                ui.item.toggleClass('grabbing',false);
+            }
+        });
+	};
+
+	me.updateCardPosition = function(cardID){
+		var context = t.getContext();
+
+		T.get('member', 'private', 'token')
+            .then(function(token){
+            var url = "cards/" +
+                    cardID+
+                    "/"+
+                    "?"+
+                    "token=" + token +
+                    "&key=" + me.API_KEY;
+
+
+			window.Trello.get(url,
+			//success
+			function(){
+			},
+			//error
+			function(){
+			});
         });
 	};
 

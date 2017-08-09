@@ -1,85 +1,146 @@
-/*
-Error: Undefined variable: "$color_trello_blue_500".
-        on line 75 of treeview.scss
+body {
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center; }
 
-70: 		position: relative;
-71: 		top: -0.2em;
-72: 		left: 0;
-73: 		font-weight: bold;
-74: 		margin: 0 0.5em;
-75: 		background: $color_trello_blue_500;
-76:         padding: 5px;
-77:         color: #fff;
-78:         border-radius: 20%;
-79: 	}
-80: }
+#maincontent {
+  background: #e4f0f6;
+  padding: .5em;
+  width: 80%;
+  max-width: 600px;
+  max-height: 100%;
+  border-radius: 0.4em;
+  position: relative; }
 
-Backtrace:
-treeview.scss:75
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/script/tree/variable.rb:49:in `_perform'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/script/tree/node.rb:50:in `perform'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:402:in `visit_prop'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:135:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:444:in `block (2 levels) in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:444:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:444:in `block in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:442:in `visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:135:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:444:in `block (2 levels) in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:444:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:444:in `block in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:442:in `visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:135:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:52:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:171:in `block in visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:170:in `visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:190:in `visit_root'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:161:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:10:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/root_node.rb:36:in `css_tree'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/engine.rb:389:in `_render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/engine.rb:307:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:462:in `update_stylesheet'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:209:in `each'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:443:in `on_file_changed'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:320:in `block in watch'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/config.rb:23:in `call'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/config.rb:23:in `call'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/processor.rb:115:in `_process_changes'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/processor.rb:19:in `block in loop_for'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/processor.rb:15:in `loop'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/processor.rb:15:in `loop_for'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/loop.rb:84:in `_wait_for_changes'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/loop.rb:42:in `block in setup'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/internals/thread_pool.rb:6:in `call'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/internals/thread_pool.rb:6:in `block in add'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: Undefined variable: \"$color_trello_blue_500\".\A         on line 75 of treeview.scss\A \A 70: 		position: relative;\A 71: 		top: -0.2em;\A 72: 		left: 0;\A 73: 		font-weight: bold;\A 74: 		margin: 0 0.5em;\A 75: 		background: $color_trello_blue_500;\A 76:         padding: 5px;\A 77:         color: #fff;\A 78:         border-radius: 20%;\A 79: 	}\A 80: }"; }
+#treeviewmain {
+  padding: 0.5em;
+  padding-left: 2em;
+  border-bottom-left-radius: 0.2em;
+  border-bottom-right-radius: 0.2em;
+  height: 70%;
+  overflow: auto;
+  max-height: 70%;
+  overflow-x: hidden; }
+
+span.node_name {
+  font-weight: bold;
+  font-size: 1em;
+  text-decoration: none; }
+span.node_desc {
+  font-weight: normal;
+  font-size: 0.9em;
+  text-decoration: none;
+  margin-left: 0.5em;
+  display: block;
+  padding: 3px;
+  border-radius: 2px;
+  line-height: 1.1;
+  color: #4D4D4D; }
+span#hovermenu {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  background: #bcd9ea;
+  padding: 0.2em 100%;
+  height: 1em;
+  z-index: 100;
+  opacity: 0.4; }
+span.subnodes-count {
+  font-size: 0.6em;
+  position: relative;
+  top: -0.2em;
+  left: 0;
+  font-weight: bold;
+  margin: 0 0.5em;
+  background: #0079BF;
+  padding: 5px;
+  color: #fff;
+  border-radius: 20%; }
+
+h1.mainheader {
+  background: #026aa7;
+  color: #e4f0f6;
+  text-align: center;
+  padding: 0.5em 1em;
+  height: 1.3em;
+  margin-bottom: 0;
+  border-top-left-radius: 0.2em;
+  border-top-right-radius: 0.2em; }
+
+ul.subnodelist {
+  margin: 0;
+  padding: 0.3em 0 1em 1em; }
+
+li.nodecontainer {
+  list-style: none;
+  position: relative;
+  padding-top: 0.2em; }
+  li.nodecontainer > a.nodelink {
+    position: relative;
+    text-decoration: none;
+    display: block;
+    z-index: 200;
+    text-overflow: ellipsis;
+    max-height: 4.3em;
+    overflow: hidden;
+    line-height: 1.1em;
+    color: #000;
+    padding: 3px; }
+    li.nodecontainer > a.nodelink.node-type-card {
+      background-color: #fff;
+      border-bottom: 1px solid #CDD2D4;
+      border-radius: 3px; }
+    li.nodecontainer > a.nodelink.currentNode {
+      background-color: #bcd9ea;
+      border-radius: 3px; }
+    li.nodecontainer > a.nodelink:hover {
+      color: #000;
+      text-decoration: none; }
+    li.nodecontainer > a.nodelink:focus {
+      color: #000;
+      text-decoration: none; }
+    li.nodecontainer > a.nodelink:visited {
+      color: #000;
+      text-decoration: none; }
+  li.nodecontainer > .expando {
+    z-index: 200; }
+    li.nodecontainer > .expando.expanded {
+      content: "\A";
+      border-style: solid;
+      border-width: 0.7em 0.7em 0 0.35em;
+      border-color: transparent #026aa7 transparent transparent;
+      position: absolute;
+      left: -1.5em;
+      top: 0.3em;
+      cursor: pointer; }
+    li.nodecontainer > .expando.collapsed {
+      content: "\A";
+      border-style: solid;
+      border-width: 0.25em 0 0.5em 0.5em;
+      border-color: transparent transparent transparent #026aa7;
+      position: absolute;
+      left: -0.9em;
+      top: 0.3em;
+      cursor: pointer; }
+
+div#closetreeview {
+  position: absolute;
+  font-size: 1.6em;
+  background: #026aa7;
+  border-radius: 50%;
+  color: #fff;
+  border: 2px solid #fff;
+  height: 2em;
+  line-height: 1.9;
+  text-align: center;
+  width: 2em;
+  right: -1em;
+  top: -1em;
+  cursor: pointer; }
+  div#closetreeview:hover {
+    box-shadow: 1px 1px 5px #000 inset;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px -1px 0px rgba(0, 0, 0, 0.7); }
+
+/*# sourceMappingURL=treeview.css.map */

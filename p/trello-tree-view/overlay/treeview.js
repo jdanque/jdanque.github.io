@@ -372,8 +372,8 @@ var T = TrelloPowerUp.iframe();
 			;
 
 
-		var leftCardPos = leftCardID != -1 ? Utils.getCardPos(leftCardID) : -1;
-		var rightCardPos = rightCardID != -1 ? Utils.getCardPos(rightCardID) : -1;
+//		var leftCardPos = leftCardID != -1 ? Utils.getCardPos(leftCardID) : -1;
+//		var rightCardPos = rightCardID != -1 ? Utils.getCardPos(rightCardID) : -1;
 
 		var leftCardPos = Utils.getCardPos(leftCardID);
 		var rightCardPos = Utils.getCardPos(rightCardID);
@@ -404,7 +404,7 @@ var T = TrelloPowerUp.iframe();
 	           window.Trello.get("cards/" + id+ "/pos"+ "?"+ "&token=" + authToken,
 	                //success
 	                function(data){
-	                    data;
+	                    return data;
 	                },
 	                //error
 	                function(reason){

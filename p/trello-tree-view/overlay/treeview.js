@@ -352,8 +352,8 @@ var T = TrelloPowerUp.iframe();
 
 	var calcPos = function(newPos,leftPos,rightPos){
 		var
-			r = rightPos === null ? 0 : rightPos,
-			l = leftPos === null ? 0 : leftPos,
+			r = rightPos != -1 ? rightPos : 0,
+			l = leftPos != -1 ? leftPos : 0 ,
 			a = 65536
 			;
 
@@ -376,6 +376,17 @@ var T = TrelloPowerUp.iframe();
 		var rightCardPos = rightCardID != -1 ? Utils.getCardPos(rightCardID) : -1;
 		console.log(calcPos(newPos,leftCardPos, rightCardPos));
 
+//		window.Trello.put("cards/" + id+ "/pos"+ "?"+ "&token=" + authToken,
+//            //success
+//            function(data){
+//                return data;
+//            },
+//            //error
+//            function(reason){
+//                return reason;
+//            }
+//        );
+
 	};
 
 
@@ -387,7 +398,7 @@ var T = TrelloPowerUp.iframe();
 		},
 		getCardPos : function(id){
 
-            window.Trello.get("cards/" + id+ "/pos"+ "?"+ "&token=" + authToken,
+           return window.Trello.get("cards/" + id+ "/pos"+ "?"+ "&token=" + authToken,
                 //success
                 function(data){
                     return data;

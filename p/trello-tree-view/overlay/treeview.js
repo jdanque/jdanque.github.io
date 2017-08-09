@@ -326,6 +326,8 @@ var T = TrelloPowerUp.iframe();
             start: function( event, ui ) {
                 ui.placeholder.height(ui.item.height());
 	            ui.item.toggleClass('grabbing',true);
+	            ui.item.data("prevPos",ui.item.parents('.nodecontainer.node-type-list:first').find('.nodecontainer.node-type-card').index(ui.item));
+	            ui.item.data("prevListID",ui.item.parents('.nodecontainer.node-type-list:first').find('.nodelink.node-type-list:first').attr('data-trello-id');
             },
 	        stop: function( event, ui ) {
 	            ui.item.toggleClass('grabbing',false);
@@ -370,6 +372,10 @@ var T = TrelloPowerUp.iframe();
 			rightCardID = cardsInList.length === (newPos+1) ? -1 : cardsInList.eq(newPos+1).find('.nodelink.node-type-card:first').attr('data-trello-id'),
 			cardID = card.find('.nodelink.node-type-card:first').attr('data-trello-id')
 			;
+
+		if(ui.item.data("prevPos") == newPos &&
+			ui.item.data("prevListID") == newList)
+			return;
 
 		Utils.getCardPos(leftCardID).then(function(leftCardPos){
 			leftCardPos = leftCardPos != -1 ? leftCardPos._value : -1;

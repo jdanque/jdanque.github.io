@@ -21,7 +21,8 @@ body {
   height: 70%;
   overflow: auto;
   max-height: 70%;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  background-color: #0079BF; }
 
 span.node_name {
   font-weight: bold;
@@ -77,9 +78,14 @@ li.nodecontainer {
   list-style: none;
   position: relative;
   padding-top: 0.2em; }
-  li.nodecontainer.node-type-list.grabbing {
+  li.nodecontainer.node-type-list {
     background-color: #e2e4e6;
-    border-radius: 3px; }
+    border-radius: 5px;
+    padding-right: 5px;
+    margin-bottom: 5px; }
+    li.nodecontainer.node-type-list.grabbing {
+      background-color: #e2e4e6;
+      border-radius: 3px; }
   li.nodecontainer > a.nodelink {
     position: relative;
     text-decoration: none;
@@ -91,6 +97,11 @@ li.nodecontainer {
     line-height: 1.1em;
     color: #000;
     padding: 3px; }
+    li.nodecontainer > a.nodelink.node-type-board.currentNode > span.node_name {
+      color: #000; }
+    li.nodecontainer > a.nodelink.node-type-board > span.node_name {
+      color: #fff;
+      font-size: 1.5em; }
     li.nodecontainer > a.nodelink.node-type-card {
       background-color: #fff;
       border-bottom: 1px solid #CDD2D4;
@@ -113,7 +124,7 @@ li.nodecontainer {
       content: "\A";
       border-style: solid;
       border-width: 0.7em 0.7em 0 0.35em;
-      border-color: transparent #026aa7 transparent transparent;
+      border-color: transparent #ccc transparent transparent;
       position: absolute;
       left: -1.5em;
       top: 0.3em;
@@ -122,7 +133,7 @@ li.nodecontainer {
       content: "\A";
       border-style: solid;
       border-width: 0.25em 0 0.5em 0.5em;
-      border-color: transparent transparent transparent #026aa7;
+      border-color: transparent transparent transparent #ccc;
       position: absolute;
       left: -0.9em;
       top: 0.3em;

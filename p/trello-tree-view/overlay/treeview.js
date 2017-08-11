@@ -223,11 +223,11 @@ document.addEventListener('click', function(e) {
 
 	var setHoverHandler = function(){
         $('body').on('mouseover','.nodelink',function(){
+			var hovermenu = 'hovermenu';
             Utils.removeElemById(hovermenu);
 
-            if($('.grabbing').length > 0){
+            if($('.grabbing').length == 0){
 				var _this = $(this);
-				var hovermenu = 'hovermenu';
 	            var html = '<span style="height:'+_this.outerHeight()+'px" id="'+hovermenu+'"></span>';
 
 	            _this.before(html);

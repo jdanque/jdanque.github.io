@@ -1,5 +1,21 @@
+
 var TreeView = {};
 var T = TrelloPowerUp.iframe();
+
+T.render(function(){
+
+  if(!TreeView.status.init){
+    TreeView.init();
+  }
+
+});
+
+// close overlay if user clicks outside our content
+document.addEventListener('click', function(e) {
+  if(e.target.tagName == 'BODY') {
+    t.closeOverlay().done();
+  }
+});
 
 (function($, me){
 	me.API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
@@ -209,7 +225,7 @@ var T = TrelloPowerUp.iframe();
         $('body').on('mouseover','.nodelink',function(){
             Utils.removeElemById(hovermenu);
 
-            if($('.grabbing').length < 1){
+            if($('.grabbing').length < 0){
 				var _this = $(this);
 				var hovermenu = 'hovermenu';
 	            var html = '<span style="height:'+_this.outerHeight()+'px" id="'+hovermenu+'"></span>';
@@ -230,6 +246,23 @@ var T = TrelloPowerUp.iframe();
 	            l = 'a.nodelink',
 	            i = ''
             ;
+
+
+        document.addEventListener('keydown', function(ev) {
+            switch(ev.keyCode) {
+                //up
+				case 38 :
+					ev.preventDefault();
+					break;
+
+				//down
+				case 39 :
+					ev.preventDefault();
+					break;
+                default:break;
+            }
+
+        });
 
 		document.addEventListener('keyup', function(ev) {
           switch(ev.keyCode) {
@@ -457,6 +490,12 @@ var T = TrelloPowerUp.iframe();
 
 
 	me.init = function(){
+		window.focus();
+
+        if (document.activeElement) {
+            document.activeElement.blur();
+        }
+
 		T.get('member', 'private', 'token').then(function(token){
 
 			authToken = token;
@@ -483,3 +522,4 @@ var T = TrelloPowerUp.iframe();
 	return me;
 
 })(jQuery, TreeView);
+

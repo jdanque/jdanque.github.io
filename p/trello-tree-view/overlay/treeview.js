@@ -355,6 +355,7 @@ document.addEventListener('click', function(e) {
             cursor: "move",
             tolerance: "pointer",
             start: function( event, ui ) {
+                Utils.removeElemById('hovermenu');
                 ui.placeholder.height(ui.item.height());
 	            var p  = ui.item.parents('.nodecontainer.node-type-list').eq(0);
 	            ui.item.toggleClass('grabbing',true)
@@ -451,6 +452,22 @@ document.addEventListener('click', function(e) {
 
 
 	var Utils = {
+//		 var isScrolledIntoView = function(elem){
+//		    var treeviewmain = $('#treeviewmain');
+//	        var docViewTop = treeviewmain.scrollTop() + treeviewmain.offset().top;
+//            var docViewBottom = docViewTop + $('#mainheader').height() + treeviewmain.outerHeight();
+//
+//			var elemTop = $(elem).position().top;
+//			var elemBottom = elemTop + $(elem).outerHeight();
+//
+//			return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+//        };
+//        document.addEventListener('keyup',function(ev){
+//        if(ev.keyCode == Key.DOWN){
+//        	console.log(isScrolledIntoView('.currentNode'));
+//        }});
+
+
 		removeElemById : function(id){
 			var x = document.getElementById(id);
 			if(x)

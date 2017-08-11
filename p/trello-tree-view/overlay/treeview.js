@@ -17,6 +17,9 @@ document.addEventListener('click', function(e) {
   }
 });
 
+var KEYCODES : {
+};
+
 (function($, me){
 	me.API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 
@@ -250,13 +253,11 @@ document.addEventListener('click', function(e) {
 
         document.addEventListener('keydown', function(ev) {
             switch(ev.keyCode) {
-                //up
-				case 38 :
+				case Key.UP :
 					ev.preventDefault();
 					break;
 
-				//down
-				case 39 :
+				case Key.DOWN :
 					ev.preventDefault();
 					break;
                 default:break;
@@ -266,11 +267,11 @@ document.addEventListener('click', function(e) {
 
 		document.addEventListener('keyup', function(ev) {
           switch(ev.keyCode) {
-           case 27 :
+           case Key.ESC :
                 T.closeOverlay().done();
                 break;
-           //up
-           case 38 :
+
+           case Key.UP :
                 ev.preventDefault();
                 ev.stopPropagation();
 
@@ -290,8 +291,7 @@ document.addEventListener('click', function(e) {
 
                 break;
 
-            //right
-            case 39 :
+            case Key.RIGHT :
                 ev.preventDefault();
                 ev.stopPropagation();
                 if($(h).closest(n).children('.expando.collapsed').length>0){
@@ -299,8 +299,7 @@ document.addEventListener('click', function(e) {
                 }
                  break;
 
-            //down
-            case 40 :
+            case Key.DOWN :
                 ev.preventDefault();
                 ev.stopPropagation();
 
@@ -321,8 +320,7 @@ document.addEventListener('click', function(e) {
 
                 break;
 
-            //left
-            case 37 :
+            case Key.LEFT :
                 ev.preventDefault();
                 ev.stopPropagation();
                    if($(h).closest(n).children('.expando.expanded').length>0){
@@ -331,7 +329,8 @@ document.addEventListener('click', function(e) {
                 break;
 
             //enter
-            case 13 :
+            case Key.ENTER :
+            case Key.NUMPAD_ENTER :
                 ev.preventDefault();
                 ev.stopPropagation();
                 openLinkInNode($(h));

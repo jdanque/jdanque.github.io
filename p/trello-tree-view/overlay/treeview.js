@@ -177,7 +177,7 @@ document.addEventListener('click', function(e) {
                     .find('.nodecontainer').toggleClass('hidden-node',false);
                 _this.toggleClass('expanded',true)
                     .toggleClass('collapsed',false);
-                _nodeLink.toggleClass('collapsed',false).
+                _nodeLink.toggleClass('collapsed',false)
                     .children('.subnodes-count').remove();
             }
 

@@ -170,13 +170,15 @@ document.addEventListener('click', function(e) {
                     .find('.nodecontainer').toggleClass('hidden-node',true);
                 _this.toggleClass('expanded',false)
                     .toggleClass('collapsed',true);
-				_nodeLink.prepend('<span class="subnodes-count">'+_subNodesList.children('.nodecontainer').length+'</span>');
+				_nodeLink.toggleClass('collapsed',true)
+					.prepend('<span class="subnodes-count">'+_subNodesList.children('.nodecontainer').length+'</span>');
             }else{
                 _subNodesList.slideDown(me.options.expando.expandDuration)
                     .find('.nodecontainer').toggleClass('hidden-node',false);
                 _this.toggleClass('expanded',true)
                     .toggleClass('collapsed',false);
-                _nodeLink.children('.subnodes-count').remove();
+                _nodeLink.toggleClass('collapsed',false).
+                    .children('.subnodes-count').remove();
             }
 
         });
@@ -265,7 +267,11 @@ document.addEventListener('click', function(e) {
 		document.addEventListener('keyup', function(ev) {
           switch(ev.keyCode) {
            case Key.ESC :
-                T.closeOverlay().done();
+                if($('.grabbing').length == 0){
+                    T.closeOverlay().done();
+                }else{
+                    $('.subnodelist.node-type-list').sortable("cancel");
+                }
                 break;
 
            case Key.UP :
@@ -379,6 +385,7 @@ document.addEventListener('click', function(e) {
 	            updateCardPosition(ui.item);
 	        }
         });
+
 	};
 
 	var setDragAndDropLists = function(){

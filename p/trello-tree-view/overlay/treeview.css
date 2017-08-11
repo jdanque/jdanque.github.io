@@ -102,11 +102,8 @@ li.nodecontainer {
     li.nodecontainer > a.nodelink.node-type-board {
       background: #e2e4e6;
       border-radius: 5px; }
-      li.nodecontainer > a.nodelink.node-type-board.currentNode > span.node_name {
-        color: #000;
-        font-size: 1.5em; }
       li.nodecontainer > a.nodelink.node-type-board > span.node_name {
-        color: #fff;
+        color: #000;
         font-size: 1.5em; }
     li.nodecontainer > a.nodelink.node-type-card {
       background-color: #fff;

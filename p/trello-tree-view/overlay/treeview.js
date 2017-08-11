@@ -13,7 +13,7 @@ T.render(function(){
 // close overlay if user clicks outside our content
 document.addEventListener('click', function(e) {
   if(e.target.tagName == 'BODY') {
-    t.closeOverlay().done();
+    T.closeOverlay().done();
   }
 });
 
@@ -225,7 +225,7 @@ document.addEventListener('click', function(e) {
         $('body').on('mouseover','.nodelink',function(){
             Utils.removeElemById(hovermenu);
 
-            if($('.grabbing').length < 0){
+            if($('.grabbing').length > 0){
 				var _this = $(this);
 				var hovermenu = 'hovermenu';
 	            var html = '<span style="height:'+_this.outerHeight()+'px" id="'+hovermenu+'"></span>';

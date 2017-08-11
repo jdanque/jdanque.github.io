@@ -170,15 +170,15 @@ document.addEventListener('click', function(e) {
                     .find('.nodecontainer').toggleClass('hidden-node',true);
                 _this.toggleClass('expanded',false)
                     .toggleClass('collapsed',true);
-				_nodeLink.toggleClass('collapsed',true)
-					.prepend('<span class="subnodes-count">'+_subNodesList.children('.nodecontainer').length+'</span>');
+				_nodeContainer.toggleClass('collapsed',true);
+				_nodeLink.prepend('<span class="subnodes-count">'+_subNodesList.children('.nodecontainer').length+'</span>');
             }else{
                 _subNodesList.slideDown(me.options.expando.expandDuration)
                     .find('.nodecontainer').toggleClass('hidden-node',false);
                 _this.toggleClass('expanded',true)
                     .toggleClass('collapsed',false);
-                _nodeLink.toggleClass('collapsed',false)
-                    .children('.subnodes-count').remove();
+                _nodeContainer.toggleClass('collapsed',false);
+               _nodeLink.children('.subnodes-count').remove();
             }
 
         });

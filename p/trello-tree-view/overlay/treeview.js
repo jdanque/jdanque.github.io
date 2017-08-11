@@ -284,6 +284,12 @@ document.addEventListener('click', function(e) {
                     }else{
                         setCurrentNode($(n).eq(i-1).children(l));
                     }
+
+                    while(Utils.isCurrentNodeInView() == false){
+                        var elem = $('.currentNode'),
+                        treeviewmain = $('#treeviewmain');
+                        treeviewmain.scrollTop(treeviewmain.scrollTop() - elem.outerHeight() - 5);
+                    }
                 }
 
                 break;
@@ -311,6 +317,12 @@ document.addEventListener('click', function(e) {
 
                     if($(n).eq(i+1).length > 0){
                         setCurrentNode($(n).eq(i+1).children(l));
+
+                        while(Utils.isCurrentNodeInView() == false){
+                            var elem = $('.currentNode'),
+                                treeviewmain = $('#treeviewmain');
+                                treeviewmain.scrollTop(treeviewmain.scrollTop() + elem.outerHeight() + 5);
+                        }
                     }
                 }
 
@@ -452,22 +464,19 @@ document.addEventListener('click', function(e) {
 
 
 	var Utils = {
-//		 var isScrolledIntoView = function(elem){
-//		    var treeviewmain = $('#treeviewmain');
-//	        var docViewTop = treeviewmain.scrollTop() + treeviewmain.offset().top;
-//            var docViewBottom = docViewTop + $('#mainheader').height() + treeviewmain.outerHeight();
-//
-//			var elemTop = $(elem).position().top;
-//			var elemBottom = elemTop + $(elem).outerHeight();
-//
-//			return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-//        };
-//        document.addEventListener('keyup',function(ev){
-//        if(ev.keyCode == Key.DOWN){
-//        	console.log(isScrolledIntoView('.currentNode'));
-//        }});
+		 isCurrentNodeInView : function(){
+		    var elem = $('.currentNode');
 
+		    var treeviewmain = $('#treeviewmain');
 
+	        var docViewTop = treeviewmain.offset().top;
+            var docViewBottom = docViewTop + $('#mainheader').height() + treeviewmain.outerHeight();
+
+			var elemTop = $(elem).offset().top;
+			var elemBottom = elemTop + $(elem).outerHeight();
+
+			return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+        },
 		removeElemById : function(id){
 			var x = document.getElementById(id);
 			if(x)

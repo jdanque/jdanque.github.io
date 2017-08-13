@@ -365,7 +365,7 @@ document.addEventListener('click', function(e) {
 
 	};
 
-	var setDragAndDropCards = function(){
+	var enableDragAndDropCards = function(){
 		$('.subnodelist.node-type-list').sortable({
             placeholder: "list-card placeholder nodecontainer",
             connectWith: ".subnodelist.node-type-list",
@@ -387,7 +387,7 @@ document.addEventListener('click', function(e) {
 
 	};
 
-	var setDragAndDropLists = function(){
+	var enableDragAndDropLists = function(){
 
 		$('.subnodelist.node-type-board').sortable({
             placeholder: "list-card placeholder nodecontainer",
@@ -529,7 +529,6 @@ document.addEventListener('click', function(e) {
 
 	};
 
-
 	var Utils = {
 		 elemIsLoading : function(elem,isTrue){
 	        elem.toggleClass('loading',isTrue);
@@ -621,8 +620,8 @@ document.addEventListener('click', function(e) {
 	            setCloseOverlay();
 
 				if(authToken != null && authToken.length != 0){
-					setDragAndDropCards();
-					setDragAndDropLists();
+					enableDragAndDropCards();
+					enableDragAndDropLists();
 				}
 			});
 		});

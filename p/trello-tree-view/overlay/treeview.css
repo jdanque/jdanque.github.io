@@ -170,6 +170,8 @@ div#closetreeview {
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
   cursor: grabbing; }
+  .grabbing > .expando {
+    display: none !important; }
 
 .ui-sortable-helper {
   -webkit-transform: rotate(4deg);

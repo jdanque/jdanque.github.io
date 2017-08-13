@@ -454,11 +454,12 @@ document.addEventListener('click', function(e) {
 				});
 			});
 		}).then(function(d){
-			Utils.elemIsLoading(card, true);
+			var el = card.find('.nodelink.node-type-card').eq(0);
+			Utils.elemIsLoading(el, true);
 			window.Trello.put("cards/" + d.cardID+ "/?idList="+d.newList+"&pos="+d.newPos+"&token=" + authToken,
 			  //success
 			  function(data){
-			      Utils.elemIsLoading(card, false);
+			      Utils.elemIsLoading(el, false);
 			      return data;
 			  },
 			  //error

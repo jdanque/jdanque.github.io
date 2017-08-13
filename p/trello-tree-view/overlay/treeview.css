@@ -177,12 +177,13 @@ div#closetreeview {
 
 .loading:before {
   content: '';
-  background-image: url("./images/loading.gif");
-  width: 10px;
-  height: 10px;
-  overflow: hidden;
-  display: block;
-  float: left;
-  margin-right: 5px; }
+  background-image: url(./images/loading.gif);
+  width: 1em;
+  height: 1em;
+  margin-right: 5px;
+  background-size: contain;
+  position: absolute;
+  left: 0;
+  top: 0; }
 
 /*# sourceMappingURL=treeview.css.map */

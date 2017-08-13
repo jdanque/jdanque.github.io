@@ -454,23 +454,27 @@ document.addEventListener('click', function(e) {
 				});
 			});
 		}).then(function(d){
-		  window.Trello.put("cards/" + d.cardID+ "/?idList="+d.newList+"&pos="+d.newPos+"&token=" + authToken,
-		      //success
-		      function(data){
-		          return data;
-		      },
-		      //error
-		      function(reason){
-		          return reason;
-		      }
-		  );
+			Utils.elemIsLoading(card, true);
+			window.Trello.put("cards/" + d.cardID+ "/?idList="+d.newList+"&pos="+d.newPos+"&token=" + authToken,
+			  //success
+			  function(data){
+			      Utils.elemIsLoading(card, false);
+			      return data;
+			  },
+			  //error
+			  function(reason){
+			      return reason;
+			  }
+			);
 		});
 		;
-
 	};
 
 
 	var Utils = {
+		 elemIsLoading : function(elem,isTrue){
+	        elem.toggleClass('loading',isTrue);
+		 },
 		 isCurrentNodeInView : function(){
 		    var elem = $('.currentNode');
 

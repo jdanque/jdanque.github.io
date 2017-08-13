@@ -175,4 +175,14 @@ div#closetreeview {
   -webkit-transform: rotate(4deg);
   transform: rotate(4deg); }
 
+.loading:before {
+  content: '';
+  background-image: url("./images/loading.gif");
+  width: 10px;
+  height: 10px;
+  overflow: hidden;
+  display: block;
+  float: left;
+  margin-right: 5px; }
+
 /*# sourceMappingURL=treeview.css.map */

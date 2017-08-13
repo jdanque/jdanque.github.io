@@ -548,7 +548,7 @@ document.addEventListener('click', function(e) {
 			return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
         },
         removeHoverMenu : function(){
-            document.getElementById('hovermenu').parentNode.removeChild(x);
+            Utils.removeElemById('hovermenu');
         },
 		removeElemById : function(id){
 			var x = document.getElementById(id);

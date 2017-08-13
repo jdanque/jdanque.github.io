@@ -1,7 +1,7 @@
 {
   "name": "Tree View for Trello",
   "description": "",
-  "details": "Displays Trello lists and cards in a tree view for easier visualization.<br/> <b>Features:</b> <ul> <li>TreeView style to view cards and lists</li> <li>Great overview of cards and lists without too much detail</li> <li>Collapse/Expand lists without archiving</li> <li>Keyboard shortcuts (See below)</li> <li>*Reorder cards while in tree view</li> </ul> <i>Needs authorization.</i><br/> <i> Go to PowerUp > Click Gear Icon > Authorize </i> <br/> <b>Keyboard shortcuts:</b> <ul> <li>Arrow Left = Collapse</li> <li>Arrow Right = Expand</li> <li>Arrow Up = Select current node up </li> <li>Arrow Down = Select current node down </li> <li>Enter / Return = Open current node's link (only if it's a card) </li> <li>Escape / ESC = Closes TreeView for Trello</li> </ul>",
+  "details": "Displays Trello lists and cards in a tree view for easier visualization.\n **Features:** \n * TreeView style to view cards and lists * Great overview of cards and lists without too much detail * Collapse/Expand lists without archiving * Keyboard shortcuts (See below) *  *Reorder cards while in tree view *Needs authorization.*\n \n *Go to PowerUp > Click Gear Icon > Authorize* \n **Keyboard shortcuts:** \n * Arrow Left = Collapse * Arrow Right = Expand * Arrow Up = Select current node up * Arrow Down = Select current node down * Enter / Return = Open current node's link (only if it's a card) * Escape / ESC = Closes TreeView for Trello",
   "icon": {
     "url": "./img/logo.svg"
   },

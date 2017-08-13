@@ -225,12 +225,11 @@ document.addEventListener('click', function(e) {
 
 	var setHoverHandler = function(){
         $('body').on('mouseover','.nodelink',function(){
-			var hovermenu = 'hovermenu';
-            Utils.removeElemById(hovermenu);
+            Utils.removeHoverMenu();
 
             if($('.grabbing').length == 0){
 				var _this = $(this);
-	            var html = '<span style="height:'+_this.outerHeight()+'px" id="'+hovermenu+'"></span>';
+	            var html = '<span style="height:'+_this.outerHeight()+'px" id="hovermenu"></span>';
 
 	            _this.before(html);
             }
@@ -238,7 +237,7 @@ document.addEventListener('click', function(e) {
         });
 
         $('body').on('mouseout','.nodelink',function(){
-            Utils.removeElemById('hovermenu');
+            Utils.removeHoverMenu();
         });
 	};
 
@@ -373,7 +372,7 @@ document.addEventListener('click', function(e) {
             cursor: "move",
             tolerance: "pointer",
             start: function( event, ui ) {
-                Utils.removeElemById('hovermenu');
+                Utils.removeHoverMenu();
                 ui.placeholder.height(ui.item.height());
 	            var p  = ui.item.parents('.nodecontainer.node-type-list').eq(0);
 	            ui.item.toggleClass('grabbing',true)
@@ -394,12 +393,18 @@ document.addEventListener('click', function(e) {
             placeholder: "list-card placeholder nodecontainer",
 	        connectWith: ".subnodelist.node-type-board",
 	        cursor: "move",
+	        tolerance: "pointer",
             start: function( event, ui ) {
+                Utils.removeHoverMenu();
                 ui.placeholder.height(ui.item.height());
-                ui.item.toggleClass('grabbing',true);
+                var p  = ui.item.parents('.nodecontainer.node-type-board').eq(0);
+                ui.item.toggleClass('grabbing',true)
+                    .data("prevPos",p.find('.nodecontainer.node-type-list').index(ui.item))
+                    ;
             },
             stop: function( event, ui ) {
                 ui.item.toggleClass('grabbing',false);
+                updateListPosition(ui.item);
             }
         });
 	};
@@ -468,7 +473,60 @@ document.addEventListener('click', function(e) {
 			  }
 			);
 		});
-		;
+	};
+
+	var updateListPosition = function(list){
+		var
+            container = list.parents('.nodecontainer.node-type-board').eq(0),
+            listInBoard = container.find('.nodecontainer.node-type-list'),
+            newPos = listInBoard.index(list)
+            ;
+
+        if(list.data("prevPos") == newPos){
+            return;
+        }
+
+        var
+            leftListID = newPos > 0 ? Utils.getListDataTrelloId(listInBoard.eq(newPos-1)) : -1,
+            rightListID = listInBoard.length === (newPos+1) ? -1 : Utils.getListDataTrelloId(listInBoard.eq(newPos+1)),
+            listID = Utils.getListDataTrelloId(list),
+            leftListPos = -1,
+            rightListPos = -1
+            ;
+
+		Utils.getListPos(leftListID)
+		.then(function(pos){
+
+			leftListPos = pos != -1 ? pos._value : -1;
+
+			return Utils.getListPos(rightListID);
+		}).then(function(pos){
+			rightListPos = pos != -1 ? pos._value : -1;
+			listID = Utils.getListDataTrelloId(list)
+			newPos = calcPos(newPos,leftListPos, rightListPos);
+
+			return new Promise((resolve, reject) => {
+				resolve({
+					'listID' : listID,
+					'newPos' : newPos
+				});
+			});
+		}).then(function(d){
+			var el = list.find('.nodelink.node-type-list').eq(0);
+			Utils.elemIsLoading(el, true);
+			window.Trello.put("lists/" + d.cardID+ "/?pos="+d.newPos+"&token=" + authToken,
+			  //success
+			  function(data){
+			      Utils.elemIsLoading(el, false);
+			      return data;
+			  },
+			  //error
+			  function(reason){
+			      return reason;
+			  }
+			);
+		});
+
 	};
 
 
@@ -488,6 +546,9 @@ document.addEventListener('click', function(e) {
 			var elemBottom = elemTop + $(elem).outerHeight();
 
 			return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+        },
+        removeHoverMenu : function(){
+            document.getElementById('hovermenu').parentNode.removeChild(x);
         },
 		removeElemById : function(id){
 			var x = document.getElementById(id);
@@ -517,8 +578,24 @@ document.addEventListener('click', function(e) {
 					resolve(id);
 				}
 			});
-
-
+		},
+		getListPos : function(id){
+			return new Promise((resolve, reject) => {
+				if(id != -1){
+	                window.Trello.get("lists/" + id+ "/pos"+ "?"+ "&token=" + authToken,
+		                //success
+		                function(data){
+		                    resolve(data);
+		                },
+		                //error
+		                function(reason){
+		                    reject(reason);
+		                }
+		            );
+				}else{
+					resolve(id);
+				}
+			});
 		}
 	};
 
@@ -545,7 +622,7 @@ document.addEventListener('click', function(e) {
 
 				if(authToken != null && authToken.length != 0){
 					setDragAndDropCards();
-		//			setDragAndDropLists();
+					setDragAndDropLists();
 				}
 			});
 		});

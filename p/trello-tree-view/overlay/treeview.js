@@ -514,7 +514,7 @@ document.addEventListener('click', function(e) {
 		}).then(function(d){
 			var el = list.find('.nodelink.node-type-list').eq(0);
 			Utils.elemIsLoading(el, true);
-			window.Trello.put("lists/" + d.cardID+ "/?pos="+d.newPos+"&token=" + authToken,
+			window.Trello.put("lists/" + d.listID+ "/?pos="+d.newPos+"&token=" + authToken,
 			  //success
 			  function(data){
 			      Utils.elemIsLoading(el, false);

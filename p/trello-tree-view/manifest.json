@@ -1,7 +1,7 @@
 {
   "name": "Tree View for Trello",
   "description": "",
-  "details": "Displays Trello lists and cards in a tree view for easier visualization.\n **Features:** \n * TreeView style to view cards and lists * Great overview of cards and lists without too much detail * Collapse/Expand lists without archiving * Keyboard shortcuts (See below) *  *Reorder cards while in tree view *Needs authorization.*\n \n *Go to PowerUp > Click Gear Icon > Authorize* \n **Keyboard shortcuts:** \n * Arrow Left = Collapse * Arrow Right = Expand * Arrow Up = Select current node up * Arrow Down = Select current node down * Enter / Return = Open current node's link (only if it's a card) * Escape / ESC = Closes TreeView for Trello",
+  "details": "Displays Trello lists and cards in a tree view for easier visualization.\n\n *Needs Authorization to enable card drag and drop*",
   "icon": {
     "url": "./img/logo.svg"
   },

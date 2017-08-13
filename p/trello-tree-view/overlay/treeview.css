@@ -124,23 +124,19 @@ li.nodecontainer {
   li.nodecontainer > .expando {
     z-index: 200;
     cursor: pointer;
-    top: 0.3em;
-    border-style: solid;
+    top: 0em;
     position: absolute;
-    content: "\A"; }
+    content: "";
+    background: url("./images/ui-icons_ffffff_256x240.png");
+    left: -1em;
+    width: 16px;
+    height: 16px;
+    zoom: 1.5; }
     li.nodecontainer > .expando.expanded {
-      content: "\A";
-      border-width: 0.7em 0.7em 0 0.35em;
-      border-color: transparent #ccc transparent transparent;
-      left: -1.5em; }
-      li.nodecontainer > .expando.expanded:hover {
-        border-color: transparent #fff transparent transparent; }
+      background-position: -48px -16px;
+      zoom: 1.6; }
     li.nodecontainer > .expando.collapsed {
-      border-width: 0.25em 0 0.5em 0.5em;
-      border-color: transparent transparent transparent #ccc;
-      left: -0.9em; }
-      li.nodecontainer > .expando.collapsed:hover {
-        border-color: transparent transparent transparent #fff; }
+      background-position: -32px -16px; }
 
 div#closetreeview {
   position: absolute;

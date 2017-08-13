@@ -431,6 +431,8 @@ document.addEventListener('click', function(e) {
 		if(card.data("prevPos") == newPos && card.data("prevListID") == newList)
 			return;
 
+		Utils.elemIsLoading(card.find('.nodelink.node-type-card').eq(0), true);
+
 		var
 			leftCardID = newPos > 0 ? Utils.getCardDataTrelloId(cardsInList.eq(newPos-1)) : -1,
 			rightCardID = cardsInList.length === (newPos+1) ? -1 : Utils.getCardDataTrelloId(cardsInList.eq(newPos+1)),
@@ -460,7 +462,6 @@ document.addEventListener('click', function(e) {
 			});
 		}).then(function(d){
 			var el = card.find('.nodelink.node-type-card').eq(0);
-			Utils.elemIsLoading(el, true);
 			window.Trello.put("cards/" + d.cardID+ "/?idList="+d.newList+"&pos="+d.newPos+"&token=" + authToken,
 			  //success
 			  function(data){
@@ -469,6 +470,7 @@ document.addEventListener('click', function(e) {
 			  },
 			  //error
 			  function(reason){
+			      Utils.elemIsLoading(el, false);
 			      return reason;
 			  }
 			);
@@ -485,6 +487,8 @@ document.addEventListener('click', function(e) {
         if(list.data("prevPos") == newPos){
             return;
         }
+
+        Utils.elemIsLoading(list.find('.nodelink.node-type-list').eq(0), true);
 
         var
             leftListID = newPos > 0 ? Utils.getListDataTrelloId(listInBoard.eq(newPos-1)) : -1,
@@ -513,7 +517,7 @@ document.addEventListener('click', function(e) {
 			});
 		}).then(function(d){
 			var el = list.find('.nodelink.node-type-list').eq(0);
-			Utils.elemIsLoading(el, true);
+
 			window.Trello.put("lists/" + d.listID+ "/?pos="+d.newPos+"&token=" + authToken,
 			  //success
 			  function(data){
@@ -522,6 +526,7 @@ document.addEventListener('click', function(e) {
 			  },
 			  //error
 			  function(reason){
+			      Utils.elemIsLoading(el, false);
 			      return reason;
 			  }
 			);

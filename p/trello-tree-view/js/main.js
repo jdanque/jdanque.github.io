@@ -3,7 +3,9 @@ var ICON = 'https://d1ipfkx2xm6eh3.cloudfront.net/img/logo.svg';
 
 var openTreeViewOverlay = function (t, opts) {
   return t.overlay({
-    url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/treeview.html',
+//    url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/treeview.html',
+	//todo
+    url: './view/treeview.html',
     args: {} // optional args to pass
   });
 };

@@ -189,11 +189,12 @@ document.addEventListener('click', function(e) {
 			var _this = $(this);
 			e.preventDefault();
 
-			if(!_this.hasClass('currentNode')){
-				setCurrentNode(_this);
-			}else {
-                openLinkInNode(_this);
-            }
+            openLinkInNode(_this);
+//			if(!_this.hasClass('currentNode')){
+//				setCurrentNode(_this);
+//			}else {
+//                openLinkInNode(_this);
+//            }
 
 		});
 	};
@@ -603,6 +604,10 @@ document.addEventListener('click', function(e) {
 		}
 	};
 
+	var hideLists = function(){
+		$('.nodecontainer.node-type-list > .expando.expanded').click();
+	};
+
 
 	me.init = function(){
 		window.focus();
@@ -618,9 +623,10 @@ document.addEventListener('click', function(e) {
 			createTreeView()
 			.then(function(){
 				setExpandoHandler();
+				hideLists();
 	            nodelinkClickHandler();
 	            setRootAsCurrentNode();
-	            setHoverHandler();
+//	            setHoverHandler();
 	            setKeyboardShortcuts();
 	            setCloseOverlay();
 

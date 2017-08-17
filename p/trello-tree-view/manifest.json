@@ -3,7 +3,7 @@
   "description": "",
   "details": "Displays Trello lists and cards in a tree view for easier visualization.\n\n *Needs Authorization to enable card drag and drop*",
   "icon": {
-    "url": "https://d1ipfkx2xm6eh3.cloudfront.net/img/logo.svg"
+    "url": "./img/logo.svg"
   },
   "author": "Jobo Danque",
   "capabilities": [

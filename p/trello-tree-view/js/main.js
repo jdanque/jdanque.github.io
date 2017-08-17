@@ -1,5 +1,7 @@
 var API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
-var ICON = 'https://d1ipfkx2xm6eh3.cloudfront.net/img/logo.svg';
+//var ICON = 'https://d1ipfkx2xm6eh3.cloudfront.net/img/logo.svg';
+//todo
+var ICON = './img/logo.svg';
 
 var openTreeViewOverlay = function (t, opts) {
   return t.overlay({
@@ -36,7 +38,9 @@ TrelloPowerUp.initialize({
 	'show-settings': function(t, options){
 		return t.popup({
 			title: 'Settings',
-			url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/settings.html',
+//			url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/settings.html',
+//todo
+			url: './view/settings.html',
 			height: 184
 		});
 	}

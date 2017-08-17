@@ -190,6 +190,26 @@ document.addEventListener('click', function(e) {
 			e.preventDefault();
 
             openLinkInNode(_this);
+
+            if(!_this.hasClass('node-type-card')){
+                var _expando = _this.closest('.nodecontainer').children('.expando');
+
+
+                if(!_expando.hasClass('expanded')){
+                    var _nodeContainer = _expando.closest('.nodecontainer'),
+	                    _subNodesList = _nodeContainer.find('.subnodelist').eq(0),
+	                    _nodeLink = _nodeContainer.find('a.nodelink').eq(0)
+	                    ;
+
+                    _subNodesList.slideDown(me.options.expando.expandDuration)
+                        .find('.nodecontainer').toggleClass('hidden-node',false);
+                    _expando.toggleClass('expanded',true)
+                        .toggleClass('collapsed',false);
+                    _nodeContainer.toggleClass('collapsed',false);
+                   _nodeLink.children('.subnodes-count').remove();
+                }
+            }
+
 //			if(!_this.hasClass('currentNode')){
 //				setCurrentNode(_this);
 //			}else {
@@ -605,7 +625,22 @@ document.addEventListener('click', function(e) {
 	};
 
 	var hideLists = function(){
-		$('.nodecontainer.node-type-list > .expando.expanded').click();
+		$('.nodecontainer.node-type-list > .expando.expanded').each(function(){
+			var _this = $(this),
+	        _nodeContainer = _this.closest('.nodecontainer'),
+	        _subNodesList = _nodeContainer.find('.subnodelist').eq(0),
+	        _nodeLink = _nodeContainer.find('a.nodelink').eq(0)
+	        ;
+
+	        _subNodesList.hide()
+	            .find('.nodecontainer').toggleClass('hidden-node',true);
+	        _this.toggleClass('expanded',false)
+	            .toggleClass('collapsed',true);
+	        _nodeContainer.toggleClass('collapsed',true);
+	        _nodeLink.prepend('<span class="subnodes-count">'+_subNodesList.children('.nodecontainer').length+'</span>');
+
+		});
+
 	};
 
 
@@ -625,7 +660,7 @@ document.addEventListener('click', function(e) {
 				setExpandoHandler();
 				hideLists();
 	            nodelinkClickHandler();
-	            setRootAsCurrentNode();
+//	            setRootAsCurrentNode();
 //	            setHoverHandler();
 	            setKeyboardShortcuts();
 	            setCloseOverlay();

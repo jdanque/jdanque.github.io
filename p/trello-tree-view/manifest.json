@@ -16,8 +16,6 @@
   ],
   "connectors": {
     "iframe": {
-//      "url": "https://d1ipfkx2xm6eh3.cloudfront.net/index.html"
-      //todo
       "url": "./index.html"
     }
   },

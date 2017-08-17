@@ -159,28 +159,8 @@ document.addEventListener('click', function(e) {
 
 	var setExpandoHandler = function(){
 		$('body').on('click','.expando',function(){
-            var _this = $(this),
-                _nodeContainer = _this.closest('.nodecontainer'),
-                _subNodesList = _nodeContainer.find('.subnodelist').eq(0),
-                _nodeLink = _nodeContainer.find('a.nodelink').eq(0)
-                ;
-
-            if(_this.hasClass('expanded')){
-                _subNodesList.slideUp(me.options.expando.collapseDuration)
-                    .find('.nodecontainer').toggleClass('hidden-node',true);
-                _this.toggleClass('expanded',false)
-                    .toggleClass('collapsed',true);
-				_nodeContainer.toggleClass('collapsed',true);
-				_nodeLink.prepend('<span class="subnodes-count">'+_subNodesList.children('.nodecontainer').length+'</span>');
-            }else{
-                _subNodesList.slideDown(me.options.expando.expandDuration)
-                    .find('.nodecontainer').toggleClass('hidden-node',false);
-                _this.toggleClass('expanded',true)
-                    .toggleClass('collapsed',false);
-                _nodeContainer.toggleClass('collapsed',false);
-               _nodeLink.children('.subnodes-count').remove();
-            }
-
+			var _this = $(this);
+			Utils.toggleChildrenByExpando(_this, !_this.hasClass('expanded'), true);
         });
 	};
 
@@ -194,20 +174,8 @@ document.addEventListener('click', function(e) {
             if(!_this.hasClass('node-type-card')){
                 var _expando = _this.closest('.nodecontainer').children('.expando');
 
+				Utils.toggleChildrenByExpando(_expando, !_expando.hasClass('expanded'), true);
 
-                if(!_expando.hasClass('expanded')){
-                    var _nodeContainer = _expando.closest('.nodecontainer'),
-	                    _subNodesList = _nodeContainer.find('.subnodelist').eq(0),
-	                    _nodeLink = _nodeContainer.find('a.nodelink').eq(0)
-	                    ;
-
-                    _subNodesList.slideDown(me.options.expando.expandDuration)
-                        .find('.nodecontainer').toggleClass('hidden-node',false);
-                    _expando.toggleClass('expanded',true)
-                        .toggleClass('collapsed',false);
-                    _nodeContainer.toggleClass('collapsed',false);
-                   _nodeLink.children('.subnodes-count').remove();
-                }
             }
 
 //			if(!_this.hasClass('currentNode')){
@@ -621,24 +589,43 @@ document.addEventListener('click', function(e) {
 					resolve(id);
 				}
 			});
+		},
+		toggleChildrenByExpando : function(_expando, isShow, withAnimation){
+			var _this = _expando,
+			    _nodeContainer = _this.closest('.nodecontainer'),
+			    _subNodesList = _nodeContainer.find('.subnodelist').eq(0),
+			    _nodeLink = _nodeContainer.find('a.nodelink').eq(0)
+			    ;
+
+			if(isShow){
+				if(withAnimation){
+			        _subNodesList.slideDown(me.options.expando.expandDuration);
+				}else{
+					_subNodesList.show();
+				}
+		        _subNodesList.find('.nodecontainer').toggleClass('hidden-node',false);
+			    _this.toggleClass('expanded',true)
+			        .toggleClass('collapsed',false);
+			    _nodeContainer.toggleClass('collapsed',false);
+			   _nodeLink.children('.subnodes-count').remove();
+			}else{
+			    if(withAnimation){
+		            _subNodesList.slideUp(me.options.expando.collapseDuration);
+			    }else{
+			        _subNodesList.hide();
+			    }
+		        _subNodesList.find('.nodecontainer').toggleClass('hidden-node',true);
+			    _this.toggleClass('expanded',false)
+			        .toggleClass('collapsed',true);
+			    _nodeContainer.toggleClass('collapsed',true);
+			    _nodeLink.prepend('<span class="subnodes-count">'+_subNodesList.children('.nodecontainer').length+'</span>');
+			}
 		}
 	};
 
 	var hideLists = function(){
 		$('.nodecontainer.node-type-list > .expando.expanded').each(function(){
-			var _this = $(this),
-	        _nodeContainer = _this.closest('.nodecontainer'),
-	        _subNodesList = _nodeContainer.find('.subnodelist').eq(0),
-	        _nodeLink = _nodeContainer.find('a.nodelink').eq(0)
-	        ;
-
-	        _subNodesList.hide()
-	            .find('.nodecontainer').toggleClass('hidden-node',true);
-	        _this.toggleClass('expanded',false)
-	            .toggleClass('collapsed',true);
-	        _nodeContainer.toggleClass('collapsed',true);
-	        _nodeLink.prepend('<span class="subnodes-count">'+_subNodesList.children('.nodecontainer').length+'</span>');
-
+			Utils.toggleChildrenByExpando($(this), false, false);
 		});
 
 	};

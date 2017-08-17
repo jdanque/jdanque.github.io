@@ -28,7 +28,8 @@ TrelloPowerUp.initialize({
 	'show-authorization': function(t, options){
 		return t.popup({
 			title: 'Authorize Account',
-			url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/auth.html',
+			//todo
+			url: './view/auth.html',
 			height: 140,
 		});
 	},

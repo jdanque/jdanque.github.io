@@ -100,7 +100,7 @@ document.addEventListener('click', function(e) {
 			}
 
 			if(this.desc.length>0){
-				nodeDesc = '<span class="node_desc">'+this.desc+'</span>';
+//				nodeDesc = '<span class="node_desc">'+this.desc+'</span>';
 			}
 
 			var html = '<li class="nodecontainer '+nodeTypeClass+'">'

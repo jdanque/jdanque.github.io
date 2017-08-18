@@ -156,6 +156,7 @@ document.addEventListener('click', function(e) {
 				}
 
 				document.getElementById('treeviewmain').innerHTML = root.toHtml();
+				$('.mainheader .boardname').html(root.name);
 			})
 			;
 

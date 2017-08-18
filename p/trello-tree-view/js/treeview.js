@@ -22,6 +22,10 @@ document.addEventListener('click', function(e) {
 
 	var authToken = '';
 
+	var themes = {
+		trello : 'theme-trello'
+	};
+
 	me.status = {
 		init: false
 	};
@@ -359,7 +363,7 @@ document.addEventListener('click', function(e) {
             placeholder: "list-card placeholder nodecontainer",
             connectWith: ".subnodelist.node-type-list",
             cursor: "move",
-            tolerance: "pointer",
+            tolerance: "intersect",
             start: function( event, ui ) {
                 Utils.removeHoverMenu();
                 ui.placeholder.height(ui.item.height());
@@ -382,7 +386,7 @@ document.addEventListener('click', function(e) {
             placeholder: "list-card placeholder nodecontainer",
 	        connectWith: ".subnodelist.node-type-board",
 	        cursor: "move",
-	        tolerance: "pointer",
+	        tolerance: "intersect",
             start: function( event, ui ) {
                 Utils.removeHoverMenu();
                 ui.placeholder.height(ui.item.height());
@@ -630,6 +634,10 @@ document.addEventListener('click', function(e) {
 
 	};
 
+	var setTheme = function(theme){
+		$('#maincontent').toggleClass(themes,true);
+	};
+
 
 	me.init = function(){
 		window.focus();
@@ -644,12 +652,13 @@ document.addEventListener('click', function(e) {
 
 			createTreeView()
 			.then(function(){
+	            setTheme(themes.trello);
 				setExpandoHandler();
 				hideLists();
 	            nodelinkClickHandler();
 //	            setRootAsCurrentNode();
 //	            setHoverHandler();
-	            setKeyboardShortcuts();
+//	            setKeyboardShortcuts();
 	            setCloseOverlay();
 
 				if(authToken != null && authToken.length != 0){

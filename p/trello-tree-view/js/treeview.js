@@ -635,7 +635,7 @@ document.addEventListener('click', function(e) {
 	};
 
 	var setTheme = function(theme){
-		$('#maincontent').toggleClass(themes,true);
+		$('#maincontent').toggleClass(theme,true);
 	};
 
 

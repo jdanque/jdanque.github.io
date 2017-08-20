@@ -164,6 +164,7 @@ document.addEventListener('click', function(e) {
 				var _this = $(this);
 				Utils.toggleChildrenByExpando(_this, !_this.hasClass('expanded'), true);
 	        });
+	        resolve();
 		});
 	};
 
@@ -188,7 +189,9 @@ document.addEventListener('click', function(e) {
 	//                openLinkInNode(_this);
 	//            }
 
+
 			});
+			resolve();
 		});
 	};
 
@@ -356,6 +359,7 @@ document.addEventListener('click', function(e) {
 				e.preventDefault();
 				T.closeOverlay().done();
 			});
+			resolve();
 		});
 	};
 
@@ -383,6 +387,7 @@ document.addEventListener('click', function(e) {
                     updateCardPosition(ui.item);
                 }
             });
+            resolve();
 		});
 	};
 
@@ -410,6 +415,7 @@ document.addEventListener('click', function(e) {
 	                updateListPosition(ui.item);
 	            }
 	        });
+	        resolve();
 		});
 	};
 
@@ -643,8 +649,8 @@ document.addEventListener('click', function(e) {
 			$('.nodecontainer.node-type-list > .expando.expanded').each(function(){
 				Utils.toggleChildrenByExpando($(this), false, false);
 			});
+			resolve();
 		});
-
 	};
 
 	var setTheme = function(){
@@ -653,6 +659,8 @@ document.addEventListener('click', function(e) {
                 $('#maincontent')
                 .toggleClass("div[class^='theme-']",false)
                 .toggleClass(theme,true);
+            }).then(function(){
+                toggleMainContent(true);
             });
 	};
 
@@ -683,9 +691,7 @@ document.addEventListener('click', function(e) {
 			.then(setCloseOverlay)
 			.then(enableDragAndDropCards)
 			.then(enableDragAndDropLists)
-			.then(function(){
-				toggleMainContent(true);
-			});
+			;
 		});
 
 		me.status.init = true;

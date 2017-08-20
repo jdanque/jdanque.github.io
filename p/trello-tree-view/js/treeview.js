@@ -677,7 +677,7 @@ document.addEventListener('click', function(e) {
 		return new Promise(function(resolve){
 			$('body').on('click','#treeviewsettings',function(e){
                 e.preventDefault();
-				T.popup({
+				return T.popup({
                     title: 'TreeView Settings',
                     url: './view/settings.html',
                     height: 184

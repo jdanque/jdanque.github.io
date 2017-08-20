@@ -669,13 +669,16 @@ document.addEventListener('click', function(e) {
 	var setExpanded = function(){
 		return T.get('board', 'private', 'expandupto')
 		.then(function(expandupto){
+			$('.expando').each(function(){
+                Utils.toggleChildrenByExpando($(this), false, false);
+            });
 
-			if(expandupto === '0'){
-				$('.nodecontainer.node-type-board > .expando').each(function(){
-                    Utils.toggleChildrenByExpando($(this), true, false);
-                });
-			}else if(expandupto === '1'){
+			if(expandupto === '1'){
 				$('.nodecontainer.node-type-list > .expando').each(function(){
+                    Utils.toggleChildrenByExpando($(this), false, false);
+                });
+			}else if(expandupto === '2'){
+				$('.expando').each(function(){
                     Utils.toggleChildrenByExpando($(this), true, false);
                 });
 			}

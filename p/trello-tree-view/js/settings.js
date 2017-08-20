@@ -6,15 +6,16 @@ var theme = document.getElementById('theme');
 var expandupto = document.getElementById('expandupto');
 
 t.render(function(){
-  return t.get('board', 'private', 'theme')
-  .then(function(savedTheme){
+  return Promise.all([
+    t.get('board', 'private', 'theme')
+    t.get('board', 'private', 'expandupto')
+  ])
+  .spread(function(savedTheme,savedExpandUpto){
     if(savedTheme && /[a-z]+/.test(savedTheme)){
       theme.value = savedTheme;
     }
-  })
-  .then(function(savedexpandupto){
-    if(savedexpandupto && /[a-z]+/.test(savedexpandupto)){
-      expandupto.value = savedexpandupto;
+    if(savedExpandUpto && /[a-z]+/.test(savedExpandUpto)){
+      expandupto.value = savedExpandUpto;
     }
   })
   .then(function(){

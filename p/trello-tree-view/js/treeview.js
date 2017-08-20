@@ -9,6 +9,8 @@ T.render(function(){
     TreeView.init();
   }
 
+  setTheme();
+
 });
 
 // close overlay if user clicks outside our content
@@ -634,10 +636,11 @@ document.addEventListener('click', function(e) {
 	var setTheme = function(){
 		return new Promise(function(){
 			T.render(function(){
-				var theme = T.get('board', 'private', 'theme');
-				$('#maincontent').toggleClass(theme,true);
+				T.get('board', 'private', 'theme')
+				.then(function(theme){
+					$('#maincontent').toggleClass(theme,true);
+				});
 			});
-			T.sizeTo('#maincontent');
 		});
 	};
 

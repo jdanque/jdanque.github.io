@@ -666,6 +666,30 @@ document.addEventListener('click', function(e) {
 		});
 	};
 
+	var setExpanded = function(){
+		return T.get('board', 'private', 'expandupto')
+		.then(function(expandupto){
+			$('.expando').each(function(){
+                Utils.toggleChildrenByExpando($(this), false, false);
+            });
+
+			if(expandupto === '0'){
+				$('.nodecontainer.node-type-board > .expando.expanded').each(function(){
+                    Utils.toggleChildrenByExpando($(this), true, false);
+                });
+			}else if(expandupto === '1'){
+				$('.nodecontainer.node-type-list > .expando.expanded').each(function(){
+                    Utils.toggleChildrenByExpando($(this), true, false);
+                });
+			}else{
+				$('.expando').each(function(){
+                    Utils.toggleChildrenByExpando($(this), true, false);
+                });
+			}
+		});
+
+	};
+
 	var setTheme = function(){
 		return T.get('board', 'private', 'theme')
             .then(function(theme){
@@ -699,7 +723,7 @@ document.addEventListener('click', function(e) {
 			createTreeView()
 			.then(setTheme)
 			.then(setExpandoHandler)
-			.then(hideLists)
+			.then(setExpanded)
 			.then(nodelinkClickHandler)
 			.then(setCloseOverlay)
 			.then(enableDragAndDropCards)

@@ -673,7 +673,7 @@ document.addEventListener('click', function(e) {
 				$('.nodecontainer.node-type-board > .expando').each(function(){
                     Utils.toggleChildrenByExpando($(this), false, false);
                 });
-			}else if(expandupto === '1'){
+			}else {
 				$('.nodecontainer.node-type-list > .expando').each(function(){
                     Utils.toggleChildrenByExpando($(this), false, false);
                 });

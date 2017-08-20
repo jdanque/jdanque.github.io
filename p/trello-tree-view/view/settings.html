@@ -5,6 +5,14 @@
       <script src="../plugins/jquery/jquery-1-12-4.js"></script>
 
       <style>
+
+        @font-face {
+            font-family: trellicons;
+            src: url(https://a.trellocdn.com/fonts/b08bd554775eafa560d3ea99519e527e/trellicons.eot?#iefix) format('embedded-opentype'),url(https://a.trellocdn.com/fonts/dffc8173a96c4bb2ff17961efb603c95/trellicons.woff) format('woff'),url(https://a.trellocdn.com/fonts/ac25df9f836b334cec81a4ae8fbc5adb/trellicons.ttf) format('truetype');
+            font-weight: 400;
+            font-style: normal
+        }
+
         .theme-tile.trello-light-gray {background-color: #838c91;}
         .theme-tile.trello-blue {background-color: #0079bf;}
         .theme-tile.trello-green {background-color: #519839 }
@@ -18,10 +26,10 @@
 
 
         .theme-tile {
-            width: 2em;
+            width: 23%;
             height: 2em;
             float: left;
-            margin: 00.5em;
+            margin: 0.5em;
             border-radius: 3px;
             cursor: pointer;
         }
@@ -40,6 +48,21 @@
             display:none;
         }
 
+
+        .theme-tile.selectedtheme{
+            position: relative;
+        }
+
+        .theme-tile.selectedtheme:before{
+            font-family: trellicons;
+            content: "\e910";
+            border: 2px solid #fff;
+            border-radius: 50%;
+            padding: 5px;
+            position: absolute;
+            top: -5px;
+            left: -5px;
+        }
 
 
       </style>

@@ -12,7 +12,8 @@ t.render(function(){
   ])
   .spread(function(savedTheme,savedExpandUpto){
     if(savedTheme && /[a-z]+/.test(savedTheme)){
-      theme.value = savedTheme;
+      $('.theme-tile').toggleClass('selectedtheme',false);
+      $('.theme-tile[data-theme="'+savedTheme+'"]').toggleClass('selectedtheme',true);
     }
     if(savedExpandUpto){
       expandupto.value = savedExpandUpto;

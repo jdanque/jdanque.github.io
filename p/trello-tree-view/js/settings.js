@@ -5,9 +5,8 @@ var t = TrelloPowerUp.iframe();
 var theme = document.getElementById('theme');
 
 t.render(function(){
-  return Promise.all(
-    t.get('board', 'private', 'theme')
-  ).then(function(savedTheme){
+  return t.get('board', 'private', 'theme')
+  .then(function(savedTheme){
     if(savedTheme && /[a-z]+/.test(savedTheme)){
       theme.value = savedTheme;
     }

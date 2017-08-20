@@ -8,7 +8,7 @@ var openTreeViewOverlay = function (t, opts) {
 //    url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/treeview.html',
 	//todo
     url: './view/treeview.html',
-    args: {mainT : t} // optional args to pass
+//    args: {mainT : t} // optional args to pass
   });
 };
 

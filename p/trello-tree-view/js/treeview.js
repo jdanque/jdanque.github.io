@@ -3,8 +3,6 @@ var TreeView = {};
 var T = TrelloPowerUp.iframe();
 var Promise = TrelloPowerUp.Promise;
 
-var mainT = T.arg('mainT');
-
 T.render(function(){
 
   if(!TreeView.status.init){
@@ -676,15 +674,18 @@ document.addEventListener('click', function(e) {
 	};
 
 	var setSettingsClickHandler = function(){
-		$('body').on('click','#treeviewsettings',function(e){
-            return mainT.popup({
-                title: 'TreeView Settings',
-                url: './view/settings.html',
-                height: 184
-            }).catch(function(x){
-                console.log(x);
-            });
-        });
+		return new Promise(function(resolve){
+			$('body').on('click','#treeviewsettings',function(e){
+				e.preventDefault();
+//	            return T.popup({
+//	                title: 'TreeView Settings',
+//	                url: './view/settings.html',
+//	                height: 184
+//	            }).catch(function(x){
+//	                console.log(x);
+//	            });
+	        });
+		});
 	};
 
 	me.init = function(){

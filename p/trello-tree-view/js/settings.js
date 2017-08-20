@@ -33,7 +33,7 @@ $(document).ready(function(){
 
 document.getElementById('save').addEventListener('click', function(){
 	return new Promise(function(resolve){
-		resolve({$('.theme-tile.selectedtheme').attr('data-theme')});
+		resolve($('.theme-tile.selectedtheme').attr('data-theme'));
 	}).then(function(v){
 		t.set('board', 'private', 'theme', v);
 	})

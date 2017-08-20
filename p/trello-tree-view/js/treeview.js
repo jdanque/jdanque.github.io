@@ -673,6 +673,20 @@ document.addEventListener('click', function(e) {
 		$('#maincontent').toggle(show);
 	};
 
+	var setSettingsClickHandler = function(){
+		return new Promise(function(resolve){
+			$('body').on('click','#treeviewsettings',function(e){
+                e.preventDefault();
+				T.popup({
+                    title: 'TreeView Settings',
+                    url: './view/settings.html',
+                    height: 184
+                });
+            });
+            resolve();
+		}).then(setTheme);
+	};
+
 	me.init = function(){
 		window.focus();
 
@@ -690,6 +704,7 @@ document.addEventListener('click', function(e) {
 
 			createTreeView()
 			.then(setTheme)
+			.then(setSettingsClickHandler)
 			.then(setExpandoHandler)
 			.then(hideLists)
 			.then(nodelinkClickHandler)

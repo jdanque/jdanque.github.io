@@ -37,7 +37,7 @@ TrelloPowerUp.initialize({
 	},
 	'show-settings': function(t, options){
 		return t.popup({
-			title: 'Settings',
+			title: 'TreeView Settings',
 //			url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/settings.html',
 //todo
 			url: './view/settings.html',

@@ -24,12 +24,23 @@ t.render(function(){
   })
 });
 
+$(document).ready(function(){
+	$('.theme-tile').on('click',function(e){
+		$('.theme-tile').toggleClass('selectedtheme',false);
+		$(this).toggleClass('selectedtheme',true);
+	});
+});
+
 document.getElementById('save').addEventListener('click', function(){
-  return t.set('board', 'private', 'theme', theme.value)
-  .then(function(){
-    return t.set('board', 'private', 'expandupto', expandupto.value);
-  })
-  .then(function(){
-    t.closePopup();
-  });
+	return new Promise(function(resolve){
+		resolve({$('.theme-tile.selectedtheme').attr('data-theme')});
+	}).then(function(v){
+		t.set('board', 'private', 'theme', v);
+	})
+	.then(function(){
+		return t.set('board', 'private', 'expandupto', expandupto.value);
+	})
+	.then(function(){
+		t.closePopup();
+	});
 });

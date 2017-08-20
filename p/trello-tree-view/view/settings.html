@@ -1,24 +1,66 @@
 <html>
   <head>
-    <script src="../plugins/trello/power-up.min.js"></script>
     <link rel="stylesheet" href="../plugins/trello/power-up.css">
+      <script src="../plugins/trello/power-up.min.js"></script>
+      <script src="../plugins/jquery/jquery-1-12-4.js"></script>
+
+      <style>
+        .theme-tile.trello-light-gray {background-color: #838c91;}
+        .theme-tile.trello-blue {background-color: #0079bf;}
+        .theme-tile.trello-green {background-color: #519839 }
+        .theme-tile.trello-orange {background-color: #d29034 }
+        .theme-tile.trello-red {background-color: #b04632 }
+        .theme-tile.trello-yellow {background-color: #F2D600 }
+        .theme-tile.trello-purple {background-color: #89609e }
+        .theme-tile.trello-pink {background-color: #cd5a91 }
+        .theme-tile.trello-sky {background-color: #00aecc }
+        .theme-tile.trello-lime {background-color: #4bbf6b }
+
+
+        .theme-tile {
+            width: 2em;
+            height: 2em;
+            float: left;
+            margin: 00.5em;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .theme-tile:hover{
+            opacity: .8;
+        }
+
+        .available-themes:after{
+             content: "";
+          display: table;
+          clear: both;
+        }
+
+        #theme{
+            display:none;
+        }
+
+
+
+      </style>
   </head>
   <body>
     <div id="content">
-        <p>Select theme</p>
-        <select id="theme">
-            <option value="theme-trello-light-gray">Trello light gray</option>
-            <option value="theme-trello-blue">Trello blue</option>
-            <option value="theme-trello-green">Trello green</option>
-            <option value="theme-trello-orange">Trello orange</option>
-            <option value="theme-trello-red">Trello red</option>
-            <!--<option value="theme-trello-yellow">Trello yellow</option>-->
-            <option value="theme-trello-purple">Trello purple</option>
-            <option value="theme-trello-pink">Trello pink</option>
-            <option value="theme-trello-sky">Trello sky</option>
-            <option value="theme-trello-lime">Trello lime</option>
-        </select>
-        <p>Expand up to</p>
+        <label>Select theme</label>
+        <p class="u-quiet">Select theme for TreeView that would complement your trello board!</p>
+        <div class="available-themes">
+            <div data-theme="theme-trello-light-gray" class="theme-tile trello-light-gray">Trello light gray</div>
+            <div data-theme="theme-trello-blue" class="theme-tile trello-blue">Trello blue</div>
+            <div data-theme="theme-trello-green" class="theme-tile trello-green">Trello green</div>
+            <div data-theme="theme-trello-orange" class="theme-tile trello-orange">Trello orange</div>
+            <div data-theme="theme-trello-red" class="theme-tile trello-red">Trello red</div>
+            <div data-theme="theme-trello-purple" class="theme-tile trello-purple">Trello purple</div>
+            <div data-theme="theme-trello-pink" class="theme-tile trello-pink">Trello pink</div>
+            <div data-theme="theme-trello-sky" class="theme-tile trello-sky">Trello sky</div>
+            <div data-theme="theme-trello-lime" class="theme-tile trello-lime">Trello lime</div>
+        </div>
+        <label for="expandupto">Expand up to</label>
+        <p class="u-quiet">Set default expand tree from board(show board only) upto cards(expand all)</p>
         <select id="expandupto">
             <option value="0">Board</option>
             <option value="1" selected="selected">Lists</option>

@@ -679,6 +679,8 @@ document.addEventListener('click', function(e) {
                 title: 'TreeView Settings',
                 url: './view/settings.html',
                 height: 184
+            }).catch(function(x){
+                console.log(x);
             });
         });
 	};

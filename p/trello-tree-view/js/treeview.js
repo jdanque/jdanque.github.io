@@ -159,7 +159,7 @@ document.addEventListener('click', function(e) {
 	};
 
 	var setExpandoHandler = function(){
-		return new Promise(function() {
+		return new Promise(function(resolve) {
 			$('body').on('click','.expando',function(){
 				var _this = $(this);
 				Utils.toggleChildrenByExpando(_this, !_this.hasClass('expanded'), true);
@@ -168,7 +168,7 @@ document.addEventListener('click', function(e) {
 	};
 
 	var nodelinkClickHandler = function(){
-		return new Promise(function(){
+		return new Promise(function(resolve){
 			$('body').on('click','a.nodelink',function(e){
 				var _this = $(this);
 				e.preventDefault();
@@ -351,7 +351,7 @@ document.addEventListener('click', function(e) {
 	};
 
 	var setCloseOverlay = function(){
-		return new Promise(function(){
+		return new Promise(function(resolve){
 			$('#closetreeview').on('click',function(e){
 				e.preventDefault();
 				T.closeOverlay().done();
@@ -360,47 +360,57 @@ document.addEventListener('click', function(e) {
 	};
 
 	var enableDragAndDropCards = function(){
-		$('.subnodelist.node-type-list').sortable({
-            placeholder: "list-card placeholder nodecontainer",
-            connectWith: ".subnodelist.node-type-list",
-            cursor: "move",
-            tolerance: "intersect",
-            start: function( event, ui ) {
-                Utils.removeHoverMenu();
-                ui.placeholder.height(ui.item.height());
-	            var p  = ui.item.parents('.nodecontainer.node-type-list').eq(0);
-	            ui.item.toggleClass('grabbing',true)
-	                .data("prevPos",p.find('.nodecontainer.node-type-card').index(ui.item))
-	                .data("prevListID",Utils.getListDataTrelloId(p));
-            },
-	        stop: function( event, ui ) {
-	            ui.item.toggleClass('grabbing',false);
-	            updateCardPosition(ui.item);
-	        }
-        });
+		if(authToken === null || authToken.length === 0){
+			return;
+		}
 
+		return new Promise(function(resolve){
+			$('.subnodelist.node-type-list').sortable({
+                placeholder: "list-card placeholder nodecontainer",
+                connectWith: ".subnodelist.node-type-list",
+                cursor: "move",
+                tolerance: "intersect",
+                start: function( event, ui ) {
+                    Utils.removeHoverMenu();
+                    ui.placeholder.height(ui.item.height());
+                    var p  = ui.item.parents('.nodecontainer.node-type-list').eq(0);
+                    ui.item.toggleClass('grabbing',true)
+                        .data("prevPos",p.find('.nodecontainer.node-type-card').index(ui.item))
+                        .data("prevListID",Utils.getListDataTrelloId(p));
+                },
+                stop: function( event, ui ) {
+                    ui.item.toggleClass('grabbing',false);
+                    updateCardPosition(ui.item);
+                }
+            });
+		});
 	};
 
 	var enableDragAndDropLists = function(){
+		if(authToken === null || authToken.length === 0){
+			return;
+		}
 
-		$('.subnodelist.node-type-board').sortable({
-            placeholder: "list-card placeholder nodecontainer",
-	        connectWith: ".subnodelist.node-type-board",
-	        cursor: "move",
-	        tolerance: "intersect",
-            start: function( event, ui ) {
-                Utils.removeHoverMenu();
-                ui.placeholder.height(ui.item.height());
-                var p  = ui.item.parents('.nodecontainer.node-type-board').eq(0);
-                ui.item.toggleClass('grabbing',true)
-                    .data("prevPos",p.find('.nodecontainer.node-type-list').index(ui.item))
-                    ;
-            },
-            stop: function( event, ui ) {
-                ui.item.toggleClass('grabbing',false);
-                updateListPosition(ui.item);
-            }
-        });
+		return new Promise(function(resolve){
+			$('.subnodelist.node-type-board').sortable({
+	            placeholder: "list-card placeholder nodecontainer",
+		        connectWith: ".subnodelist.node-type-board",
+		        cursor: "move",
+		        tolerance: "intersect",
+	            start: function( event, ui ) {
+	                Utils.removeHoverMenu();
+	                ui.placeholder.height(ui.item.height());
+	                var p  = ui.item.parents('.nodecontainer.node-type-board').eq(0);
+	                ui.item.toggleClass('grabbing',true)
+	                    .data("prevPos",p.find('.nodecontainer.node-type-list').index(ui.item))
+	                    ;
+	            },
+	            stop: function( event, ui ) {
+	                ui.item.toggleClass('grabbing',false);
+	                updateListPosition(ui.item);
+	            }
+	        });
+		});
 	};
 
 	var calcPos = function(newPos,leftPos,rightPos){
@@ -629,7 +639,7 @@ document.addEventListener('click', function(e) {
 	};
 
 	var hideLists = function(){
-		return new Promise(function(){
+		return new Promise(function(resolve){
 			$('.nodecontainer.node-type-list > .expando.expanded').each(function(){
 				Utils.toggleChildrenByExpando($(this), false, false);
 			});
@@ -661,22 +671,18 @@ document.addEventListener('click', function(e) {
 
 			authToken = token;
 
+//	            setRootAsCurrentNode();
+//	            setHoverHandler();
+//	            setKeyboardShortcuts();
+
 			createTreeView()
 			.then(setTheme)
 			.then(setExpandoHandler)
 			.then(hideLists)
 			.then(nodelinkClickHandler)
 			.then(setCloseOverlay)
-			.then(function(){
-//	            setRootAsCurrentNode();
-//	            setHoverHandler();
-//	            setKeyboardShortcuts();
-
-				if(authToken != null && authToken.length != 0){
-					enableDragAndDropCards();
-					enableDragAndDropLists();
-				}
-			})
+			.then(enableDragAndDropCards)
+			.then(enableDragAndDropLists)
 			.then(function(){
 				toggleMainContent(true);
 			});

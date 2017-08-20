@@ -685,6 +685,7 @@ document.addEventListener('click', function(e) {
 //	                console.log(x);
 //	            });
 	        });
+	        resolve();
 		});
 	};
 

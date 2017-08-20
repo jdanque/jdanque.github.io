@@ -3,6 +3,8 @@ var TreeView = {};
 var T = TrelloPowerUp.iframe();
 var Promise = TrelloPowerUp.Promise;
 
+var mainT = T.arg('mainT');
+
 T.render(function(){
 
   if(!TreeView.status.init){
@@ -675,7 +677,7 @@ document.addEventListener('click', function(e) {
 
 	var setSettingsClickHandler = function(){
 		$('body').on('click','#treeviewsettings',function(e){
-            return T.popup({
+            return mainT.popup({
                 title: 'TreeView Settings',
                 url: './view/settings.html',
                 height: 184

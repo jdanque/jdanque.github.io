@@ -669,9 +669,6 @@ document.addEventListener('click', function(e) {
 	var setExpanded = function(){
 		return T.get('board', 'private', 'expandupto')
 		.then(function(expandupto){
-			$('.expando').each(function(){
-                Utils.toggleChildrenByExpando($(this), false, false);
-            });
 
 			if(expandupto === '0'){
 				$('.nodecontainer.node-type-board > .expando').each(function(){
@@ -679,10 +676,6 @@ document.addEventListener('click', function(e) {
                 });
 			}else if(expandupto === '1'){
 				$('.nodecontainer.node-type-list > .expando').each(function(){
-                    Utils.toggleChildrenByExpando($(this), true, false);
-                });
-			}else{
-				$('.expando').each(function(){
                     Utils.toggleChildrenByExpando($(this), true, false);
                 });
 			}

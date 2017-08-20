@@ -675,15 +675,13 @@ document.addEventListener('click', function(e) {
 
 	var setSettingsClickHandler = function(){
 		$('body').on('click','#treeviewsettings',function(e){
-			T.closeOverlay().then(function(){
-	            return T.popup({
-	                title: 'TreeView Settings',
-	                url: './view/settings.html',
-	                height: 184
-	            }).catch(function(x){
-	                console.log(x);
-	            });
-			});
+            return T.popup({
+                title: 'TreeView Settings',
+                url: './view/settings.html',
+                height: 184
+            }).catch(function(x){
+                console.log(x);
+            });
         });
 	};
 

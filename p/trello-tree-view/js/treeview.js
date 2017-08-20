@@ -23,6 +23,11 @@ document.addEventListener('click', function(e) {
 
 	var authToken = '';
 
+	var themes = [
+		'theme-trello-white',
+		'theme-trello-blue'
+	];
+
 	me.status = {
 		init: false
 	};
@@ -657,7 +662,7 @@ document.addEventListener('click', function(e) {
 		return T.get('board', 'private', 'theme')
             .then(function(theme){
                 $('#maincontent')
-                .toggleClass("div[class^='theme-']",false)
+                .toggleClass(themes.join(' '),false)
                 .toggleClass(theme,true);
             }).then(function(){
                 toggleMainContent(true);

@@ -33,7 +33,7 @@ document.addEventListener('click', function(e) {
 		'theme-trello-purple',
 		'theme-trello-pink',
 		'theme-trello-sky',
-		'theme-trello-lime
+		'theme-trello-lime'
 	];
 
 	me.status = {

@@ -1,6 +1,7 @@
 
 var TreeView = {};
 var T = TrelloPowerUp.iframe();
+var Promise = TrelloPowerUp.Promise;
 
 T.render(function(){
 
@@ -634,10 +635,13 @@ document.addEventListener('click', function(e) {
 
 	};
 
-	var setTheme = function(theme){
-		$('#maincontent').toggleClass(theme,true);
+	var setTheme = function(){
+		T.render(function(){
+			var theme = T.get('board', 'private', 'theme');
+			$('#maincontent').toggleClass(theme,true);
+		});
+		return T.sizeTo('#maincontent');
 	};
-
 
 	me.init = function(){
 		window.focus();
@@ -651,6 +655,7 @@ document.addEventListener('click', function(e) {
 			authToken = token;
 
 			createTreeView()
+			.then(setTheme)
 			.then(function(){
 				setExpandoHandler();
 				hideLists();

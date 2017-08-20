@@ -1,17 +1,17 @@
 <html>
   <head>
-    <!--<link rel="stylesheet" href="https://trello.com/power-ups/power-up.css">-->
-    <!--<script src="https://trello.com/power-ups/power-up.min.js"></script>-->
+    <script src="../plugins/trello/power-up.min.js"></script>
+    <link rel="stylesheet" href="../plugins/trello/power-up.css">
   </head>
   <body>
     <div id="content">
-      <p>In progress..</p>
-      <h3>Coming soon!</h3>
-      <ul>
-        <li>Different themes/Theme chooser</li>
-        <li>Additional details in the cards overview like badges, votes, labels, and others.</li>
-        <li>Card or list duplication/archiving using the tree</li>
-      </ul>
-      <!--<script src="./js/settings.js"></script>-->
+        <p>Select theme</p>
+        <select id="theme">
+          <option value="theme-trello-white">Trello White</option>
+          <option value="theme-trello-blue">Trello Blue</option>
+        </select>
+        <button id="save" class="mod-primary">Save</button>
+    </div>
+    <script src="../js/settings.js"></script>
   </body>
 </html>

@@ -14,7 +14,7 @@ t.render(function(){
     if(savedTheme && /[a-z]+/.test(savedTheme)){
       theme.value = savedTheme;
     }
-    if(savedExpandUpto && /[a-z]+/.test(savedExpandUpto)){
+    if(savedExpandUpto){
       expandupto.value = savedExpandUpto;
     }
   })

@@ -36,7 +36,7 @@ document.getElementById('save').addEventListener('click', function(){
 	return new Promise(function(resolve){
 		resolve($('.theme-tile.selectedtheme').attr('data-theme'));
 	}).then(function(v){
-		t.set('board', 'private', 'theme', v);
+		return t.set('board', 'private', 'theme', v);
 	})
 	.then(function(){
 		return t.set('board', 'private', 'expandupto', expandupto.value);

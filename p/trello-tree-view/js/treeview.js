@@ -632,14 +632,10 @@ document.addEventListener('click', function(e) {
 	};
 
 	var setTheme = function(){
-		return new Promise(function(){
-			T.render(function(){
-				T.get('board', 'private', 'theme')
-				.then(function(theme){
-					$('#maincontent').toggleClass(theme,true);
-				});
-			});
-		});
+		return T.get('board', 'private', 'theme')
+            .then(function(theme){
+                $('#maincontent').toggleClass(theme,true);
+            });
 	};
 
 	me.init = function(){
@@ -659,10 +655,10 @@ document.addEventListener('click', function(e) {
 				setExpandoHandler();
 				hideLists();
 	            nodelinkClickHandler();
+	            setCloseOverlay();
 //	            setRootAsCurrentNode();
 //	            setHoverHandler();
 //	            setKeyboardShortcuts();
-	            setCloseOverlay();
 
 				if(authToken != null && authToken.length != 0){
 					enableDragAndDropCards();

@@ -9,8 +9,6 @@ T.render(function(){
     TreeView.init();
   }
 
-  setTheme();
-
 });
 
 // close overlay if user clicks outside our content

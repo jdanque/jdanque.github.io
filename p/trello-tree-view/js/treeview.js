@@ -24,8 +24,16 @@ document.addEventListener('click', function(e) {
 	var authToken = '';
 
 	var themes = [
-		'theme-trello-white',
-		'theme-trello-blue'
+		'theme-trello-light-gray',
+		'theme-trello-blue',
+		'theme-trello-green',
+		'theme-trello-orange',
+		'theme-trello-red',
+		'theme-trello-yellow',
+		'theme-trello-purple',
+		'theme-trello-pink',
+		'theme-trello-sky',
+		'theme-trello-lime
 	];
 
 	me.status = {
@@ -673,22 +681,6 @@ document.addEventListener('click', function(e) {
 		$('#maincontent').toggle(show);
 	};
 
-	var setSettingsClickHandler = function(){
-		return new Promise(function(resolve){
-			$('body').on('click','#treeviewsettings',function(e){
-				e.preventDefault();
-//	            return T.popup({
-//	                title: 'TreeView Settings',
-//	                url: './view/settings.html',
-//	                height: 184
-//	            }).catch(function(x){
-//	                console.log(x);
-//	            });
-	        });
-	        resolve();
-		});
-	};
-
 	me.init = function(){
 		window.focus();
 
@@ -706,7 +698,6 @@ document.addEventListener('click', function(e) {
 
 			createTreeView()
 			.then(setTheme)
-			.then(setSettingsClickHandler)
 			.then(setExpandoHandler)
 			.then(hideLists)
 			.then(nodelinkClickHandler)

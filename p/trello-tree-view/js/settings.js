@@ -7,7 +7,7 @@ var expandupto = document.getElementById('expandupto');
 
 t.render(function(){
   return Promise.all([
-    t.get('board', 'private', 'theme')
+    t.get('board', 'private', 'theme'),
     t.get('board', 'private', 'expandupto')
   ])
   .spread(function(savedTheme,savedExpandUpto){

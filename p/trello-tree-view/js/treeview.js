@@ -674,17 +674,13 @@ document.addEventListener('click', function(e) {
 	};
 
 	var setSettingsClickHandler = function(){
-		return new Promise(function(resolve){
-			$('body').on('click','#treeviewsettings',function(e){
-                e.preventDefault();
-				return T.popup({
-                    title: 'TreeView Settings',
-                    url: './view/settings.html',
-                    height: 184
-                });
+		$('body').on('click','#treeviewsettings',function(e){
+            return T.popup({
+                title: 'TreeView Settings',
+                url: './view/settings.html',
+                height: 184
             });
-            resolve();
-		}).then(setTheme);
+        });
 	};
 
 	me.init = function(){

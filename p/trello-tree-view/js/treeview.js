@@ -23,10 +23,6 @@ document.addEventListener('click', function(e) {
 
 	var authToken = '';
 
-	var themes = {
-		trello : 'theme-trello'
-	};
-
 	me.status = {
 		init: false
 	};
@@ -636,11 +632,13 @@ document.addEventListener('click', function(e) {
 	};
 
 	var setTheme = function(){
-		T.render(function(){
-			var theme = T.get('board', 'private', 'theme');
-			$('#maincontent').toggleClass(theme,true);
+		return new Promise(function(){
+			T.render(function(){
+				var theme = T.get('board', 'private', 'theme');
+				$('#maincontent').toggleClass(theme,true);
+			});
+			T.sizeTo('#maincontent');
 		});
-		return T.sizeTo('#maincontent');
 	};
 
 	me.init = function(){

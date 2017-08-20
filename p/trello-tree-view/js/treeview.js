@@ -159,32 +159,36 @@ document.addEventListener('click', function(e) {
 	};
 
 	var setExpandoHandler = function(){
-		$('body').on('click','.expando',function(){
-			var _this = $(this);
-			Utils.toggleChildrenByExpando(_this, !_this.hasClass('expanded'), true);
-        });
+		return new Promise(function() {
+			$('body').on('click','.expando',function(){
+				var _this = $(this);
+				Utils.toggleChildrenByExpando(_this, !_this.hasClass('expanded'), true);
+	        });
+		});
 	};
 
 	var nodelinkClickHandler = function(){
-		$('body').on('click','a.nodelink',function(e){
-			var _this = $(this);
-			e.preventDefault();
+		return new Promise(function(){
+			$('body').on('click','a.nodelink',function(e){
+				var _this = $(this);
+				e.preventDefault();
 
-            openLinkInNode(_this);
+	            openLinkInNode(_this);
 
-            if(!_this.hasClass('node-type-card')){
-                var _expando = _this.closest('.nodecontainer').children('.expando');
+	            if(!_this.hasClass('node-type-card')){
+	                var _expando = _this.closest('.nodecontainer').children('.expando');
 
-				Utils.toggleChildrenByExpando(_expando, !_expando.hasClass('expanded'), true);
+					Utils.toggleChildrenByExpando(_expando, !_expando.hasClass('expanded'), true);
 
-            }
+	            }
 
-//			if(!_this.hasClass('currentNode')){
-//				setCurrentNode(_this);
-//			}else {
-//                openLinkInNode(_this);
-//            }
+	//			if(!_this.hasClass('currentNode')){
+	//				setCurrentNode(_this);
+	//			}else {
+	//                openLinkInNode(_this);
+	//            }
 
+			});
 		});
 	};
 
@@ -347,12 +351,12 @@ document.addEventListener('click', function(e) {
 	};
 
 	var setCloseOverlay = function(){
-
-		$('#closetreeview').on('click',function(e){
-			e.preventDefault();
-			T.closeOverlay().done();
+		return new Promise(function(){
+			$('#closetreeview').on('click',function(e){
+				e.preventDefault();
+				T.closeOverlay().done();
+			});
 		});
-
 	};
 
 	var enableDragAndDropCards = function(){
@@ -625,8 +629,10 @@ document.addEventListener('click', function(e) {
 	};
 
 	var hideLists = function(){
-		$('.nodecontainer.node-type-list > .expando.expanded').each(function(){
-			Utils.toggleChildrenByExpando($(this), false, false);
+		return new Promise(function(){
+			$('.nodecontainer.node-type-list > .expando.expanded').each(function(){
+				Utils.toggleChildrenByExpando($(this), false, false);
+			});
 		});
 
 	};
@@ -634,8 +640,14 @@ document.addEventListener('click', function(e) {
 	var setTheme = function(){
 		return T.get('board', 'private', 'theme')
             .then(function(theme){
-                $('#maincontent').toggleClass(theme,true);
+                $('#maincontent')
+                .toggleClass("div[class^='theme-']",false)
+                .toggleClass(theme,true);
             });
+	};
+
+	var toggleMainContent = function(show){
+		$('#maincontent').toggle(show);
 	};
 
 	me.init = function(){
@@ -651,11 +663,11 @@ document.addEventListener('click', function(e) {
 
 			createTreeView()
 			.then(setTheme)
+			.then(setExpandoHandler)
+			.then(hideLists)
+			.then(nodelinkClickHandler)
+			.then(setCloseOverlay)
 			.then(function(){
-				setExpandoHandler();
-				hideLists();
-	            nodelinkClickHandler();
-	            setCloseOverlay();
 //	            setRootAsCurrentNode();
 //	            setHoverHandler();
 //	            setKeyboardShortcuts();
@@ -664,6 +676,9 @@ document.addEventListener('click', function(e) {
 					enableDragAndDropCards();
 					enableDragAndDropLists();
 				}
+			})
+			.then(function(){
+				toggleMainContent(true);
 			});
 		});
 

@@ -670,6 +670,9 @@ document.addEventListener('click', function(e) {
 		return T.get('board', 'private', 'expandupto')
 		.then(function(expandupto){
 			if(expandupto === '0'){
+				$('.nodecontainer.node-type-list > .expando').each(function(){
+                    Utils.toggleChildrenByExpando($(this), false, false);
+                });
 				$('.nodecontainer.node-type-board > .expando').each(function(){
                     Utils.toggleChildrenByExpando($(this), false, false);
                 });

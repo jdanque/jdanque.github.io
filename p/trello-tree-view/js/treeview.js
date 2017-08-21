@@ -377,8 +377,8 @@ document.addEventListener('click', function(e) {
 	};
 
 	var enableDragAndDropCards = function(){
-		if(authToken === null || authToken.length === 0){
-			return;
+		if(authToken === null || authToken === undefined || authToken.length === 0){
+			return new Promise(function(resolve){ resolve(); });
 		}
 
 		return new Promise(function(resolve){
@@ -405,8 +405,8 @@ document.addEventListener('click', function(e) {
 	};
 
 	var enableDragAndDropLists = function(){
-		if(authToken === null || authToken.length === 0){
-			return;
+		if(authToken === null || authToken === undefined || authToken.length === 0){
+			return new Promise(function(resolve){ resolve(); });
 		}
 
 		return new Promise(function(resolve){

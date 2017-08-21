@@ -1,5 +1,5 @@
 {
-  "name": "Dev Tree View for Trello",
+  "name": "Dev TreeView",
   "description": "",
   "details": "Displays Trello lists and cards in a tree view for easier visualization.\n\n *Needs Authorization to enable card drag and drop*",
   "icon": {

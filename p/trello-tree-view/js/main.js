@@ -17,7 +17,7 @@ TrelloPowerUp.initialize({
 	'board-buttons': function (t, opts) {
 		return [{
 			icon: ICON,
-			text: 'Trello Tree View',
+			text: 'TreeView',
 			callback: openTreeViewOverlay
 		}];
 	},

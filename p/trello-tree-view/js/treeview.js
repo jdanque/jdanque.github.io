@@ -377,7 +377,7 @@ document.addEventListener('click', function(e) {
 	};
 
 	var enableDragAndDropCards = function(){
-		if(authToken === null || authToken === undefined || authToken.length === 0){
+		if(Utils.isEmpty(authToken)){
 			return new Promise(function(resolve){ resolve(); });
 		}
 
@@ -405,7 +405,7 @@ document.addEventListener('click', function(e) {
 	};
 
 	var enableDragAndDropLists = function(){
-		if(authToken === null || authToken === undefined || authToken.length === 0){
+		if(Utils.isEmpty(authToken)){
 			return new Promise(function(resolve){ resolve(); });
 		}
 
@@ -558,6 +558,9 @@ document.addEventListener('click', function(e) {
 	};
 
 	var Utils = {
+		 isEmpty : function(x){
+		    return (x === undefined || x === null || x.length == 0);
+		 },
 		 elemIsLoading : function(elem,isTrue){
 	        elem.toggleClass('loading',isTrue);
 		 },
@@ -657,29 +660,25 @@ document.addEventListener('click', function(e) {
 		}
 	};
 
-	var hideLists = function(){
+	var collapseNodeContainer = function(name){
 		return new Promise(function(resolve){
-			$('.nodecontainer.node-type-list > .expando.expanded').each(function(){
-				Utils.toggleChildrenByExpando($(this), false, false);
-			});
-			resolve();
-		});
+            $('.nodecontainer.node-type-'+name+' > .expando.expanded').each(function(){
+                Utils.toggleChildrenByExpando($(this), false, false);
+            });
+            resolve();
+        });
 	};
 
 	var setExpanded = function(){
 		return T.get('board', 'private', 'expandupto')
 		.then(function(expandupto){
-			if(expandupto === '0'){
-				$('.nodecontainer.node-type-list > .expando').each(function(){
-                    Utils.toggleChildrenByExpando($(this), false, false);
-                });
-				$('.nodecontainer.node-type-board > .expando').each(function(){
-                    Utils.toggleChildrenByExpando($(this), false, false);
-                });
+			if(Utils.isEmpty(expandupto)){
+				collapseNodeContainer('list');
+			}else if(expandupto === '0'){
+				collapseNodeContainer('list');
+				collapseNodeContainer('board');
 			}else if(expandupto === '1'){
-				$('.nodecontainer.node-type-list > .expando').each(function(){
-                    Utils.toggleChildrenByExpando($(this), false, false);
-                });
+				collapseNodeContainer('list');
 			}
 		});
 
@@ -688,6 +687,9 @@ document.addEventListener('click', function(e) {
 	var setTheme = function(){
 		return T.get('board', 'private', 'theme')
             .then(function(theme){
+                if(Utils.isEmpty(theme)){
+	                theme = themes[0];
+                }
                 $('#maincontent')
                 .toggleClass(themes.join(' '),false)
                 .toggleClass(theme,true);

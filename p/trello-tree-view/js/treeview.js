@@ -685,7 +685,7 @@ document.addEventListener('click', function(e) {
 	};
 
 	var setTheme = function(){
-		return T.get('board', 'private', 'theme')
+		return T.get('board', 'shared', 'theme')
             .then(function(theme){
                 if(Utils.isEmpty(theme)){
 	                theme = themes[0];

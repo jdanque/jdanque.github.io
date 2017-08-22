@@ -141,9 +141,10 @@ document.addEventListener('click', function(e) {
                     .withUrl(board.url)
                     .withType('board')
                     ;
-
+				console.log(board);
                 return T.lists('all');
             }).then(function(lists){
+                console.log(lists);
 				for(var list of lists){
 					var listNode = new Node(list.name)
 						.withId(list.id)
@@ -698,6 +699,10 @@ document.addEventListener('click', function(e) {
 
 	var toggleMainContent = function(show){
 		$('#maincontent').toggle(show);
+	};
+
+	var updateCardBadges = function(){
+
 	};
 
 	me.init = function(){

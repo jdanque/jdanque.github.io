@@ -627,8 +627,9 @@ document.addEventListener('click', function(e) {
 			if(type === 'due'){
 				badgeTitle = 'Due Date';
 				var dueDate = moment(item);
+				var now = moment().local();
 				badgeText = dueDate.format('MMM DD');
-				var diff = moment().diff(dueDate,"hours");
+				var diff = now.diff(dueDate,"hours", true);
 				badgeClass = diff <= 24 ? 'due-soon' : diff <= 36 ? 'due-now' : diff > 36 ? 'past-due' : '';
 			}else if(type === 'attachments'){
 				badgeTitle = 'Attachments';

@@ -29,7 +29,7 @@
             width: 23%;
             height: 2em;
             float: left;
-            margin: 0.5em;
+            margin: 0em 0.5em 0.5em 0em;
             border-radius: 3px;
             cursor: pointer;
         }
@@ -63,6 +63,51 @@
         }
 
 
+    .toggle-item{
+        border-radius: 3px;
+        margin: 0;
+        cursor: pointer;
+        display: block;
+        font-weight: 700;
+        padding: 6px 10px;
+        position: relative;
+        margin: 0 -10px;
+        text-decoration: none;
+        color: #444;
+    }
+
+    .toggle-item-sub{
+        clear: both;
+        color: #8c8c8c;
+        display: block;
+        font-size: 9pt;
+        font-weight: 400;
+        line-height: 15px;
+        margin-top: 4px;
+    }
+
+    .icon-check{
+        font-family: trellicons;
+        font-size: 9pt;
+        height: 18px;
+        line-height: 18px;
+        width: 18px;
+        display: inline-block;
+        font-family: trellicons;
+        -webkit-font-smoothing: antialiased;
+        font-style: normal;
+        font-weight: 400;
+        text-align: center;
+        text-decoration: none;
+        color: #999;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .icon-check:before{
+        content: "\e910";
+    }
+
+
       </style>
   </head>
   <body>
@@ -80,6 +125,7 @@
             <div data-theme="theme-trello-sky" class="theme-tile trello-sky"></div>
             <div data-theme="theme-trello-lime" class="theme-tile trello-lime"></div>
         </div>
+        <hr/>
         <label for="expandupto">Expand up to</label>
         <p class="u-quiet">Set default expand tree from board(collapse all) up to cards(expand all)</p>
         <select id="expandupto">
@@ -87,6 +133,18 @@
             <option value="1" selected="selected">Lists</option>
             <option value="2">Cards</option>
         </select>
+        <div class="toggle-item">
+            <div class="toggle-item-text">Show Labels Enabled</div>
+            <div class="toggle-item-icon icon-check"></div>
+            <div class="toggle-item-sub">Show labels on top of cards</div>
+        </div>
+        <hr/>
+        <div class="toggle-item">
+            <div class="toggle-item-text">Show Badges Enabled</div>
+            <div class="toggle-item-icon icon-check"></div>
+            <div class="toggle-item-sub">Show labels on top of cards</div>
+        </div>
+        <hr/>
         <button id="save" class="mod-primary">Save</button>
     </div>
     <script src="https://jdanque.github.io/p/trello-tree-view/js/settings.js?v=1.0.0"></script>

@@ -56,7 +56,22 @@ document.addEventListener('click', function(e) {
 		this.type = '';
 		this.isClosed = null;
 		this.desc = '';
+		this.labels = [];
+		this.badges = {};
+		this.members = '';
 
+		this.withMembers = function(v){
+			this.members = v;
+			return this;
+		};
+		this.withLabels = function(v){
+			this.labels = v;
+			return this;
+		};
+		this.withBadges = function(v){
+			this.badges = v;
+			return this;
+		};
 		this.withDesc = function(v){
 			this.desc = v;
 			return this;
@@ -91,6 +106,58 @@ document.addEventListener('click', function(e) {
 			this.nodes.push(node);
 		};
 
+		this.labelsToHtml = function(){
+			var html = '<div class="labels-wrapper details-wrapper-top clearfix hidden">';
+            for(var label of this.labels){
+                if(!Utils.isEmpty(label.color)){
+                    html += '<span class="card-label card-label-'+label.color+'">'+label.name+'</span>';
+                }
+            }
+            html += '</div>';
+            return html;
+		};
+
+		this.badgesToHtml = function(){
+            var html = '<div class="badges-wrapper details-wrapper-btm clearfix hidden">';
+            var memberNames = '';
+            if(Utils.isEmpty(this.members)){
+                html+= '<div class="badge" title="Members">'
+                    +'<span class="badge-icon icon-member"></span>';
+
+	            for(var member of this.members){
+                   memberNames += member.fullName + '('+member.username+'), &#10;';
+	            }
+	            memberNames = memberNames.substring(0,memberNames.length-7);
+				html+='<span class="badge-text" title="Members Assigned: &#10;'+memberNames+'">'
+					+''+this.members.length+'</span>'
+					+'</div>';
+            }
+
+
+            html += '<div class="badge" title="Votes">'
+            		+'<span class="badge-icon icon-votes"></span>'
+            		+'<span class="badge-text">'+this.badges.votes+'</span>'
+            	+'</div>';
+
+            html+='<div class="badge" title="Checklist">'
+                    +'<span class="badge-icon icon-checklist"></span>'
+                    +'<span class="badge-text">'+this.badges.checkItemsChecked+'/'+this.badges.checkItems+'</span>'
+                +'</div>';
+
+            html+='<div class="badge" title="Attachments">'
+                    +'<span class="badge-icon icon-attachments"></span>'
+                    +'<span class="badge-text">'+this.badges.attachments+'</span>'
+                +'</div>';
+
+           html+=' <div class="badge" title="Due Date">'
+            		+'<span class="badge-icon icon-due"></span>'
+            		+'<span class="badge-text">'+moment(this.badges.due).format('MMM DD')+'</span>'
+            	+'</div>';
+
+            html += '</div>';
+            return html;
+        };
+
 		this.toHtml = function(){
 
 			var subnodes = '',
@@ -120,8 +187,10 @@ document.addEventListener('click', function(e) {
 			var html = '<li class="nodecontainer '+nodeTypeClass+'">'
 					+ expando
                     +'<a class="nodelink '+nodeTypeClass+'" href="'+this.url+'" data-trello-id="'+this.id+'" data-trello-url="'+this.url+'" '+closedAttr+' ">'
+					+ this.labelsToHtml()
                     +'<span class="node_name">'+this.name+'</span>'
                     + nodeDesc
+                    + this.badgesToHtml()
                     +'</a>'
 					+ subnodes
 					+'</li>'
@@ -141,10 +210,9 @@ document.addEventListener('click', function(e) {
                     .withUrl(board.url)
                     .withType('board')
                     ;
-				console.log(board);
+
                 return T.lists('all');
             }).then(function(lists){
-                console.log(lists);
 				for(var list of lists){
 					var listNode = new Node(list.name)
 						.withId(list.id)
@@ -158,6 +226,9 @@ document.addEventListener('click', function(e) {
 							.withType('card')
 							.withIsClosed(card.closed)
 							.withDesc(card.desc)
+							.withLabels(card.labels)
+							.withBadges(card.badges)
+							.withMembers(card.members)
 							;
 
 						listNode.add(cardNode);
@@ -712,6 +783,20 @@ document.addEventListener('click', function(e) {
 		});
 	};
 
+	var toggleLabels = function(){
+		return T.get('board', 'private', 'showlabels')
+        .then(function(isEnabled){
+            $('.labels-wrapper.hidden').toggleClass('hidden',!isEnabled);
+        });
+	};
+
+	var toggleBadges = function(){
+		return T.get('board', 'private', 'showbadges')
+        .then(function(isEnabled){
+            $('.badges-wrapper.hidden').toggleClass('hidden',!isEnabled);
+        });
+	};
+
 	me.init = function(){
 		window.focus();
 
@@ -735,6 +820,8 @@ document.addEventListener('click', function(e) {
 			.then(setCloseOverlay)
 			.then(enableDragAndDropCards)
 			.then(enableDragAndDropLists)
+			.then(toggleLabels)
+			.then(toggleBadges)
 			.then(function(){
                 toggleMainContent(true);
 			})

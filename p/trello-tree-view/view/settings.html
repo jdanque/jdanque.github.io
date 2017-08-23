@@ -40,8 +40,8 @@
 
         .available-themes:after{
              content: "";
-          display: table;
-          clear: both;
+              display: table;
+              clear: both;
         }
 
         #theme{
@@ -62,50 +62,67 @@
             color: #fff;
         }
 
+        .toggle-item:after{
+         content: "";
+                  display: table;
+                  clear: both;
+        }
 
-    .toggle-item{
-        border-radius: 3px;
-        margin: 0;
-        cursor: pointer;
-        display: block;
-        font-weight: 700;
-        padding: 6px 10px;
-        position: relative;
-        margin: 0 -10px;
-        text-decoration: none;
-        color: #444;
-    }
+        .toggle-item{
+            border-radius: 3px;
+            margin: 0;
+            cursor: pointer;
+            display: block;
+            font-weight: 700;
+            padding: 6px 10px;
+            position: relative;
+            text-decoration: none;
+            color: #444;
+        }
 
-    .toggle-item-sub{
-        clear: both;
-        color: #8c8c8c;
-        display: block;
-        font-size: 9pt;
-        font-weight: 400;
-        line-height: 15px;
-        margin-top: 4px;
-    }
+        .toggle-item:hover{
+            background-color: #298FCA;
+            color: #fff;
+        }
 
-    .icon-check{
-        font-family: trellicons;
-        font-size: 9pt;
-        height: 18px;
-        line-height: 18px;
-        width: 18px;
-        display: inline-block;
-        font-family: trellicons;
-        -webkit-font-smoothing: antialiased;
-        font-style: normal;
-        font-weight: 400;
-        text-align: center;
-        text-decoration: none;
-        color: #999;
-        -webkit-font-smoothing: antialiased;
-    }
+        .toggle-item-text{
+            float:left;
+        }
 
-    .icon-check:before{
-        content: "\e910";
-    }
+        .toggle-item-sub{
+            clear: both;
+            color: #8c8c8c;
+            display: block;
+            font-size: 9pt;
+            font-weight: 400;
+            line-height: 15px;
+            margin-top: 4px;
+        }
+
+        .icon-check{
+            float:left;
+            font-family: trellicons;
+            font-size: 9pt;
+            height: 18px;
+            line-height: 18px;
+            width: 18px;
+            display: inline-block;
+            font-family: trellicons;
+            -webkit-font-smoothing: antialiased;
+            font-style: normal;
+            font-weight: 400;
+            text-align: center;
+            text-decoration: none;
+            color: #999;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .icon-check:before{
+            content: "\e910";
+        }
+
+        .toggle-item-text.enabled:before {content: "Enabled ";}
+        .toggle-item-text.disabled:after {content: " Disabled";}
 
 
       </style>
@@ -133,16 +150,17 @@
             <option value="1" selected="selected">Lists</option>
             <option value="2">Cards</option>
         </select>
-        <div class="toggle-item">
-            <div class="toggle-item-text">Show Labels Enabled</div>
+        <hr/>
+        <div class="toggle-item" id="showlabels" data-enabled="yes">
+            <div class="toggle-item-text">Show Labels</div>
             <div class="toggle-item-icon icon-check"></div>
             <div class="toggle-item-sub">Show labels on top of cards</div>
         </div>
         <hr/>
-        <div class="toggle-item">
-            <div class="toggle-item-text">Show Badges Enabled</div>
+        <div class="toggle-item" id="showbadges" data-enabled="yes">
+            <div class="toggle-item-text">Show Badges</div>
             <div class="toggle-item-icon icon-check"></div>
-            <div class="toggle-item-sub">Show labels on top of cards</div>
+            <div class="toggle-item-sub">Show Badges below cards</div>
         </div>
         <hr/>
         <button id="save" class="mod-primary">Save</button>

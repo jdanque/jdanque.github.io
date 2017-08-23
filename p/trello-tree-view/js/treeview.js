@@ -705,6 +705,13 @@ document.addEventListener('click', function(e) {
 
 	};
 
+	me.showLists = function(){
+		T.lists('all')
+		.then(function(lists){
+			console.log(lists);
+		});
+	};
+
 	me.init = function(){
 		window.focus();
 

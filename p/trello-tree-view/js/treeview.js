@@ -120,7 +120,8 @@ document.addEventListener('click', function(e) {
 		this.badgesToHtml = function(){
             var html = '<div class="badges-wrapper details-wrapper-btm clearfix hidden">';
             var memberNames = '';
-            if(Utils.isEmpty(this.members)){
+
+            if(!Utils.isEmpty(this.members) && this.members > 0){
                 html+= '<div class="badge" title="Members">'
                     +'<span class="badge-icon icon-member"></span>';
 
@@ -133,26 +134,31 @@ document.addEventListener('click', function(e) {
 					+'</div>';
             }
 
+			if(this.badges.votes > 0){
+	            html += '<div class="badge" title="Votes">'
+					+'<span class="badge-icon icon-votes"></span>'
+					+'<span class="badge-text">'+this.badges.votes+'</span>'
+					+'</div>';
+            }
+			if(this.badges.checkItems > 0){
+	            html+='<div class="badge" title="Checklist">'
+					+'<span class="badge-icon icon-checklist"></span>'
+					+'<span class="badge-text">'+this.badges.checkItemsChecked+'/'+this.badges.checkItems+'</span>'
+					+'</div>';
+			}
 
-            html += '<div class="badge" title="Votes">'
-            		+'<span class="badge-icon icon-votes"></span>'
-            		+'<span class="badge-text">'+this.badges.votes+'</span>'
-            	+'</div>';
-
-            html+='<div class="badge" title="Checklist">'
-                    +'<span class="badge-icon icon-checklist"></span>'
-                    +'<span class="badge-text">'+this.badges.checkItemsChecked+'/'+this.badges.checkItems+'</span>'
-                +'</div>';
-
-            html+='<div class="badge" title="Attachments">'
-                    +'<span class="badge-icon icon-attachments"></span>'
-                    +'<span class="badge-text">'+this.badges.attachments+'</span>'
-                +'</div>';
-
-           html+=' <div class="badge" title="Due Date">'
+			if(this.badges.attachments > 0){
+                html+='<div class="badge" title="Attachments">'
+					+'<span class="badge-icon icon-attachments"></span>'
+					+'<span class="badge-text">'+this.badges.attachments+'</span>'
+					+'</div>';
+			}
+			if(!Utils.isEmpty(this.badges.due)){
+                html+=' <div class="badge" title="Due Date">'
             		+'<span class="badge-icon icon-due"></span>'
             		+'<span class="badge-text">'+moment(this.badges.due).format('MMM DD')+'</span>'
-            	+'</div>';
+            	    +'</div>';
+            	}
 
             html += '</div>';
             return html;
@@ -164,7 +170,9 @@ document.addEventListener('click', function(e) {
 				nodeTypeClass = 'node-type-'+this.type,
 				expando = '',
 				closedAttr = '',
-				nodeDesc = ''
+				nodeDesc = '',
+				labels = this.type === 'card' ? this.labelsToHtml() : '',
+				badges = this.type === 'card' ? this.badgesToHtml() : ''
 				;
 
 			if(this.nodes.length>0){
@@ -187,10 +195,10 @@ document.addEventListener('click', function(e) {
 			var html = '<li class="nodecontainer '+nodeTypeClass+'">'
 					+ expando
                     +'<a class="nodelink '+nodeTypeClass+'" href="'+this.url+'" data-trello-id="'+this.id+'" data-trello-url="'+this.url+'" '+closedAttr+' ">'
-					+ this.labelsToHtml()
+					+ labels
                     +'<span class="node_name">'+this.name+'</span>'
                     + nodeDesc
-                    + this.badgesToHtml()
+                    + badges
                     +'</a>'
 					+ subnodes
 					+'</li>'

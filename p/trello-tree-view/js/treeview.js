@@ -110,7 +110,7 @@ document.addEventListener('click', function(e) {
 			var html = '<div class="labels-wrapper details-wrapper-top clearfix hidden">';
             for(var label of this.labels){
                 if(!Utils.isEmpty(label.color)){
-                    html += '<span class="card-label card-label-'+label.color+'">'+label.name+'</span>';
+                    html += '<span title="'+label.name+'" class="card-label card-label-'+label.color+'">'+label.name+'</span>';
                 }
             }
             html += '</div>';
@@ -630,7 +630,7 @@ document.addEventListener('click', function(e) {
 				var now = moment().local();
 				badgeText = dueDate.format('MMM DD');
 				var diff = now.diff(dueDate,"hours", true);
-				badgeClass = diff <= 24 ? 'due-soon' : diff <= 36 ? 'due-now' : diff > 36 ? 'past-due' : '';
+				badgeClass = diff < 0 && diff > -25 ? 'due-soon' : diff <= 36 && diff >= 0 ? 'due-now' : diff > 36 ? 'past-due' : '';
 			}else if(type === 'attachments'){
 				badgeTitle = 'Attachments';
 				badgeText = item;
@@ -642,7 +642,7 @@ document.addEventListener('click', function(e) {
 				badgeTitle = 'Votes';
 				badgeText = item;
 			}else if(type === 'member'){
-				badgeTitle = '';
+				badgeTitle = 'Members assigned: &#10;';
 				for(var member of item){
                    badgeTitle += member.fullName + '('+member.username+'), &#10;';
                 }

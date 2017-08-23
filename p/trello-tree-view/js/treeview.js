@@ -119,46 +119,26 @@ document.addEventListener('click', function(e) {
 
 		this.badgesToHtml = function(){
             var html = '<div class="badges-wrapper details-wrapper-btm clearfix hidden">';
-            var memberNames = '';
 
-            if(!Utils.isEmpty(this.members) && this.members.length > 0){
-                html+= '<div class="badge" title="Members">'
-                    +'<span class="badge-icon icon-member"></span>';
-
-	            for(var member of this.members){
-                   memberNames += member.fullName + '('+member.username+'), &#10;';
-	            }
-	            memberNames = memberNames.substring(0,memberNames.length-7);
-				html+='<span class="badge-text" title="Members Assigned: &#10;'+memberNames+'">'
-					+''+this.members.length+'</span>'
-					+'</div>';
+            if(!Utils.isEmpty(this.badges.due)){
+                html+= getBadgeHtml(this.badges.due,'due');
             }
-
-			if(this.badges.votes > 0){
-	            html += '<div class="badge" title="Votes">'
-					+'<span class="badge-icon icon-votes"></span>'
-					+'<span class="badge-text">'+this.badges.votes+'</span>'
-					+'</div>';
-            }
-			if(this.badges.checkItems > 0){
-	            html+='<div class="badge" title="Checklist">'
-					+'<span class="badge-icon icon-checklist"></span>'
-					+'<span class="badge-text">'+this.badges.checkItemsChecked+'/'+this.badges.checkItems+'</span>'
-					+'</div>';
-			}
 
 			if(this.badges.attachments > 0){
-                html+='<div class="badge" title="Attachments">'
-					+'<span class="badge-icon icon-attachments"></span>'
-					+'<span class="badge-text">'+this.badges.attachments+'</span>'
-					+'</div>';
+				html+= getBadgeHtml(this.badges.attachments,'attachments');
 			}
-			if(!Utils.isEmpty(this.badges.due)){
-                html+=' <div class="badge" title="Due Date">'
-            		+'<span class="badge-icon icon-due"></span>'
-            		+'<span class="badge-text">'+moment(this.badges.due).format('MMM DD')+'</span>'
-            	    +'</div>';
-            	}
+
+			if(this.badges.checkItems > 0){
+				html+= getBadgeHtml({checkItems : this.badges.checkItems, checkItemsChecked: this.badges.checkItemsChecked},'checklist');
+			}
+
+			if(this.badges.votes > 0){
+				html+= getBadgeHtml(this.badges.votes,'votes');
+            }
+
+            if(!Utils.isEmpty(this.members) && this.members.length > 0){
+                html+= getBadgeHtml(this.members,'member');
+            }
 
             html += '</div>';
             return html;
@@ -635,6 +615,46 @@ document.addEventListener('click', function(e) {
 			);
 		});
 
+	};
+
+	var getBadgeHtml = function(item,type){
+			var html = '',
+				badgeTitle = '',
+				badgeText = '',
+				badgeClass = ''
+				;
+
+			if(type === 'due'){
+				badgeTitle = 'Due Date';
+				var dueDate = moment(item);
+				badgeText = dueDate.format('MMM DD');
+				var diff = moment().diff(dueDate,"hours");
+				badgeClass = diff <= 24 ? 'due-soon' : diff <= 36 ? 'due-now' : diff > 36 ? 'past-due' : '';
+			}else if(type === 'attachments'){
+				badgeTitle = 'Attachments';
+				badgeText = item;
+			}else if(type === 'checklist'){
+				badgeTitle = 'Checklist';
+				badgeText = ''+item.checkItemsChecked+'/'+item.checkItems+'';
+				badgeClass = item.checkItems - item.checkItemsChecked == 0 ? 'checklist-complete' : '';
+			}else if(type === 'votes'){
+				badgeTitle = 'Votes';
+				badgeText = item;
+			}else if(type === 'member'){
+				badgeTitle = '';
+				for(var member of item){
+                   badgeTitle += member.fullName + '('+member.username+'), &#10;';
+                }
+                badgeTitle = badgeTitle.substring(0,badgeTitle.length-7);
+
+				badgeText = item.length;
+			}
+
+			html+=' <div class="badge '+badgeClass+'" title="'+badgeTitle+'">'
+                        +'<span class="badge-icon icon-'+type+'"></span>'
+                        +'<span class="badge-text">'+badgeText+'</span>'
+                        +'</div>';
+            return html;
 	};
 
 	var Utils = {

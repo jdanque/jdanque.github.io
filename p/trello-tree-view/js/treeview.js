@@ -121,7 +121,7 @@ document.addEventListener('click', function(e) {
             var html = '<div class="badges-wrapper details-wrapper-btm clearfix hidden">';
             var memberNames = '';
 
-            if(!Utils.isEmpty(this.members) && this.members > 0){
+            if(!Utils.isEmpty(this.members) && this.members.length > 0){
                 html+= '<div class="badge" title="Members">'
                     +'<span class="badge-icon icon-member"></span>';
 
@@ -794,6 +794,7 @@ document.addEventListener('click', function(e) {
 	var toggleLabels = function(){
 		return T.get('board', 'private', 'showlabels')
         .then(function(isEnabled){
+            isEnabled = Utils.isEmpty(isEnabled) ? true : isEnabled;
             $('.labels-wrapper.hidden').toggleClass('hidden',!isEnabled);
         });
 	};
@@ -801,6 +802,7 @@ document.addEventListener('click', function(e) {
 	var toggleBadges = function(){
 		return T.get('board', 'private', 'showbadges')
         .then(function(isEnabled){
+            isEnabled = Utils.isEmpty(isEnabled) ? true : isEnabled;
             $('.badges-wrapper.hidden').toggleClass('hidden',!isEnabled);
         });
 	};

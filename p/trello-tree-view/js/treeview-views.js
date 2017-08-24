@@ -5,24 +5,27 @@ var TreeView = TreeView || {};
 
 TreeView.Views = TreeView.Views || {};
 
-//
-//TreeView.Views.Card = Backbone.View.extend({
-//
-//	tagName:  'li',
-//	template: _.template($('#card-template').html()),
-//
-//	events : {
-//
-//	}
-//
-//
-//});
+
+TreeView.Views.Card = Backbone.View.extend({
+
+	tagName:  'li',
+
+	events : {
+
+	},
+
+	initialize : function(){
+		this.template = _.template($('#card-template').html());
+	}
+
+
+});
 
 TreeView.Views.CardBadge = Backbone.View.extend({
 	tagName : 'div',
-	template: _.template($('#cardbadge-template').html()),
 
 	initialize: function() {
+		this.template = _.template($('#cardbadge-template').html());
         this.listenTo(this.model, "update", this.render);
     },
     render: function() {

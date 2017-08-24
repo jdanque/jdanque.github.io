@@ -5,18 +5,18 @@ var TreeView = TreeView || {};
 
 TreeView.Views = TreeView.Views || {};
 
-
-TreeView.Views.Card = Backbone.View.extend({
-
-	tagName:  'li',
-	template: _.template($('#card-template').html()),
-
-	events : {
-
-	}
-
-
-});
+//
+//TreeView.Views.Card = Backbone.View.extend({
+//
+//	tagName:  'li',
+//	template: _.template($('#card-template').html()),
+//
+//	events : {
+//
+//	}
+//
+//
+//});
 
 TreeView.Views.CardBadge = Backbone.View.extend({
 	tagName : 'div',

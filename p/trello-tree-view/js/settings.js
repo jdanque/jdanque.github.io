@@ -64,9 +64,8 @@ function toggleItem(elem, isEnabled){
 
 
 document.getElementById('save').addEventListener('click', function(){
-	return new Promise(function(resolve){
-		resolve($('.theme-tile.selectedtheme').attr('data-theme'));
-	}).then(function(v){
+	return Promise.resolve($('.theme-tile.selectedtheme').attr('data-theme')
+	).then(function(v){
 		return t.set('board', 'private', 'theme', v);
 	})
 	.then(function(){

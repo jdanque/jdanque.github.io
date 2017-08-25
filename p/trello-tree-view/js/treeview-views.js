@@ -89,7 +89,7 @@ TreeView.Views.Board = Backbone.View.extend({
 
 });
 
-TreeView.Views.List = = Backbone.View.extend({
+TreeView.Views.List = Backbone.View.extend({
 	tagName : 'li',
 
 	events : {

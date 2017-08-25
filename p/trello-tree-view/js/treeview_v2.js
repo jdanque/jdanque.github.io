@@ -41,7 +41,7 @@ T.render(function(){
 	Since T.lists('all') just returns list from the current board we'll
 	just add these lists to the current 'one' board
 	*/
-	var renderLists = function(){
+	var renderListsAndCards = function(){
 		return T.lists('all')
 		.then(function(lists){
 			var board = me._models.main.get('boards').at(0);
@@ -50,8 +50,23 @@ T.render(function(){
 					'id'   : list.id,
 					'name' : list.name
 				}));
+
+				for(var card of list.cards){
+					board.get('lists')
+						.get({id : list.id})
+						.add(new TreeView.Models.Card({
+							'id'   : card.id,
+							'name' : card.name,
+							'url'  : card.url,
+							'desc' : card.desc
+						}));
+				}
 			}
 		});
+	};
+
+	var renderCards = function(card){
+
 	};
 
 	me.init = function(){
@@ -66,7 +81,7 @@ T.render(function(){
 
 			initMainWiring()
 			.then(renderBoards)
-			.then(renderLists)
+			.then(renderListsAndCards)
 			;
 
 		});

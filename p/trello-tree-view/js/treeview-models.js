@@ -33,12 +33,15 @@ TreeView.Models.Boards = Backbone.Collection.extend({
 TreeView.Models.List = TreeView.Models.Node.extend({
 	defaults :  _.extend({},TreeView.Models.Node.prototype.defaults,{
 		'type'  : 'list'
-	})
+		'cards': []
+	}),
+	initialize : function(){
+		this.set('cards', new TreeView.Models.Cards());
+	}
 });
 TreeView.Models.Lists = Backbone.Collection.extend({
 	model	  :  TreeView.Models.List
 });
-
 
 
 TreeView.Models.Card = TreeView.Models.Node.extend({

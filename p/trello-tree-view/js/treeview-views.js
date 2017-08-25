@@ -40,6 +40,21 @@ TreeView.Views.CardBadge = Backbone.View.extend({
 
 });
 
+TreeView.Views.Card = Backbone.View.extend({
+	tagName : 'li',
+
+	initialize: function() {
+		this.template = _.template($('#node-template').html());
+        this.listenTo(this.model, "update", this.render);
+
+        this.setElement(this.template(this.model.attributes));
+    },
+    render: function() {
+		return this;
+	}
+
+});
+
 
 TreeView.Views.List = Backbone.View.extend({
 	tagName : 'li',
@@ -53,6 +68,8 @@ TreeView.Views.List = Backbone.View.extend({
 		this.template = _.template($('#node-template').html());
 		this.$expando = this.$('.expando');
 
+		this.listenTo(this.model.get('cards'), 'add', this.addCard);
+
 		this.setElement(this.template(this.model.attributes));
 	},
 	render : function(){
@@ -61,6 +78,10 @@ TreeView.Views.List = Backbone.View.extend({
 		}
 		return this;
 	},
+	addCard : function(cardModel){
+		var view = new TreeView.Views.Card({ model: cardModel });
+		this.$el.children('.subnodelist').append(view.render().el);
+	},
 
 	toggleExpand : function(e){
 		e.preventDefault();
@@ -68,12 +89,11 @@ TreeView.Views.List = Backbone.View.extend({
 
 		var isExpanded = this.model.get('expanded');
 		this.$el.children('.expando')
-			.toggleClass('expanded',isExpanded)
-			.toggleClass('collapsed',!isExpanded);
+			.toggleClass('expanded',!isExpanded)
+			.toggleClass('collapsed',isExpanded);
 		this.model.set('expanded',!isExpanded);
 
 		subnodelist.slideToggle(100, function(){});
-
 
 	},
 

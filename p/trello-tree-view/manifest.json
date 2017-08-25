@@ -1,9 +1,9 @@
 {
-  "name": "Dev TreeView",
+  "name": "TreeView",
   "description": "",
   "details": "Displays Trello lists and cards in a tree view for easier visualization.\n\n *Needs Authorization to enable card drag and drop*",
   "icon": {
-    "url": "https://jdanque.github.io/p/trello-tree-view/img/logo.svg?v=1.0.0"
+    "url": "https://d1ipfkx2xm6eh3.cloudfront.net/img/logo.svg?v=1.3.0"
   },
   "author": "Jobo Danque",
   "capabilities": [
@@ -16,7 +16,7 @@
   ],
   "connectors": {
     "iframe": {
-      "url": "https://jdanque.github.io/p/trello-tree-view/index.html?v=1.0.0"
+      "url": "https://d1ipfkx2xm6eh3.cloudfront.net/index.html?v=1.3.0"
     }
   },
   "recommend": {

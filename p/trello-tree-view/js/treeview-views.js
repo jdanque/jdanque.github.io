@@ -14,6 +14,7 @@ TreeView.Views.Main = Backbone.View.extend({
 
 		//listeners
 		this.listenTo(this.model, 'change:theme', this.changeTheme);
+		this.listenTo(this.model, 'add:boards', this.addBoard);
 
 		this.availableThemes = [
 			'theme-trello-light-gray',

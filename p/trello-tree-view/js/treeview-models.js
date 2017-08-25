@@ -9,14 +9,12 @@ TreeView.Models = TreeView.Models || {};
 TreeView.Models.Main = Backbone.Model.extend({
 	defaults : {
 		'theme' : 'theme-trello-light-gray',
-		'boards' : new Backbone.Collection.extend({
-				model : TreeView.Models.Board
-	    })
+		'boards' : new TreeView.Models.Boards()
 	}
 
 });
 
-TreeView.Models.Main.Boards = Backbone.Collection.extend({
+TreeView.Models.Boards = Backbone.Collection.extend({
 	model : TreeView.Models.Board
 });
 
@@ -38,7 +36,7 @@ TreeView.Models.Board = TreeView.Models.Node.extend({
 	})
 });
 
-TreeView.Models.Board.Lists = Backbone.Collection.extend({
+TreeView.Models.Lists = Backbone.Collection.extend({
 	model	  :  TreeView.Models.List
 });
 
@@ -48,7 +46,7 @@ TreeView.Models.List = TreeView.Models.Node.extend({
 	})
 });
 
-TreeView.Models.List.Cards = Backbone.Collection.extend({
+TreeView.Models.Cards = Backbone.Collection.extend({
 	model : TreeView.Models.Card
 });
 
@@ -60,7 +58,7 @@ TreeView.Models.Card = TreeView.Models.Node.extend({
 
 });
 
-TreeView.Models.Card.Labels = Backbone.Collection.extend({
+TreeView.Models.CardLabels = Backbone.Collection.extend({
     model : TreeView.Models.CardLabel
 });
 
@@ -71,7 +69,7 @@ TreeView.Models.CardLabel = Backbone.Model.extend({
     }
 });
 
-TreeView.Models.Card.Badges = Backbone.Collection.extend({
+TreeView.Models.CardBadges = Backbone.Collection.extend({
     model : TreeView.Models.CardBadge
 });
 

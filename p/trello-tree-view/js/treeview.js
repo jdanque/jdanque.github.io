@@ -108,7 +108,7 @@ document.addEventListener('click', function(e) {
 			this.nodes.push(node);
 		};
 
-		createBoardNode = function(board){
+		this.createBoardNode = function(board){
 			return new Node(board.name)
                .withId(board.id)
                .withUrl(board.url)
@@ -116,7 +116,7 @@ document.addEventListener('click', function(e) {
                ;
 		};
 
-		createCardNode = function(card){
+		this.createCardNode = function(card){
 			return new Node(card.name)
                 .withId(card.id)
                 .withUrl(card.url)
@@ -129,7 +129,7 @@ document.addEventListener('click', function(e) {
                 ;
 		};
 
-		createListNode = function(list){
+		this.createListNode = function(list){
 			return new Node(list.name)
                 .withId(list.id)
                 .withType('list')

@@ -942,7 +942,7 @@ document.addEventListener('click', function(e) {
 			}
 		},
 
-		getListObjFromArrById : function)(id,listArr){
+		getListObjFromArrById : function(id,listArr){
 			for(var l of listArr){
 				if(l.id === id){
 					return l;

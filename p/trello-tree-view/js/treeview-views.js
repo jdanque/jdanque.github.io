@@ -26,8 +26,7 @@ TreeView.Views.Main = Backbone.View.extend({
 		];
 
 		//set default theme
-		this.$el.toggleClass(this.availableThemes.join(' '),false)
-			.toggleClass(this.model.get('theme'),true);
+		this.changeTheme(this.model.get('theme'));
 
     },
     render: function() {
@@ -35,16 +34,23 @@ TreeView.Views.Main = Backbone.View.extend({
 	},
 	clear : function(){
 		this.$treeViewMain.html('');
+		return this;
+	},
+	changeTheme : function(theme){
+		this.$el.toggleClass(this.availableThemes.join(' '),false)
+			.toggleClass(them,true);
 	},
 	addBoard : function(boardModel){
 		var view = new TreeView.Views.Board({ model: boardModel });
 		this.$treeViewMain.append(view.render().el);
+		return this;
 	}
 
 });
 
 
 TreeView.Views.Board = Backbone.View.extend({
+	tagName : 'li',
 
 	events : {
 
@@ -52,9 +58,30 @@ TreeView.Views.Board = Backbone.View.extend({
 
 	initialize : function(){
 		this.template = _.template($('#node-template').html());
-		this.$el.html(this.template(this.model.attributes));
 		this.$expando = this.$('.expando');
+
+		this.setElement(this.template(this.model.attributes));
+	},
+
+	render : function(){
 		return this;
+	}
+
+
+});
+
+TreeView.Views.CardLabel = Backbone.View.extend({
+	tagName : 'li',
+
+	events : {
+
+	},
+
+	initialize : function(){
+		this.template = _.template($('#node-template').html());
+		this.$expando = this.$('.expando');
+
+		this.setElement(this.template(this.model.attributes));
 	},
 
 	render : function(){
@@ -70,6 +97,7 @@ TreeView.Views.CardBadge = Backbone.View.extend({
 	initialize: function() {
 		this.template = _.template($('#cardbadge-template').html());
         this.listenTo(this.model, "update", this.render);
+
     },
     render: function() {
 		this.$el.html(this.template(this.model.attributes));

@@ -8,8 +8,12 @@ TreeView.Models = TreeView.Models || {};
 
 TreeView.Models.Main = Backbone.Model.extend({
 	defaults : {
-		'theme' : 'theme-trello-light-gray'
+		'theme' : 'theme-trello-light-gray',
+		'boards' : Backbone.Collection.extend({
+				model : TreeView.Models.Board
+	    })
 	}
+
 });
 
 TreeView.Models.Main.Boards = Backbone.Collection.extend({

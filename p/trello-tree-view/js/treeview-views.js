@@ -12,6 +12,9 @@ TreeView.Views.Main = Backbone.View.extend({
 		this.$closeTreeView = this.$('#closetreeview');
 		this.$treeViewMain = this.$('#treeviewmain');
 
+		//listeners
+		this.listenTo(this.model.get('boards'), 'change:title', this.changeTheme);
+
 		this.availableThemes = [
 			'theme-trello-light-gray',
 			'theme-trello-blue',
@@ -28,6 +31,7 @@ TreeView.Views.Main = Backbone.View.extend({
 		//set default theme
 		this.changeTheme(this.model.get('theme'));
 
+
     },
     render: function() {
 		return this;
@@ -36,7 +40,8 @@ TreeView.Views.Main = Backbone.View.extend({
 		this.$treeViewMain.html('');
 		return this;
 	},
-	changeTheme : function(theme){
+	changeTheme : function(){
+		var theme = this.model.get('theme');
 		this.$el.toggleClass(this.availableThemes.join(' '),false)
 			.toggleClass(theme,true);
 	},

@@ -54,6 +54,9 @@ TreeView.Views.List = Backbone.View.extend({
 		this.setElement(this.template(this.model.attributes));
 	},
 	render : function(){
+		if(this.model.get('expanded')){
+			this.$el.children('.subnodelist').hide();
+		}
 		return this;
 	},
 
@@ -68,7 +71,6 @@ TreeView.Views.Board = Backbone.View.extend({
 
 	initialize : function(){
 		this.template = _.template($('#node-template').html());
-		this.$expando = this.$el.children('.expando');
 
 		this.listenTo(this.model.get('lists'), 'add', this.addList);
 
@@ -86,9 +88,11 @@ TreeView.Views.Board = Backbone.View.extend({
 
 	renderExpando : function(){
 		var isExpanded = this.model.get('expanded');
-		this.$expando.toggleClass('expanded',isExpanded)
+		this.$el.children('.expando')
+			.toggleClass('expanded',isExpanded)
 			.toggleClass('collapsed',!isExpanded);
-	}
+
+	},
 
 
 });

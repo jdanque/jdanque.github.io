@@ -5,19 +5,6 @@ var TreeView = TreeView || {};
 
 TreeView.Models = TreeView.Models || {};
 
-
-TreeView.Models.Main = Backbone.Model.extend({
-	defaults : {
-		'theme' : 'theme-trello-light-gray',
-		'boards' : new TreeView.Models.Boards()
-	}
-
-});
-
-TreeView.Models.Boards = Backbone.Collection.extend({
-	model : TreeView.Models.Board
-});
-
 TreeView.Models.Node = Backbone.Model.extend({
 	defaults: {
 		'type' 	     : '',
@@ -35,9 +22,8 @@ TreeView.Models.Board = TreeView.Models.Node.extend({
 		'type' : 'board'
 	})
 });
-
-TreeView.Models.Lists = Backbone.Collection.extend({
-	model	  :  TreeView.Models.List
+TreeView.Models.Boards = Backbone.Collection.extend({
+	model : TreeView.Models.Board
 });
 
 TreeView.Models.List = TreeView.Models.Node.extend({
@@ -45,10 +31,11 @@ TreeView.Models.List = TreeView.Models.Node.extend({
 		'type'  : 'list'
 	})
 });
-
-TreeView.Models.Cards = Backbone.Collection.extend({
-	model : TreeView.Models.Card
+TreeView.Models.Lists = Backbone.Collection.extend({
+	model	  :  TreeView.Models.List
 });
+
+
 
 TreeView.Models.Card = TreeView.Models.Node.extend({
 	defaults :  _.extend({},TreeView.Models.Node.prototype.defaults,{
@@ -57,9 +44,8 @@ TreeView.Models.Card = TreeView.Models.Node.extend({
 	})
 
 });
-
-TreeView.Models.CardLabels = Backbone.Collection.extend({
-    model : TreeView.Models.CardLabel
+TreeView.Models.Cards = Backbone.Collection.extend({
+	model : TreeView.Models.Card
 });
 
 TreeView.Models.CardLabel = Backbone.Model.extend({
@@ -68,9 +54,8 @@ TreeView.Models.CardLabel = Backbone.Model.extend({
        'color' : ''
     }
 });
-
-TreeView.Models.CardBadges = Backbone.Collection.extend({
-    model : TreeView.Models.CardBadge
+TreeView.Models.CardLabels = Backbone.Collection.extend({
+    model : TreeView.Models.CardLabel
 });
 
 TreeView.Models.CardBadge = Backbone.Model.extend({
@@ -79,6 +64,9 @@ TreeView.Models.CardBadge = Backbone.Model.extend({
        'value'     : '',
        'iconClass' : ''
     }
+});
+TreeView.Models.CardBadges = Backbone.Collection.extend({
+    model : TreeView.Models.CardBadge
 });
 
 TreeView.Models.CardBadgeDue = TreeView.Models.CardBadge.extend({
@@ -115,14 +103,25 @@ TreeView.Models.CardBadgeVote = TreeView.Models.CardBadge.extend({
 	})
 });
 
-TreeView.Models.CardBadgeMembers = Backbone.Collection.extend({
-	model : TreeView.Models.CardBadgeMember
-});
-
 TreeView.Models.CardBadgeMember = TreeView.Models.CardBadge.extend({
 	defaults :  _.extend({},TreeView.Models.CardBadge.prototype.defaults,{
 		'fullName' : '',
 		'username' : '',
 		'iconClass' : 'member'
 	})
+});
+TreeView.Models.CardBadgeMembers = Backbone.Collection.extend({
+	model : TreeView.Models.CardBadgeMember
+});
+
+
+TreeView.Models.Main = Backbone.Model.extend({
+	defaults : {
+		'theme' : 'theme-trello-light-gray',
+		'boards' : []
+	},
+	initialize : function(){
+		this.set('boards', new TreeView.Models.Boards());
+	}
+
 });

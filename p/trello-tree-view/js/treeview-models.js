@@ -12,7 +12,7 @@ TreeView.Models.Node = Backbone.Model.extend({
 		'name'   	 : '',
 		'url'		 : '',
 		'desc'   	 : '',
-		'closed' 	 : false,
+		'expanded' 	 : false,
 		'hasExpando' : true
 	}
 });

@@ -29,7 +29,7 @@ T.render(function(){
 	var renderBoards = function(){
 		return T.board('all')
 		.then(function(board){
-			me._views.main.addBoard(new TreeView.Models.Board({
+			me._models.main.get('boards').add(new TreeView.Models.Board({
 				'id'    : board.id,
         		'name'  : board.name,
         		'url' 	: board.url

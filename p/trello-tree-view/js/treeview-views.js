@@ -46,7 +46,6 @@ TreeView.Views.Main = Backbone.View.extend({
 			.toggleClass(theme,true);
 	},
 	addBoard : function(boardModel){
-		this.model.get('boards').add(boardModel);
 		var view = new TreeView.Views.Board({ model: boardModel });
 		this.$treeViewMain.append(view.render().el);
 		return this;
@@ -71,6 +70,12 @@ TreeView.Views.Board = Backbone.View.extend({
 
 	render : function(){
 		return this;
+	},
+
+	renderExpando : function(){
+		var isExpanded = this.model.get('expanded');
+		this.$expando.toggleClass('expanded',isExpanded)
+			.toggleClass('collapsed',!isExpanded);
 	}
 
 

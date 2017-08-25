@@ -47,7 +47,8 @@ TreeView.Models.Lists = Backbone.Collection.extend({
 TreeView.Models.Card = TreeView.Models.Node.extend({
 	defaults :  _.extend({},TreeView.Models.Node.prototype.defaults,{
 		'type' : 'card',
-		'hasExpando' : false
+		'hasExpando' : false,
+		'closed' : false
 	})
 
 });

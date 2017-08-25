@@ -8,6 +8,12 @@ T.render(function(){
 	}
 });
 
+document.addEventListener('click', function(e) {
+  if(e.target.tagName == 'BODY') {
+    T.closeOverlay().done();
+  }
+});
+
 (function($, me){
 	me.API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 	me.authToken = '';
@@ -55,10 +61,11 @@ T.render(function(){
 					board.get('lists').get({id : list.id})
 						.get('cards')
 						.add(new TreeView.Models.Card({
-							'id'   : card.id,
-							'name' : card.name,
-							'url'  : card.url,
-							'desc' : card.desc
+							'id'  	 : card.id,
+							'name'	 : card.name,
+							'url' 	 : card.url,
+							'desc'	 : card.desc,
+							'closed' : card.closed
 						}));
 				}
 			}

@@ -42,6 +42,9 @@ TreeView.Views.CardBadge = Backbone.View.extend({
 
 TreeView.Views.Card = Backbone.View.extend({
 	tagName : 'li',
+	events : {
+		'click > a.nodelink': 'openCard'
+	},
 
 	initialize: function() {
 		this.template = _.template($('#node-template').html());
@@ -51,6 +54,20 @@ TreeView.Views.Card = Backbone.View.extend({
     },
     render: function() {
 		return this;
+	},
+	openCard : function(e){
+		e.preventDefault();
+		 if(this.model.get('closed')){
+			 T.navigate({ url : this.model.get('url') })
+			 .then(function(){
+				 T.closeOverlay();
+			 });
+		 }else{
+			 T.showCard(this.model.get('id'))
+			 .then(function(){
+				 T.closeOverlay();
+			 });
+		 }
 	}
 
 });
@@ -135,8 +152,8 @@ TreeView.Views.Board = Backbone.View.extend({
 
 		var isExpanded = this.model.get('expanded');
 		this.$el.children('.expando')
-			.toggleClass('expanded',isExpanded)
-			.toggleClass('collapsed',!isExpanded);
+			.toggleClass('expanded',!isExpanded)
+			.toggleClass('collapsed',isExpanded);
 		this.model.set('expanded',!isExpanded);
 
 		subnodelist.slideToggle(100, function(){});
@@ -150,8 +167,13 @@ TreeView.Views.Board = Backbone.View.extend({
 TreeView.Views.Main = Backbone.View.extend({
 	el : '#maincontent',
 
+	events : {
+		'click  #closetreeview' : 'exitTreeView',
+		'keyup': 'keyUpAction'
+	},
+
+
 	initialize: function() {
-		this.$closeTreeView = this.$('#closetreeview');
 		this.$treeViewMain = this.$('#treeviewmain');
 
 		this.listenTo(this.model, 'change:theme', this.changeTheme);
@@ -180,6 +202,21 @@ TreeView.Views.Main = Backbone.View.extend({
 	clear : function(){
 		this.$treeViewMain.html('');
 		return this;
+	},
+	exitTreeView : function(){
+		T.closeOverlay().done();
+	},
+	keyUpAction : function(ev){
+		switch(ev.keyCode) {
+		   case Key.ESC :
+				if($('.grabbing').length == 0){
+					T.closeOverlay().done();
+				}else{
+					$('.subnodelist.node-type-list').sortable("cancel");
+				}
+				break;
+			default:break;
+		}
 	},
 	changeTheme : function(){
 		var theme = this.model.get('theme');

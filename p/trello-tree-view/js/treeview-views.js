@@ -45,6 +45,7 @@ TreeView.Views.List = Backbone.View.extend({
 	tagName : 'li',
 
 	events : {
+		'click > .expando' : 'toggleExpando'
 	},
 
 	initialize : function(){
@@ -60,6 +61,14 @@ TreeView.Views.List = Backbone.View.extend({
 		return this;
 	},
 
+	toggleExpando : function(){
+		var isExpanded = this.model.get('expanded');
+		this.$el.children('.expando')
+			.toggleClass('expanded',isExpanded)
+			.toggleClass('collapsed',!isExpanded);
+		this.model.set('expanded',!isExpanded);
+	},
+
 });
 
 
@@ -67,6 +76,7 @@ TreeView.Views.Board = Backbone.View.extend({
 	tagName : 'li',
 
 	events : {
+		'click > .expando' : 'toggleExpando'
 	},
 
 	initialize : function(){
@@ -78,6 +88,10 @@ TreeView.Views.Board = Backbone.View.extend({
 	},
 
 	render : function(){
+		if(!this.model.get('expanded')){
+			this.$el.children('.subnodelist').hide();
+		}
+
 		return this;
 	},
 
@@ -86,13 +100,13 @@ TreeView.Views.Board = Backbone.View.extend({
 		this.$el.children('.subnodelist').append(view.render().el);
 	},
 
-	renderExpando : function(){
+	toggleExpando : function(){
 		var isExpanded = this.model.get('expanded');
 		this.$el.children('.expando')
 			.toggleClass('expanded',isExpanded)
 			.toggleClass('collapsed',!isExpanded);
-
-	},
+		this.model.set('expanded',!isExpanded);
+	}
 
 
 });
@@ -105,7 +119,6 @@ TreeView.Views.Main = Backbone.View.extend({
 		this.$closeTreeView = this.$('#closetreeview');
 		this.$treeViewMain = this.$('#treeviewmain');
 
-		//listeners
 		this.listenTo(this.model, 'change:theme', this.changeTheme);
 		this.listenTo(this.model.get('boards'), 'add', this.addBoard);
 

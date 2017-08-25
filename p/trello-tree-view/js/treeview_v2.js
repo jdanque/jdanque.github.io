@@ -72,10 +72,6 @@ document.addEventListener('click', function(e) {
 		});
 	};
 
-	var renderCards = function(card){
-
-	};
-
 	me.init = function(){
 		//set focus to main window
 		window.focus();

@@ -47,6 +47,8 @@ document.addEventListener('click', function(e) {
 		}
 	};
 
+	me._data = '';
+
 
 	var Node = function(name){
 		this.id = '';
@@ -106,6 +108,34 @@ document.addEventListener('click', function(e) {
 			this.nodes.push(node);
 		};
 
+		createBoardNode = function(board){
+			return new Node(board.name)
+               .withId(board.id)
+               .withUrl(board.url)
+               .withType('board')
+               ;
+		};
+
+		createCardNode = function(card){
+			return new Node(card.name)
+                .withId(card.id)
+                .withUrl(card.url)
+                .withType('card')
+                .withIsClosed(card.closed)
+                .withDesc(card.desc)
+                .withLabels(card.labels)
+                .withBadges(card.badges)
+                .withMembers(card.members)
+                ;
+		};
+
+		createListNode = function(list){
+			return new Node(list.name)
+                .withId(list.id)
+                .withType('list')
+                ;
+		};
+
 		this.labelsToHtml = function(){
 			var html = '<div class="labels-wrapper details-wrapper-top clearfix hidden">';
             for(var label of this.labels){
@@ -156,7 +186,7 @@ document.addEventListener('click', function(e) {
 				;
 
 			if(this.nodes.length>0){
-				subnodes += '<ul class="subnodelist '+nodeTypeClass+'">';
+				subnodes += '<ul class="subnodelist '+nodeTypeClass+'" >';
 				for(var i = 0 ; i < this.nodes.length; i++){
 					subnodes += this.nodes[i].toHtml();
 				}
@@ -193,31 +223,18 @@ document.addEventListener('click', function(e) {
 
 		return T.board('all')
             .then(function(board){
-                root = new Node(board.name)
-                    .withId(board.id)
-                    .withUrl(board.url)
-                    .withType('board')
-                    ;
+                root = Node.createBoardNode(board);
 
                 return T.lists('all');
             }).then(function(lists){
+
+                me._data = lists;
+
 				for(var list of lists){
-					var listNode = new Node(list.name)
-						.withId(list.id)
-						.withType('list')
-						;
+					var listNode = Node.createListNode(list);
 
 					for(var card of list.cards){
-						var cardNode = new Node(card.name)
-							.withId(card.id)
-							.withUrl(card.url)
-							.withType('card')
-							.withIsClosed(card.closed)
-							.withDesc(card.desc)
-							.withLabels(card.labels)
-							.withBadges(card.badges)
-							.withMembers(card.members)
-							;
+						var cardNode = Node.createCardNode(card);
 
 						listNode.add(cardNode);
 					}
@@ -228,7 +245,6 @@ document.addEventListener('click', function(e) {
 				document.getElementById('treeviewmain').innerHTML = root.toHtml();
 			})
 			;
-
 	};
 
 	var setExpandoHandler = function(){
@@ -625,12 +641,12 @@ document.addEventListener('click', function(e) {
 				;
 
 			if(type === 'due'){
-				badgeTitle = 'Due Date';
 				var dueDate = moment(item);
 				var now = moment().local();
 				badgeText = dueDate.format('MMM DD');
 				var diff = now.diff(dueDate,"hours", true);
 				badgeClass = diff < 0 && diff > -25 ? 'due-soon' : diff <= 36 && diff >= 0 ? 'due-now' : diff > 36 ? 'past-due' : '';
+				badgeTitle = badgeClass.length > 0 ? badgeClass.replace("-"," ") : 'Due on: '+badgeText;
 			}else if(type === 'attachments'){
 				badgeTitle = 'Attachments';
 				badgeText = item;
@@ -758,7 +774,34 @@ document.addEventListener('click', function(e) {
 			    _nodeContainer.toggleClass('collapsed',true);
 			    _nodeLink.prepend('<span class="subnodes-count">'+_subNodesList.children('.nodecontainer').length+'</span>');
 			}
-		}
+		},
+		compare : function (obj1, obj2) {
+        	//Loop through properties in object 1
+        	for (var p in obj1) {
+        		//Check property exists on both objects
+        		if (obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) return false;
+
+        		switch (typeof (obj1[p])) {
+        			//Deep compare objects
+        			case 'object':
+        				if (!Object.compare(obj1[p], obj2[p])) return false;
+        				break;
+        			//Compare function code
+        			case 'function':
+        				if (typeof (obj2[p]) == 'undefined' || (p != 'compare' && obj1[p].toString() != obj2[p].toString())) return false;
+        				break;
+        			//Compare values
+        			default:
+        				if (obj1[p] != obj2[p]) return false;
+        		}
+        	}
+
+        	//Check object 2 for any extra properties
+        	for (var p in obj2) {
+        		if (typeof (obj1[p]) == 'undefined') return false;
+        	}
+        	return true;
+        }
 	};
 
 	var collapseNodeContainer = function(name){
@@ -801,10 +844,6 @@ document.addEventListener('click', function(e) {
 		$('#maincontent').toggle(show);
 	};
 
-	var updateCardBadges = function(){
-
-	};
-
 	me.showLists = function(){
 		T.lists('all')
 		.then(function(lists){
@@ -826,6 +865,107 @@ document.addEventListener('click', function(e) {
             isEnabled = Utils.isEmpty(isEnabled) ? true : isEnabled;
             $('.badges-wrapper.hidden').toggleClass('hidden',!isEnabled);
         });
+	};
+
+	var updateTreeView = {
+
+		isStop : false,
+		interval : 1e4, //10sec
+
+		getUpdatedLists : function(){
+			return T.lists('all');
+		},
+
+		updateDOM : function(uList){
+			if(!Utils.compare(uList,me._data)){
+
+				//deleted lists
+				for(var dList of me._data){
+					var listObj = updateTreeView.getListObjFromArrById(dList.id, uList);
+					if(Utils.isEmpty(listObj)){
+						$('.nodelink.node-type-list[data-trello-id="'+dList.id+'"]')
+							.parents('.nodecontainer.node-type-list').eq(0)
+							.remove();
+					}
+				}
+
+				//update existing and add new lists
+				for(var i = 0; i < uList.length; i++){
+					var aList = uList[i];
+                    var listObj = updateTreeView.getListObjFromArrById(aList.id, me._data);
+
+                    if(!Utils.isEmpty(listObj)){
+                        //update current existing lists and cards
+						var linkNodeContainer = $('.subnodelist.node-type-board')
+							.find('.nodelink[data-trello-id="'+aList.id+'"]')
+							.closest('.nodecontainer');
+
+						//check position
+						if(linkNodeContainer.index() !== i){
+							//list is in a different position than before
+							if(i==0){
+								$('.subnodelist.node-type-board')
+	                                .find('.nodecontainer.node-type-list')
+	                                .eq(i).before(linkNodeContainer);
+							}else{
+								$('.subnodelist.node-type-board')
+									.find('.nodecontainer.node-type-list')
+									.eq(i).after(linkNodeContainer);
+							}
+						}
+
+						//update cards
+						//check deleted cards
+						//update existing cards
+						//check cards positions
+						//add new cards
+
+
+
+                    }else{
+                        //create new lists and cards not existing currently
+                        var listNode = Node.createListNode(aList);
+
+                        for(aCard of aList.cards){
+							listNode.add(Node.createCardNode(aCard));
+                        }
+
+                        $('.subnodelist.node-type-board').append(listNode.toHtml());
+						var _expando = $('.subnodelist.node-type-board')
+							.find('.nodelink[data-trello-id="'+listNode.id+'"]')
+							.closest('.nodecontainer').children('.expando');
+						 Utils.toggleChildrenByExpando(_expando, false, false);
+                    }
+                }
+
+
+			}
+		},
+
+		getListObjFromArrById : function)(id,listArr){
+			for(var l of listArr){
+				if(l.id === id){
+					return l;
+				}
+			}
+
+			return null;
+		},
+
+		start : function(){
+			return new Promise.resolve().then(function resolver() {
+                return updateTreeView.getUpdatedLists()
+                .then(function(lists){
+
+                    updateTreeView.updateDOM(uList);
+
+                    if(!updateTreeView.isStop)
+                        resolver();
+                });
+            }).catch((error) => {
+                throw error;
+            });
+		}
 	};
 
 	me.init = function(){
@@ -853,6 +993,7 @@ document.addEventListener('click', function(e) {
 			.then(enableDragAndDropLists)
 			.then(toggleLabels)
 			.then(toggleBadges)
+//			.then(updateTreeView.start)
 			.then(function(){
                 toggleMainContent(true);
 			})

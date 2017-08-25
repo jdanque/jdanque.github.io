@@ -29,18 +29,10 @@
     </div>
 
 
-
-    <script type="text/template" id="cardbadge-template">
-        <div class="badge " title="<%- title %>">
-            <span class="badge-icon icon-<%- iconClass%>"></span>
-            <span class="badge-text"><%= value %></span>
-        </div>
-    </script>
-
     <script type="text/template" id="node-template">
         <li class="nodecontainer node-type-<%- type %>">
             <% if (hasExpando) { %>
-                <span class="expando expanded"></span>
+            <span class="expando expanded"></span>
             <% } %>
             <a class="nodelink node-type-<%- type %>" href="<%- url %>" data-trello-id="<%- id %>" >
                 <!--label-->
@@ -49,10 +41,16 @@
                 <!--badge-->
             </a>
             <% if (hasExpando) { %>
-                <ul class="subnodelist node-type-<%- type %>" >
-                </ul>
+            <ul class="subnodelist node-type-<%- type %>" >
+            </ul>
             <% } %>
         </li>
+    </script>
+    <script type="text/template" id="cardbadge-template">
+        <div class="badge " title="<%- title %>">
+            <span class="badge-icon icon-<%- iconClass%>"></span>
+            <span class="badge-text"><%= value %></span>
+        </div>
     </script>
     </body>
 </html>

@@ -25,6 +25,7 @@ TreeView.Views.Main = Backbone.View.extend({
 			'theme-trello-lime'
 		];
 
+		//set default theme
 		this.$el.toggleClass(this.availableThemes.join(' '),false)
 			.toggleClass(this.model.get('theme'),true);
 
@@ -57,6 +58,7 @@ TreeView.Views.Board = Backbone.View.extend({
 	},
 
 	render : function(){
+		return this;
 	}
 
 

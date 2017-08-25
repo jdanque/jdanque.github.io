@@ -5,14 +5,6 @@ var TreeView = TreeView || {};
 
 TreeView.Models = TreeView.Models || {};
 
-TreeView.Models.Node = Backbone.Model.extend({
-
-    defaults: {
-       'id'   : '',
-       'name' : '',
-	}
-
-});
 
 TreeView.Models.TreeMain = Backbone.Collection.extend({
 	model : TreeView.Models.BoardNode
@@ -21,29 +13,51 @@ TreeView.Models.TreeMain = Backbone.Collection.extend({
 TreeView.Models.BoardNode = Backbone.Collection.extend({
 	model 	: TreeView.Models.ListNode,
 	defaults: {
-		'id'     : '',
-	    'name'   : '',
-		'closed' : false
+		'type' 	     : 'board',
+		'id'     	 : '',
+	    'name'   	 : '',
+		'url'		 : '',
+		'desc'   	 : '',
+		'closed' 	 : false,
+		'hasExpando' : true,
+		'labels' 	 : [],
+		'badges' 	 : []
 	}
 
 });
 
-TreeView.Models.ListNode = TreeView.Models.BoardNode.extend({
-	model	: TreeView.Models.CardNode
+TreeView.Models.ListNode = Backbone.Collection.extend({
+	model	  :  TreeView.Models.CardNode,
+	defaults  : {
+		'type' 	     : 'list',
+		'id'     	 : '',
+		'name'   	 : '',
+		'url'		 : '',
+		'desc'   	 : '',
+		'closed' 	 : false,
+		'hasExpando' : true,
+		'labels' 	 : [],
+		'badges' 	 : []
+	}
 });
 
-TreeView.Models.CardNode = TreeView.Models.Node.extend({
-	defaults : _.extend({},TreeView.Models.Node.prototype.defaults,{
-		'url'    : '',
-		'desc'   : '',
-		'labels' : [],
-		'badges' : [],
+TreeView.Models.CardNode = Backbone.Model.extend({
+	defaults : {
+		'type'   	 : 'card',
+		'id'   		 : '',
+		'name' 	     : '',
+		'url'   	 : '',
+		'desc'   	 : '',
+		'closed' 	 : false,
+		'hasExpando' : false,
+		'labels' 	 : [],
+		'badges' 	 : []
+	},
 
-		initialize : function(){
-			this.set({labels : new TreeView.Models.CardLabels()});
-			this.set({badges : new TreeView.Models.CardBadges()});
-		}
-	})
+	initialize : function(){
+		this.set({labels : new TreeView.Models.CardLabels()});
+		this.set({badges : new TreeView.Models.CardBadges()});
+	}
 
 });
 

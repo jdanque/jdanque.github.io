@@ -11,7 +11,9 @@ T.render(function(){
 (function($, me){
 	me.API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 	me.authToken = '';
-	me.status.init = false;
+	me.status = {
+		init : false
+	};
 
 	me._models = {};
 	me._views = {};

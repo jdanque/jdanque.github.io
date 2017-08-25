@@ -65,19 +65,16 @@ TreeView.Views.List = Backbone.View.extend({
 	toggleExpand : function(e){
 		e.preventDefault();
 		var subnodelist = this.$el.children('.subnodelist');
-		if(!subnodelist.hasClass('toggling')){
-			subnodelist.toggleClass('toggling',true);
 
-			var isExpanded = this.model.get('expanded');
-			this.$el.children('.expando')
-				.toggleClass('expanded',isExpanded)
-				.toggleClass('collapsed',!isExpanded);
-			this.model.set('expanded',!isExpanded);
+		var isExpanded = this.model.get('expanded');
+		this.$el.children('.expando')
+			.toggleClass('expanded',isExpanded)
+			.toggleClass('collapsed',!isExpanded);
+		this.model.set('expanded',!isExpanded);
 
-			subnodelist.slideToggle(100, function(){
-				subnodelist.toggleClass('toggling',false);
-			});
-		}
+		subnodelist.slideToggle(100, function(){});
+
+
 	},
 
 });
@@ -115,19 +112,14 @@ TreeView.Views.Board = Backbone.View.extend({
 	toggleExpand : function(e){
 		e.preventDefault();
 		var subnodelist = this.$el.children('.subnodelist');
-		if(!subnodelist.hasClass('toggling')){
-			subnodelist.toggleClass('toggling',true);
 
-			var isExpanded = this.model.get('expanded');
-			this.$el.children('.expando')
-				.toggleClass('expanded',isExpanded)
-				.toggleClass('collapsed',!isExpanded);
-			this.model.set('expanded',!isExpanded);
+		var isExpanded = this.model.get('expanded');
+		this.$el.children('.expando')
+			.toggleClass('expanded',isExpanded)
+			.toggleClass('collapsed',!isExpanded);
+		this.model.set('expanded',!isExpanded);
 
-			subnodelist.slideToggle(100, function(){
-				subnodelist.toggleClass('toggling',false);
-			});
-		}
+		subnodelist.slideToggle(100, function(){});
 
 	}
 

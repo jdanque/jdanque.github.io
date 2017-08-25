@@ -19,8 +19,12 @@ TreeView.Models.Node = Backbone.Model.extend({
 
 TreeView.Models.Board = TreeView.Models.Node.extend({
 	defaults :  _.extend({},TreeView.Models.Node.prototype.defaults,{
-		'type' : 'board'
-	})
+		'type' : 'board',
+		'lists': []
+	}),
+	initialize : function(){
+		this.set('lists', new TreeView.Models.Lists());
+	}
 });
 TreeView.Models.Boards = Backbone.Collection.extend({
 	model : TreeView.Models.Board

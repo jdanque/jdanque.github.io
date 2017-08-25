@@ -58,12 +58,14 @@ TreeView.Views.Board = Backbone.View.extend({
 	tagName : 'li',
 
 	events : {
-
 	},
 
 	initialize : function(){
 		this.template = _.template($('#node-template').html());
 		this.$expando = this.$('.expando');
+		this.$subnodelist = this.$('.subnodelist');
+
+		this.listenTo(this.model.get('lists'), 'add', this.addList);
 
 		this.setElement(this.template(this.model.attributes));
 	},
@@ -72,12 +74,36 @@ TreeView.Views.Board = Backbone.View.extend({
 		return this;
 	},
 
+	addList : function(listModel){
+		var view = new TreeView.Views.List({ model: listModel });
+		this.$subnodelist.append(view.render().el);
+		return this;
+	}
+
 	renderExpando : function(){
 		var isExpanded = this.model.get('expanded');
 		this.$expando.toggleClass('expanded',isExpanded)
 			.toggleClass('collapsed',!isExpanded);
 	}
 
+
+});
+
+TreeView.Views.List = = Backbone.View.extend({
+	tagName : 'li',
+
+	events : {
+	},
+
+	initialize : function(){
+		this.template = _.template($('#node-template').html());
+		this.$expando = this.$('.expando');
+
+		this.setElement(this.template(this.model.attributes));
+	},
+	render : function(){
+		return this;
+	},
 
 });
 

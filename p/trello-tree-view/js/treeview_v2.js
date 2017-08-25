@@ -34,7 +34,24 @@ T.render(function(){
         		'name'  : board.name,
         		'url' 	: board.url
 			}));
-		})
+		});
+	};
+
+	/**
+	Since T.lists('all') just returns list from the current board we'll
+	just add these lists to the current 'one' board
+	*/
+	var renderLists = function(){
+		return T.lists('all')
+		.then(function(lists){
+			var board = me._models.main.get('boards').at(0);
+			for(var list of lists){
+				board.get('lists').add(new TreeView.Models.List({
+					'id'   : list.id,
+					'name' : list.name
+				}));
+			}
+		});
 	};
 
 	me.init = function(){
@@ -49,6 +66,7 @@ T.render(function(){
 
 			initMainWiring()
 			.then(renderBoards)
+			.then(renderLists)
 			;
 
 		});

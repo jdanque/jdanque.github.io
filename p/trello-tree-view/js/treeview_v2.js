@@ -52,8 +52,8 @@ T.render(function(){
 				}));
 
 				for(var card of list.cards){
-					board.get('lists')
-						.get({id : list.id})
+					board.get('lists').get({id : list.id})
+						.get('cards')
 						.add(new TreeView.Models.Card({
 							'id'   : card.id,
 							'name' : card.name,

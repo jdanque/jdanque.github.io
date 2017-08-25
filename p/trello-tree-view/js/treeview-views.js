@@ -7,7 +7,7 @@ TreeView.Views = TreeView.Views || {};
 
 
 TreeView.Views.Main = Backbone.View.extend({
-	el : '#maincontent'
+	el : '#maincontent',
 
 	initialize: function() {
 		this.$closeTreeView = this.$('#closetreeview');

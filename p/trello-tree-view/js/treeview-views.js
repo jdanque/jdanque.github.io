@@ -5,13 +5,29 @@ var TreeView = TreeView || {};
 
 TreeView.Views = TreeView.Views || {};
 
-
 TreeView.Views.Main = Backbone.View.extend({
 	el : '#maincontent',
 
 	initialize: function() {
 		this.$closeTreeView = this.$('#closetreeview');
 		this.$treeViewMain = this.$('#treeviewmain');
+
+		this.availableThemes = [
+			'theme-trello-light-gray',
+			'theme-trello-blue',
+			'theme-trello-green',
+			'theme-trello-orange',
+			'theme-trello-red',
+			'theme-trello-yellow',
+			'theme-trello-purple',
+			'theme-trello-pink',
+			'theme-trello-sky',
+			'theme-trello-lime'
+		];
+
+		$el.toggleClass(this.availableThemes.join(' '),false)
+			.toggleClass(this.model.get('theme'),true);
+
     },
     render: function() {
 		return this;

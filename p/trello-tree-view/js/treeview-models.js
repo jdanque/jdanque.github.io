@@ -6,62 +6,57 @@ var TreeView = TreeView || {};
 TreeView.Models = TreeView.Models || {};
 
 
-TreeView.Models.TreeMain = Backbone.Collection.extend({
-	model : TreeView.Models.BoardNode
-});
-
-TreeView.Models.BoardNode = Backbone.Collection.extend({
-	model 	: TreeView.Models.ListNode,
-	defaults: {
-		'type' 	     : 'board',
-		'id'     	 : '',
-	    'name'   	 : '',
-		'url'		 : '',
-		'desc'   	 : '',
-		'closed' 	 : false,
-		'hasExpando' : true,
-		'labels' 	 : [],
-		'badges' 	 : []
+TreeView.Models.Main = Backbone.Model.extend({
+	defaults : {
+		'theme' : 'theme-trello-blue'
 	}
-
 });
 
-TreeView.Models.ListNode = Backbone.Collection.extend({
-	model	  :  TreeView.Models.CardNode,
-	defaults  : {
-		'type' 	     : 'list',
+TreeView.Models.Main.Boards = Backbone.Collection.extend({
+	model : TreeView.Models.Board
+});
+
+TreeView.Models.Node = Backbone.Model.extend({
+	defaults: {
+		'type' 	     : '',
 		'id'     	 : '',
 		'name'   	 : '',
 		'url'		 : '',
 		'desc'   	 : '',
 		'closed' 	 : false,
-		'hasExpando' : true,
-		'labels' 	 : [],
-		'badges' 	 : []
+		'hasExpando' : true
 	}
 });
 
-TreeView.Models.CardNode = Backbone.Model.extend({
-	defaults : {
-		'type'   	 : 'card',
-		'id'   		 : '',
-		'name' 	     : '',
-		'url'   	 : '',
-		'desc'   	 : '',
-		'closed' 	 : false,
-		'hasExpando' : false,
-		'labels' 	 : [],
-		'badges' 	 : []
-	},
+TreeView.Models.Board = TreeView.Models.Node.extend({
+	defaults :  _.extend({},TreeView.Models.Node.prototype.defaults,{
+		'type' : 'board'
+	})
+});
 
-	initialize : function(){
-		this.set({labels : new TreeView.Models.CardLabels()});
-		this.set({badges : new TreeView.Models.CardBadges()});
-	}
+TreeView.Models.Board.Lists = Backbone.Collection.extend({
+	model	  :  TreeView.Models.List
+});
+
+TreeView.Models.List = TreeView.Models.Node.extend({
+	defaults :  _.extend({},TreeView.Models.Node.prototype.defaults,{
+		'type'  : 'list'
+	})
+});
+
+TreeView.Models.List.Cards = Backbone.Collection.extend({
+	model : TreeView.Models.Card
+});
+
+TreeView.Models.Card = TreeView.Models.Node.extend({
+	defaults :  _.extend({},TreeView.Models.Node.prototype.defaults,{
+		'type' : 'card',
+		'hasExpando' : false
+	})
 
 });
 
-TreeView.Models.CardLabels = Backbone.Collection.extend({
+TreeView.Models.Card.Labels = Backbone.Collection.extend({
     model : TreeView.Models.CardLabel
 });
 
@@ -72,7 +67,7 @@ TreeView.Models.CardLabel = Backbone.Model.extend({
     }
 });
 
-TreeView.Models.CardBadges = Backbone.Collection.extend({
+TreeView.Models.Card.Badges = Backbone.Collection.extend({
     model : TreeView.Models.CardBadge
 });
 

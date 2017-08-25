@@ -26,6 +26,17 @@ T.render(function(){
 		});
 	};
 
+	var renderBoards = function(){
+		return T.board('all')
+		.then(function(board){
+			me._views.main.addBoard(new TreeView.Models.Board({
+				'id'    : board.id,
+        		'name'  : board.name,
+        		'url' 	: board.url
+			}));
+		})
+	};
+
 	me.init = function(){
 		//set focus to main window
 		window.focus();
@@ -36,7 +47,9 @@ T.render(function(){
         T.get('member', 'private', 'token').then(function(token){
 			me.authToken = token;
 
-			initMainWiring();
+			initMainWiring()
+			.then(renderBoards)
+			;
 
 		});
 

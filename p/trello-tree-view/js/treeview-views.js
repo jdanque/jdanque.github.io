@@ -78,7 +78,7 @@ TreeView.Views.Board = Backbone.View.extend({
 		var view = new TreeView.Views.List({ model: listModel });
 		this.$subnodelist.append(view.render().el);
 		return this;
-	}
+	},
 
 	renderExpando : function(){
 		var isExpanded = this.model.get('expanded');

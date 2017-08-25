@@ -69,7 +69,6 @@ TreeView.Views.Board = Backbone.View.extend({
 	initialize : function(){
 		this.template = _.template($('#node-template').html());
 		this.$expando = this.$('.expando');
-		this.$subnodelist = this.$('.subnodelist');
 
 		this.listenTo(this.model.get('lists'), 'add', this.addList);
 
@@ -82,8 +81,7 @@ TreeView.Views.Board = Backbone.View.extend({
 
 	addList : function(listModel){
 		var view = new TreeView.Views.List({ model: listModel });
-		this.$subnodelist.append(view.render().el);
-		return this;
+		this.$el.find('.subnodelist').append(view.render().el);
 	},
 
 	renderExpando : function(){

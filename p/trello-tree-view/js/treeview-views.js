@@ -38,7 +38,7 @@ TreeView.Views.Main = Backbone.View.extend({
 	},
 	changeTheme : function(theme){
 		this.$el.toggleClass(this.availableThemes.join(' '),false)
-			.toggleClass(them,true);
+			.toggleClass(theme,true);
 	},
 	addBoard : function(boardModel){
 		var view = new TreeView.Views.Board({ model: boardModel });

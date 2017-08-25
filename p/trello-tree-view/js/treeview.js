@@ -223,7 +223,7 @@ document.addEventListener('click', function(e) {
 
 		return T.board('all')
             .then(function(board){
-                root = Node.createBoardNode(board);
+                root = new Node().createBoardNode(board);
 
                 return T.lists('all');
             }).then(function(lists){
@@ -231,10 +231,10 @@ document.addEventListener('click', function(e) {
                 me._data = lists;
 
 				for(var list of lists){
-					var listNode = Node.createListNode(list);
+					var listNode = new Node().createListNode(list);
 
 					for(var card of list.cards){
-						var cardNode = Node.createCardNode(card);
+						var cardNode = new Node().createCardNode(card);
 
 						listNode.add(cardNode);
 					}
@@ -924,10 +924,10 @@ document.addEventListener('click', function(e) {
 
                     }else{
                         //create new lists and cards not existing currently
-                        var listNode = Node.createListNode(aList);
+                        var listNode = new Node().createListNode(aList);
 
-                        for(aCard of aList.cards){
-							listNode.add(Node.createCardNode(aCard));
+                        for(var aCard of aList.cards){
+							listNode.add(new Node().createCardNode(aCard));
                         }
 
                         $('.subnodelist.node-type-board').append(listNode.toHtml());

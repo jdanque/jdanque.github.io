@@ -54,7 +54,7 @@ TreeView.Views.List = Backbone.View.extend({
 		this.setElement(this.template(this.model.attributes));
 	},
 	render : function(){
-		if(this.model.get('expanded')){
+		if(!this.model.get('expanded')){
 			this.$el.children('.subnodelist').hide();
 		}
 		return this;

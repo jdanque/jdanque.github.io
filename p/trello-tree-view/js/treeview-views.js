@@ -45,7 +45,8 @@ TreeView.Views.List = Backbone.View.extend({
 	tagName : 'li',
 
 	events : {
-		'click > .expando' : 'toggleExpando'
+		'click > .expando' : 'toggleExpand',
+		'click > a.nodelink': 'toggleExpand'
 	},
 
 	initialize : function(){
@@ -61,12 +62,22 @@ TreeView.Views.List = Backbone.View.extend({
 		return this;
 	},
 
-	toggleExpando : function(){
-		var isExpanded = this.model.get('expanded');
-		this.$el.children('.expando')
-			.toggleClass('expanded',isExpanded)
-			.toggleClass('collapsed',!isExpanded);
-		this.model.set('expanded',!isExpanded);
+	toggleExpand : function(e){
+		e.preventDefault();
+		var subnodelist = this.$el.children('.subnodelist');
+		if(!subnodelist.hasClass('toggling')){
+			subnodelist.toggleClass('toggling',true);
+
+			var isExpanded = this.model.get('expanded');
+			this.$el.children('.expando')
+				.toggleClass('expanded',isExpanded)
+				.toggleClass('collapsed',!isExpanded);
+			this.model.set('expanded',!isExpanded);
+
+			subnodelist.slideToggle(100, function(){
+				subnodelist.toggleClass('toggling',false);
+			});
+		}
 	},
 
 });
@@ -76,7 +87,8 @@ TreeView.Views.Board = Backbone.View.extend({
 	tagName : 'li',
 
 	events : {
-		'click > .expando' : 'toggleExpando'
+		'click > .expando' : 'toggleExpand',
+		'click > a.nodelink': 'toggleExpand'
 	},
 
 	initialize : function(){
@@ -100,12 +112,23 @@ TreeView.Views.Board = Backbone.View.extend({
 		this.$el.children('.subnodelist').append(view.render().el);
 	},
 
-	toggleExpando : function(){
-		var isExpanded = this.model.get('expanded');
-		this.$el.children('.expando')
-			.toggleClass('expanded',isExpanded)
-			.toggleClass('collapsed',!isExpanded);
-		this.model.set('expanded',!isExpanded);
+	toggleExpand : function(e){
+		e.preventDefault();
+		var subnodelist = this.$el.children('.subnodelist');
+		if(!subnodelist.hasClass('toggling')){
+			subnodelist.toggleClass('toggling',true);
+
+			var isExpanded = this.model.get('expanded');
+			this.$el.children('.expando')
+				.toggleClass('expanded',isExpanded)
+				.toggleClass('collapsed',!isExpanded);
+			this.model.set('expanded',!isExpanded);
+
+			subnodelist.slideToggle(100, function(){
+				subnodelist.toggleClass('toggling',false);
+			});
+		}
+
 	}
 
 

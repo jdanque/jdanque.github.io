@@ -85,6 +85,9 @@ T.render(function(){
 			initMainWiring()
 			.then(renderBoards)
 			.then(renderListsAndCards)
+			.then(function(){
+				T.sizeTo('#maincontent');
+			})
 			;
 
 		});

@@ -119,13 +119,10 @@ TreeView.Views.List = Backbone.View.extend({
 			.toggleClass('loading',_this.model.get('_loading'));
 	},
 
-	addCard : function(cardModel){
+	addCard : function(cardModel,options){
 		var view = new TreeView.Views.Card({ model: cardModel });
 
 		this.$el.children('.subnodelist').append(view.render().el);
-
-		if(this.model.get('subnodes').indexOf(cardModel) < 0){
-		}
 
 		this.$el.children('.nodelink').children('.subnodes-count').html(this.model.get('subnodes').length);
 	},

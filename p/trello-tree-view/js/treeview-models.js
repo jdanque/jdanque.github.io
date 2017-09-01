@@ -20,10 +20,10 @@ TreeView.Models.Node = Backbone.Model.extend({
 TreeView.Models.Board = TreeView.Models.Node.extend({
 	defaults :  _.extend({},TreeView.Models.Node.prototype.defaults,{
 		'type' : 'board',
-		'lists': []
+		'subnodes': []
 	}),
 	initialize : function(){
-		this.set('lists', new TreeView.Models.Lists());
+		this.set('subnodes', new TreeView.Models.Lists());
 	}
 });
 TreeView.Models.Boards = Backbone.Collection.extend({
@@ -33,10 +33,10 @@ TreeView.Models.Boards = Backbone.Collection.extend({
 TreeView.Models.List = TreeView.Models.Node.extend({
 	defaults :  _.extend({},TreeView.Models.Node.prototype.defaults,{
 		'type'  : 'list',
-		'cards': []
+		'subnodes': []
 	}),
 	initialize : function(){
-		this.set('cards', new TreeView.Models.Cards());
+		this.set('subnodes', new TreeView.Models.Cards());
 	}
 });
 TreeView.Models.Lists = Backbone.Collection.extend({
@@ -126,11 +126,11 @@ TreeView.Models.CardBadgeMembers = Backbone.Collection.extend({
 TreeView.Models.Main = Backbone.Model.extend({
 	defaults : {
 		'theme' : 'theme-gray',
-		'boards' : []
+		'subnodes' : []
 	},
 	initialize : function(){
 		var _this = this;
-		_this.set('boards', new TreeView.Models.Boards());
+		_this.set('subnodes', new TreeView.Models.Boards());
 	}
 
 });

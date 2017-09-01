@@ -85,7 +85,7 @@ TreeView.Views.List = Backbone.View.extend({
 		this.template = _.template($('#node-template').html());
 		this.$expando = this.$('.expando');
 
-		this.listenTo(this.model.get('cards'), 'add', this.addCard);
+		this.listenTo(this.model.get('subnodes'), 'add', this.addCard);
 
 		this.setElement(this.template(this.model.attributes));
 
@@ -112,15 +112,14 @@ TreeView.Views.List = Backbone.View.extend({
 //		}
 	},
 	render : function(){
-		var nodelink = this.$el.children('.nodelink'),
+		var
 			subnodelist = this.$el.children('.subnodelist'),
 			isExpanded = this.model.get('expanded')
 			;
 
 		if(!isExpanded){
 			subnodelist.hide();
-			this.toggleSubnodeCount(isExpanded, subnodelist.children('.nodecontainer').length);
-			nodelink.prepend('<span class="subnodes-count">'+subnodelist.children('.nodecontainer').length+'</span>');
+			this.toggleSubnodeCount(isExpanded);
 		}
 
 
@@ -129,13 +128,11 @@ TreeView.Views.List = Backbone.View.extend({
 	addCard : function(cardModel){
 		var view = new TreeView.Views.Card({ model: cardModel });
 		this.$el.children('.subnodelist').append(view.render().el);
+		this.$el.children('.nodelink').children('.subnodes-count').html(this.model.get('subnodes').length);
 	},
 
-	toggleSubnodeCount : function(isShow,count){
-		this.$el.children('.nodelink').children('.subnodes-count').remove();
-		if(isShow){
-			this.$el.children('.nodelink').prepend('<span class="subnodes-count">'+count+'</span>');
-		}
+	toggleSubnodeCount : function(isShow){
+		this.$el.children('.nodelink').children('.subnodes-count').toggle(isShow);
 	},
 
 	toggleExpand : function(e){
@@ -151,7 +148,7 @@ TreeView.Views.List = Backbone.View.extend({
 		_this.model.set('expanded',!isExpanded);
 
 		subnodelist.slideToggle(100, function(){
-			_this.toggleSubnodeCount(isExpanded,subnodelist.children('.nodecontainer').length);
+			_this.toggleSubnodeCount(isExpanded);
 			T.sizeTo('#maincontent');
 		});
 
@@ -171,22 +168,20 @@ TreeView.Views.Board = Backbone.View.extend({
 	initialize : function(){
 		this.template = _.template($('#node-template').html());
 
-		this.listenTo(this.model.get('lists'), 'add', this.addList);
+		this.listenTo(this.model.get('subnodes'), 'add', this.addList);
 
 		this.setElement(this.template(this.model.attributes));
 	},
 
 	render : function(){
 		var _this = this,
-			nodelink = _this.$el.children('.nodelink'),
 			subnodelist = _this.$el.children('.subnodelist'),
 			isExpanded = _this.model.get('expanded')
 			;
 
 		if(!isExpanded){
 			subnodelist.hide();
-			_this.toggleSubnodeCount(isExpanded, subnodelist.children('.nodecontainer').length);
-			nodelink.prepend('<span class="subnodes-count">'+subnodelist.children('.nodecontainer').length+'</span>');
+			_this.toggleSubnodeCount(isExpanded);
 		}
 
 		return this;
@@ -195,14 +190,12 @@ TreeView.Views.Board = Backbone.View.extend({
 	addList : function(listModel){
 		var view = new TreeView.Views.List({ model: listModel });
 		this.$el.children('.subnodelist').append(view.render().el);
+		this.$el.children('.nodelink').children('.subnodes-count').html(this.model.get('subnodes').length);
 	},
 
 
-	toggleSubnodeCount : function(isShow,count){
-		this.$el.children('.nodelink').children('.subnodes-count').remove();
-		if(isShow){
-			this.$el.children('.nodelink').prepend('<span class="subnodes-count">'+count+'</span>');
-		}
+	toggleSubnodeCount : function(isShow){
+		this.$el.children('.nodelink').children('.subnodes-count').toggle(isShow);
 	},
 
 	toggleExpand : function(e){
@@ -218,7 +211,7 @@ TreeView.Views.Board = Backbone.View.extend({
 		_this.model.set('expanded',!isExpanded);
 
 		subnodelist.slideToggle(100, function(){
-			_this.toggleSubnodeCount(isExpanded,subnodelist.children('.nodecontainer').length);
+			_this.toggleSubnodeCount(isExpanded);
 
 			T.sizeTo('#maincontent');
 		});
@@ -242,7 +235,7 @@ TreeView.Views.Main = Backbone.View.extend({
 		this.$treeViewMain = this.$('#treeviewmain');
 
 		this.listenTo(this.model, 'change:theme', this.changeTheme);
-		this.listenTo(this.model.get('boards'), 'add', this.addBoard);
+		this.listenTo(this.model.get('subnodes'), 'add', this.addBoard);
 
 		this.availableThemes = [
 			'theme-gray',

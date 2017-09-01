@@ -35,7 +35,7 @@ T.render(function(){
 	var renderBoards = function(){
 		return T.board('all')
 		.then(function(board){
-			me._models.main.get('boards').add(new TreeView.Models.Board({
+			me._models.main.get('subnodes').add(new TreeView.Models.Board({
 				'id'    : board.id,
         		'name'  : board.name,
         		'url' 	: board.url
@@ -50,16 +50,16 @@ T.render(function(){
 	var renderListsAndCards = function(){
 		return T.lists('all')
 		.then(function(lists){
-			var board = me._models.main.get('boards').at(0);
+			var board = me._models.main.get('subnodes').at(0);
 			for(var list of lists){
-				board.get('lists').add(new TreeView.Models.List({
+				board.get('subnodes').add(new TreeView.Models.List({
 					'id'   : list.id,
 					'name' : list.name
 				}));
 
 				for(var card of list.cards){
-					board.get('lists').get({id : list.id})
-						.get('cards')
+					board.get('subnodes').get({id : list.id})
+						.get('subnodes')
 						.add(new TreeView.Models.Card({
 							'id'  	 : card.id,
 							'name'	 : card.name,

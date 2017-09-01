@@ -132,7 +132,9 @@ TreeView.Views.List = Backbone.View.extend({
 			.toggleClass('collapsed',isExpanded);
 		this.model.set('expanded',!isExpanded);
 
-		subnodelist.slideToggle(100, function(){});
+		subnodelist.slideToggle(100, function(){
+			T.sizeTo('#maincontent');
+		});
 
 	},
 
@@ -178,7 +180,9 @@ TreeView.Views.Board = Backbone.View.extend({
 			.toggleClass('collapsed',isExpanded);
 		this.model.set('expanded',!isExpanded);
 
-		subnodelist.slideToggle(100, function(){});
+		subnodelist.slideToggle(100, function(){
+			T.sizeTo('#maincontent');
+		});
 
 	}
 

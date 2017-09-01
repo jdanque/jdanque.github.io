@@ -12,7 +12,7 @@ var openTreeViewOverlay = function (t, opts) {
 		url: 'https://jdanque.github.io/p/trello-tree-view/view/treeview.html?v=1.0.0',
 		fullscreen : false,
 		title: 'TreeView for Trello',
-		height: 300,
+		height: 600,
 		accentColor : _accentColor
 	  });
 	});

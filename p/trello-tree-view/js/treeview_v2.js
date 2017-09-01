@@ -14,6 +14,15 @@ T.render(function(){
 //  }
 //});
 
+_.mixin({
+
+    move: function (array, fromIndex, toIndex) {
+	    array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] );
+	    return array;
+    }
+
+});
+
 (function($, me){
 	me.API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 	me.authToken = '';
@@ -108,11 +117,73 @@ T.render(function(){
 				},
 				stop: function( event, ui ) {
 					ui.item.toggleClass('grabbing',false);
-//					updateListPosition(ui.item);
+					updateListPosition(ui.item);
 				}
 			});
 
 			resolve();
+		});
+	};
+
+	var updateListPosition = function(list){
+		var listModel = me._models.main.get('subnodes').at(0)
+			.get('subnodes')
+			.at(p.find('.nodecontainer.node-type-list').index(ui.item));
+
+
+		var
+            container = list.parents('.nodecontainer.node-type-board').eq(0),
+            listInBoard = container.find('.nodecontainer.node-type-list'),
+            newPos = listInBoard.index(list)
+            ;
+
+
+        if(list.data("prevPos") == newPos){
+            return;
+        }
+
+        Utils.elemIsLoading(list.find('.nodelink.node-type-list').eq(0), true);
+
+        var
+            leftListID = newPos > 0 ? Utils.getListDataTrelloId(listInBoard.eq(newPos-1)) : -1,
+            rightListID = listInBoard.length === (newPos+1) ? -1 : Utils.getListDataTrelloId(listInBoard.eq(newPos+1)),
+            listID = Utils.getListDataTrelloId(list),
+            leftListPos = -1,
+            rightListPos = -1
+            ;
+
+		Utils.getListPos(leftListID)
+		.then(function(pos){
+
+			leftListPos = pos != -1 ? pos._value : -1;
+
+			return Utils.getListPos(rightListID);
+		}).then(function(pos){
+			rightListPos = pos != -1 ? pos._value : -1;
+			listID = Utils.getListDataTrelloId(list)
+			newPos = calcPos(newPos,leftListPos, rightListPos);
+
+			return new Promise((resolve, reject) => {
+				resolve({
+					'listID' : listID,
+					'newPos' : newPos
+				});
+			});
+		}).then(function(d){
+			var el = list.find('.nodelink.node-type-list').eq(0);
+
+			window.Trello.put("lists/" + d.listID+ "/?pos="+d.newPos+"&token=" + authToken,
+			  //success
+			  function(data){
+			      Utils.elemIsLoading(el, false);
+			      return data;
+			  },
+			  //error
+			  function(reason){
+			      Utils.elemIsLoading(el, false);
+			      return reason;
+			  }
+			);
 		});
 	};
 
@@ -146,6 +217,35 @@ T.render(function(){
 			resolve();
 		});
 	};
+
+	var Utils = {
+		isEmpty : function(x){
+			return (_.isUndefined(x) ||
+				_.isNull(x) ||
+				_.isEmpty(x));
+		},
+		elemIsLoading : function(elem, isTrue){
+			elem.toggleClass('loading',isTrue);
+		},
+		getListPos : function(id){
+			return new Promise((resolve, reject) => {
+				if(id != -1){
+					window.Trello.get("lists/" + id+ "/pos"+ "?"+ "&token=" + me.authToken,
+						//success
+						function(data){
+							resolve(data);
+						},
+						//error
+						function(reason){
+							reject(reason);
+						}
+					);
+				}else{
+					resolve(id);
+				}
+			});
+		},
+	 };
 
 
 	me.init = function(){

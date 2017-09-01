@@ -27,7 +27,8 @@ TreeView.Models.Board = TreeView.Models.Node.extend({
 	}
 });
 TreeView.Models.Boards = Backbone.Collection.extend({
-	model : TreeView.Models.Board
+	model : TreeView.Models.Board,
+	comparator : false
 });
 
 TreeView.Models.List = TreeView.Models.Node.extend({
@@ -40,7 +41,8 @@ TreeView.Models.List = TreeView.Models.Node.extend({
 	}
 });
 TreeView.Models.Lists = Backbone.Collection.extend({
-	model	  :  TreeView.Models.List
+	model	  :  TreeView.Models.List,
+	comparator : false
 });
 
 
@@ -53,7 +55,8 @@ TreeView.Models.Card = TreeView.Models.Node.extend({
 
 });
 TreeView.Models.Cards = Backbone.Collection.extend({
-	model : TreeView.Models.Card
+	model : TreeView.Models.Card,
+	comparator : false
 });
 
 TreeView.Models.CardLabel = Backbone.Model.extend({
@@ -63,7 +66,8 @@ TreeView.Models.CardLabel = Backbone.Model.extend({
     }
 });
 TreeView.Models.CardLabels = Backbone.Collection.extend({
-    model : TreeView.Models.CardLabel
+    model : TreeView.Models.CardLabel,
+    comparator : false
 });
 
 TreeView.Models.CardBadge = Backbone.Model.extend({
@@ -74,7 +78,8 @@ TreeView.Models.CardBadge = Backbone.Model.extend({
     }
 });
 TreeView.Models.CardBadges = Backbone.Collection.extend({
-    model : TreeView.Models.CardBadge
+    model : TreeView.Models.CardBadge,
+    comparator : false
 });
 
 TreeView.Models.CardBadgeDue = TreeView.Models.CardBadge.extend({
@@ -119,7 +124,8 @@ TreeView.Models.CardBadgeMember = TreeView.Models.CardBadge.extend({
 	})
 });
 TreeView.Models.CardBadgeMembers = Backbone.Collection.extend({
-	model : TreeView.Models.CardBadgeMember
+	model : TreeView.Models.CardBadgeMember,
+	comparator : false
 });
 
 

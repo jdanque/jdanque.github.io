@@ -31,7 +31,7 @@
             <% if (hasExpando) { %>
             <span class="expando <%= expanded ? 'expanded' : 'collapsed' %>"></span>
             <% } %>
-            <a class="nodelink node-type-<%- type %>" href="<%- url %>" >
+            <a class="nodelink node-type-<%- type %>" href="<%- url %>" data-trello-id="<%- id %>">
                 <% if (hasExpando) { %>
                 <span class="subnodes-count <%= expanded ? 'hidden' : '' %>" > <%= subnodes.length %></span>
                 <% } %>

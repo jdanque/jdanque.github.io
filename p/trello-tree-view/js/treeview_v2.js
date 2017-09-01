@@ -188,11 +188,11 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 		},
 		members : function(item){
 			var opts = {};
-			opts.title = 'Members assigned: &#10; ';
+			opts.title = 'Members assigned: ';
 			for(var member of item){
-			   opts.title += member.fullName + '('+member.username+'), &#10; ';
+			   opts.title += member.fullName + '('+member.username+'), ';
 			}
-			opts.title = opts.title.substring(0,opts.title.length-7);
+			opts.title = opts.title.substring(0,opts.title.length-2);
 			opts.value = item.length;
 
 			return opts;

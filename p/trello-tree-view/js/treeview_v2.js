@@ -490,7 +490,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 		},
 
 		updateBoard : function(){
-			T.board('all').then(function(board){
+			return T.board('all').then(function(board){
 				if(Utils.isEmpty(board)){
 					me._models.main.get('subnodes').at(0).trigger('destroy');
 				}

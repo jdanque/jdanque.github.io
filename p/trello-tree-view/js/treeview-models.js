@@ -134,7 +134,7 @@ TreeView.Models.CardBadgeVote = TreeView.Models.CardBadge.extend({
 //		'iconClass' : 'member'
 //	})
 //});
-TreeView.Models.CardBadgeMembers = Backbone.Models.CardBadge.extend({
+TreeView.Models.CardBadgeMembers = TreeView.Models.CardBadge.extend({
 	defaults :  _.extend({},TreeView.Models.CardBadge.prototype.defaults,{
 		'title' : 'Members',
 		'value' : 0,

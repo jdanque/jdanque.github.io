@@ -58,7 +58,7 @@ TreeView.Views.Card = Backbone.View.extend({
     	var _this = this;
     	_this.$el.children('.nodelink').children('.labels-wrapper').toggleClass('hidden',!_this.model.get('showLabels'));
     	_this.$el.children('.nodelink').children('.badges-wrapper').toggleClass('hidden',!_this.model.get('showBadges'));
-    	
+
 		return _this;
 	},
 

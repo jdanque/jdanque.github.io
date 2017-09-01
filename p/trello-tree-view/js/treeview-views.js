@@ -132,7 +132,7 @@ TreeView.Views.List = Backbone.View.extend({
 	},
 
 	toggleSubnodeCount : function(isShow){
-		this.$el.children('.nodelink').children('.subnodes-count').toggle(isShow);
+		this.$el.children('.nodelink').children('.subnodes-count').toggleClass('hidden',!isShow);
 	},
 
 	toggleExpand : function(e){
@@ -195,7 +195,7 @@ TreeView.Views.Board = Backbone.View.extend({
 
 
 	toggleSubnodeCount : function(isShow){
-		this.$el.children('.nodelink').children('.subnodes-count').toggle(isShow);
+		this.$el.children('.nodelink').children('.subnodes-count').toggleClass('hidden',!isShow);
 	},
 
 	toggleExpand : function(e){

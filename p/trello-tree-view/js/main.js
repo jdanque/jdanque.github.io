@@ -4,7 +4,9 @@ var ICON = 'https://jdanque.github.io/p/trello-tree-view/img/logo_white.svg?v=1.
 var openTreeViewOverlay = function (t, opts) {
   return t.modal({
     url: 'https://jdanque.github.io/p/trello-tree-view/view/treeview.html?v=1.0.0',
-    fullscreen : false
+    fullscreen : false,
+    height: 100%,
+    accentColor : '#fff'
 //    args: {mainT : t} // optional args to pass
   });
 };

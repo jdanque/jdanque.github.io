@@ -161,9 +161,6 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 
         listModel.set('_loading',true);
 
-        me._models.main.get('subnodes').at(0)
-				.get('subnodes')
-
         var
             leftListID = newPos > 0 ? Utils.getListDataTrelloId(listInBoard.eq(newPos-1)) : -1,
             rightListID = listInBoard.length === (newPos+1) ? -1 : Utils.getListDataTrelloId(listInBoard.eq(newPos+1)),
@@ -227,19 +224,27 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 					var p  = ui.item.parents('.nodecontainer.node-type-list').eq(0);
 					ui.item.toggleClass('grabbing',true)
 						.data("prevPos",p.find('.nodecontainer.node-type-card').index(ui.item))
+						.data("prevListID",Utils.getListDataTrelloId(p))
 						;
-//						.data("prevListID",Utils.getListDataTrelloId(p));
 				},
 				stop: function( event, ui ) {
 					ui.item.toggleClass('grabbing',false);
-					updateCardPosition(ui.item);
+
+					var cardModel = me._models.main.get('subnodes').at(0)
+						.get('subnodes')
+						.findWhere({'id': ui.item.data("prevListID")})
+						.get('subnodes')
+						.at(ui.item.data("prevPos"))
+						;
+
+					updateCardPosition(cardModel,ui.item);
 				}
 			});
 			resolve();
 		});
 	};
 
-	var updateCardPosition = function(card){
+	var updateCardPosition = function(cardModel, card){
 
 		var
 			container = card.parents('.nodecontainer.node-type-list').eq(0),
@@ -251,12 +256,12 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 		if(card.data("prevPos") == newPos && card.data("prevListID") == newList)
 			return;
 
-		Utils.elemIsLoading(card.find('.nodelink.node-type-card').eq(0), true);
+		cardModel.set('_loading',true);
 
 		var
 			leftCardID = newPos > 0 ? Utils.getCardDataTrelloId(cardsInList.eq(newPos-1)) : -1,
 			rightCardID = cardsInList.length === (newPos+1) ? -1 : Utils.getCardDataTrelloId(cardsInList.eq(newPos+1)),
-			cardID = Utils.getCardDataTrelloId(card),
+			cardID = cardModel.get('id'),
 			leftCardPos = -1,
 			rightCardPos = -1
 			;
@@ -270,7 +275,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 			return Utils.getCardPos(rightCardID);
 		}).then(function(pos){
 			rightCardPos = pos != -1 ? pos._value : -1;
-			cardID = Utils.getCardDataTrelloId(card)
+			cardID = cardModel.get('id');
 			newPos = calcPos(newPos,leftCardPos, rightCardPos);
 
 			return new Promise((resolve, reject) => {
@@ -281,16 +286,16 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 				});
 			});
 		}).then(function(d){
-			var el = card.find('.nodelink.node-type-card').eq(0);
+
 			window.Trello.put("cards/" + d.cardID+ "/?idList="+d.newList+"&pos="+d.newPos+"&token=" + authToken,
 			  //success
 			  function(data){
-				  Utils.elemIsLoading(el, false);
+				  cardModel.set('_loading',false);
 				  return data;
 			  },
 			  //error
 			  function(reason){
-				  Utils.elemIsLoading(el, false);
+				  cardModel.set('_loading',false);
 				  return reason;
 			  }
 			);
@@ -309,10 +314,31 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 		getListDataTrelloId : function(el){
 			return el.find('.nodelink.node-type-list').eq(0).attr('data-trello-id');
 		},
+		getCardDataTrelloId : function(el){
+			return el.find('.nodelink.node-type-card').eq(0).attr('data-trello-id');
+		},
 		getListPos : function(id){
 			return new Promise((resolve, reject) => {
 				if(id != -1){
 					window.Trello.get("lists/" + id+ "/pos"+ "?"+ "&token=" + me.authToken,
+						//success
+						function(data){
+							resolve(data);
+						},
+						//error
+						function(reason){
+							reject(reason);
+						}
+					);
+				}else{
+					resolve(id);
+				}
+			});
+		},
+		getCardPos : function(id){
+			return new Promise((resolve, reject) => {
+				if(id != -1){
+					window.Trello.get("cards/" + id+ "/pos"+ "?"+ "&token=" + me.authToken,
 						//success
 						function(data){
 							resolve(data);

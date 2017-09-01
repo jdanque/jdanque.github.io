@@ -75,7 +75,7 @@ TreeView.Views.Card = Backbone.View.extend({
 		var _this = this;
 		var wrapper = _this.$el.children('.nodelink').children('.badges-wrapper');
 
-		var view = new TreeView.Views.CardLabel({ model: badge });
+		var view = new TreeView.Views.CardBadge({ model: badge });
 
 		wrapper.append(view.render().el);
 

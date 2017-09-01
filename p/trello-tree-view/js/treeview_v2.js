@@ -87,7 +87,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 				board.get('subnodes').add(new TreeView.Models.List({
 					'id'   : list.id,
 					'name' : list.name,
-					'expanded' : ( !Utils.isEmpty(expandupto) && expandupto === '1')
+					'expanded' : ( !Utils.isEmpty(expandupto) && expandupto === '2')
 				}));
 
 				for(var card of list.cards){
@@ -108,20 +108,14 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 	var renderTheme = function(){
 		return T.get('board', 'private', 'theme')
 			.then(function(theme){
-				if(!_.isUndefined(theme) &&
-					!_.isNull(theme) &&
-					!_.isEmpty(theme)
-				){
+				if(!Utils.isEmpty(theme)){
 					me._models.main.set('theme',theme)
 				}
 			});
 	};
 
 	var enableSortableLists = function(){
-		if(_.isUndefined(me.authToken) ||
-			_.isNull(me.authToken) ||
-			_.isEmpty(me.authToken)
-		){
+		if(Utils.isEmpty(me.authToken)){
 			return Promise.resolve();
 		}
 
@@ -212,10 +206,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 	};
 
 	var enableSortableCards = function(){
-		if(_.isUndefined(me.authToken) ||
-			_.isNull(me.authToken) ||
-			_.isEmpty(me.authToken)
-		){
+		if(Utils.isEmpty(me.authToken)){
 			return Promise.resolve();
 		}
 

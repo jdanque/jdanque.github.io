@@ -38,7 +38,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
   if (fromIndex !== toIndex) {
     this.models.splice(toIndex, 0, this.models.splice(fromIndex, 1)[0])
   }
-
+};
 
 
 (function($, me){
@@ -195,6 +195,8 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 			  //success
 			  function(data){
 			      listModel.set('_loading',false);
+			      me._models.main.get('subnodes').at(0)
+				  	.get('subnodes').move(listModel,listInBoard.index(list));
 			      return data;
 			  },
 			  //error

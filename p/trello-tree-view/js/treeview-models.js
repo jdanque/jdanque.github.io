@@ -51,8 +51,18 @@ TreeView.Models.Card = TreeView.Models.Node.extend({
 	defaults :  _.extend({},TreeView.Models.Node.prototype.defaults,{
 		'type' : 'card',
 		'hasExpando' : false,
-		'closed' : false
-	})
+		'closed' : false,
+		'labels' : [],
+		'badges' : [],
+		'showLabels' : false,
+		'showBadges' : false
+	}),
+
+	initialize : function(){
+		this.set('labels', new TreeView.Models.CardLabels());
+		this.set('badges', new TreeView.Models.CardBadges());
+	}
+
 
 });
 TreeView.Models.Cards = Backbone.Collection.extend({
@@ -116,17 +126,20 @@ TreeView.Models.CardBadgeVote = TreeView.Models.CardBadge.extend({
 		'iconClass' : 'votes'
 	})
 });
-
-TreeView.Models.CardBadgeMember = TreeView.Models.CardBadge.extend({
+//
+//TreeView.Models.CardBadgeMember = TreeView.Models.CardBadge.extend({
+//	defaults :  _.extend({},TreeView.Models.CardBadge.prototype.defaults,{
+//		'fullName' : '',
+//		'username' : '',
+//		'iconClass' : 'member'
+//	})
+//});
+TreeView.Models.CardBadgeMembers = Backbone.Models.CardBadge.extend({
 	defaults :  _.extend({},TreeView.Models.CardBadge.prototype.defaults,{
-		'fullName' : '',
-		'username' : '',
-		'iconClass' : 'member'
+		'title' : 'Members',
+		'value' : 0,
+		'iconClass' : 'member',
 	})
-});
-TreeView.Models.CardBadgeMembers = Backbone.Collection.extend({
-	model : TreeView.Models.CardBadgeMember,
-	comparator : false
 });
 
 

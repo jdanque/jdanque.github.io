@@ -80,9 +80,15 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 	var renderListsAndCards = function(){
 		return Promise.all([
 			T.lists('all'),
-			T.get('board', 'private', 'expandupto')
-		]).spread(function(lists, expandupto){
-			var board = me._models.main.get('subnodes').at(0);
+			T.get('board', 'private', 'expandupto'),
+			T.get('board', 'private', 'showlabels'),
+			T.get('board', 'private', 'showbadges')
+		]).spread(function(lists, expandupto, showLabels, showBadges){
+			var board = me._models.main.get('subnodes').at(0),
+				showLabels = Utils.isEmpty(showLabels) ? true : showLabels,
+				showBadges = Utils.isEmpty(showBadges) ? true : showBadges
+				;
+
 			for(var list of lists){
 				board.get('subnodes').add(new TreeView.Models.List({
 					'id'   : list.id,
@@ -92,17 +98,103 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 
 				for(var card of list.cards){
 					board.get('subnodes').get({id : list.id})
+					.get('subnodes')
+					.add(new TreeView.Models.Card({
+						'id'  	 : card.id,
+						'name'	 : card.name,
+						'url' 	 : card.url,
+						'desc'	 : card.desc,
+						'closed' : card.closed,
+						'showLabels' : showLabels,
+						'showBadges' : showBadges
+					}));
+
+					var newCard = board.get('subnodes')
+						.get({id : list.id})
 						.get('subnodes')
-						.add(new TreeView.Models.Card({
-							'id'  	 : card.id,
-							'name'	 : card.name,
-							'url' 	 : card.url,
-							'desc'	 : card.desc,
-							'closed' : card.closed
-						}));
+						.get({id : card.id});
+
+					if(showLabels){
+						//labels
+						for(var label of card.labels){
+							newCard.get('labels').add(new TreeView.Models.CardLabel({
+								'name' : label.name,
+								'color' : label.color
+							}));
+						}
+					}
+
+					if(showBadges){
+						//badges
+						if(!Utils.isEmpty(card.badges.due)){
+							newCard.get('badges').add(new TreeView.Models.CardBadgeDue(
+								getBadgeOptions.due(card.badges.due)));
+						}
+
+						if(card.badges.attachments > 0){
+							newCard.get('badges').add(new TreeView.Models.CardBadgeAttachment(
+								getBadgeOptions.attachments(card.badges.attachments)));
+						}
+
+						if(card.badges.checkItems > 0){
+							newCard.get('badges').add(new TreeView.Models.CardBadgeChecklist(
+								getBadgeOptions.checklist({checkItems : card.badges.checkItems, checkItemsChecked : card.badges.checkItemsChecked})));
+						}
+
+						if(card.badges.votes > 0){
+							newCard.get('badges').add(new TreeView.Models.CardBadgeVote(
+								getBadgeOptions.votes(card.badges.votes)));
+						}
+
+						if(!Utils.isEmpty(card.members) && card.members.length > 0){
+							newCard.get('badges').add(new TreeView.Models.CardBadgeMembers(
+								getBadgeOptions.members(card.members)));
+						}
+					}
 				}
 			}
 		});
+	};
+
+	var getBadgeOptions = {
+		due : function(badge){
+			var opts = {};
+			var dueDate = moment(badge.due);
+			var now = moment().local();
+			var diff = now.diff(dueDate,"hours", true);
+
+			opts.value = dueDate.format('MMM DD');
+			opts.iconClass = diff < 0 && diff > -25 ? 'due-soon' : diff <= 36 && diff >= 0 ? 'due-now' : diff > 36 ? 'past-due' : '';
+			opts.title = opts.iconClass.length > 0 ? opts.iconClass.replace("-"," ") : 'Due on: '+opts.value;
+			return opts;
+		},
+		attachments : function(badge){
+			var opts = {};
+			opts.value = badge;
+			return opts;
+		},
+		checklist : function(badge){
+			var opts = {};
+			opts.value = ''+badge.checkItemsChecked+'/'+badge.checkItems+'';
+			opts.iconClass = badge.checkItems - badge.checkItemsChecked == 0 ? 'checklist-complete' : '';
+			return opts;
+		},
+		votes : function(badge){
+			var opts = {};
+			opts.value = badge;
+			return opts;
+		},
+		members : function(item){
+			var opts = {};
+			opts.title = 'Members assigned: &#10;';
+			for(var member of item){
+			   opts.title += member.fullName + '('+member.username+'), &#10;';
+			}
+			opts.title = opts.title.substring(0,opts.title.length-7);
+			opts.value = item.length;
+
+			return opts;
+		}
 	};
 
 	var renderTheme = function(){

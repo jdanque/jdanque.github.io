@@ -35,16 +35,25 @@
                 <% if (hasExpando) { %>
                 <span class="subnodes-count <%= expanded ? 'hidden' : '' %>" > <%= subnodes.length %></span>
                 <% } %>
-                <!--label-->
+
+                <div class="labels-wrapper details-wrapper-top clearfix hidden">
+                </div>
+
                 <span class="node_name"><%= name %></span>
                 <!--nodeDes-->
-                <!--badge-->
+
+                <div class="badges-wrapper details-wrapper-btm clearfix hidden">
+                </div>
+
             </a>
             <% if (hasExpando) { %>
             <ul class="subnodelist node-type-<%- type %>" >
             </ul>
             <% } %>
         </li>
+    </script>
+    <script type="text/template" id="cardlabel-template">
+        <span title="<%- name %>" class="card-label card-label-<%- color %>"><%= name %></span>
     </script>
     <script type="text/template" id="cardbadge-template">
         <div class="badge " title="<%- title %>">

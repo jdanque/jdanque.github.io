@@ -6,15 +6,14 @@ var TreeView = TreeView || {};
 TreeView.Views = TreeView.Views || {};
 
 TreeView.Views.CardLabel = Backbone.View.extend({
-	tagName : 'li',
+	tagName : 'div',
 
 	events : {
 
 	},
 
 	initialize : function(){
-		this.template = _.template($('#node-template').html());
-		this.$expando = this.$('.expando');
+		this.template = _.template($('#cardlabel-template').html());
 
 		this.setElement(this.template(this.model.attributes));
 	},
@@ -50,12 +49,38 @@ TreeView.Views.Card = Backbone.View.extend({
 		this.template = _.template($('#node-template').html());
         this.listenTo(this.model, "update", this.render);
         this.listenTo(this.model, 'change:_loading', this.updateLoading);
+        this.listenTo(this.model.get('labels'), 'add', this.addLabel);
+        this.listenTo(this.model.get('badges'), 'add', this.addBadge);
 
         this.setElement(this.template(this.model.attributes));
     },
     render: function() {
-		return this;
+    	var _this = this;
+    	_this.$el.children('.nodelink').children('.labels-wrapper').toggleClass('hidden',!_this.model.get('showLabels'));
+    	_this.$el.children('.nodelink').children('.badges-wrapper').toggleClass('hidden',!_this.model.get('showBadges'));
+    	
+		return _this;
 	},
+
+	addLabel : function(label, collection, options){
+		var _this = this;
+		var wrapper = _this.$el.children('.nodelink').children('.labels-wrapper');
+
+		var view = new TreeView.Views.CardLabel({ model: label });
+
+		wrapper.append(view.render().el);
+	},
+
+	addBadge : function(badge, collection, options){
+		var _this = this;
+		var wrapper = _this.$el.children('.nodelink').children('.badges-wrapper');
+
+		var view = new TreeView.Views.CardLabel({ model: badge });
+
+		wrapper.append(view.render().el);
+
+	},
+
 	updateLoading : function(){
 		var _this = this;
 		_this.$el.children('.nodelink')

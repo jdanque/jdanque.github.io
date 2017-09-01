@@ -6,7 +6,7 @@ var openTreeViewOverlay = function (t, opts) {
 	t.get('board', 'private', 'theme').then(function(_accentColor){
 
 		_accentColor = _accentColor.split("-")[1];
-		var colorWeight = (_accentColor === 'gray') ? 200 : 600;
+		var colorWeight = (_accentColor === 'gray') ? 200 : 700;
 		_accentColor = window.TrelloPowerUp.util.colors.getHexString(_accentColor, colorWeight);
 	  return t.modal({
 		url: 'https://jdanque.github.io/p/trello-tree-view/view/treeview.html?v=1.0.0',

@@ -123,7 +123,7 @@ TreeView.Views.List = Backbone.View.extend({
 		var view = new TreeView.Views.Card({ model: cardModel });
 
 		this.$el.children('.subnodelist').append(view.render().el);
-		
+
 		if(this.model.get('subnodes').indexOf(cardModel) < 0){
 		}
 

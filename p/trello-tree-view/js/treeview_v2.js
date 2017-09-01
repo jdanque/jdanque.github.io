@@ -72,6 +72,18 @@ T.render(function(){
 		});
 	};
 
+	var renderTheme = function(){
+		return T.get('board', 'private', 'theme')
+			.then(function(theme){
+				if(!_.isUndefined(theme) &&
+					!_.isNull(theme) &&
+					!_.isEmpty(theme)
+				){
+					me._models.main.set('theme','blue')
+				}
+			});
+	};
+
 	me.init = function(){
 		//set focus to main window
 		window.focus();
@@ -85,6 +97,7 @@ T.render(function(){
 			initMainWiring()
 			.then(renderBoards)
 			.then(renderListsAndCards)
+			.then(renderTheme)
 			.then(function(){
 				T.sizeTo('#maincontent');
 			})

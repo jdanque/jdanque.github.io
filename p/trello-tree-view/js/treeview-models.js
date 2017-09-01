@@ -131,17 +131,6 @@ TreeView.Models.Main = Backbone.Model.extend({
 	initialize : function(){
 		var _this = this;
 		_this.set('boards', new TreeView.Models.Boards());
-		T.get('board', 'private', 'theme')
-		.then(function(theme){
-			if(!_.isUndefined(theme) &&
-				!_.isNull(theme) &&
-				!_.isEmpty(theme)
-			){
-				_this.set('theme'.theme);
-			}
-		});
-
-
 	}
 
 });

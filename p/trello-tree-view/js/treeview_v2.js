@@ -306,7 +306,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 						.get('subnodes').findWhere({'id': d.newList})
 						.get('subnodes')
 						.add(cardModel,{at: cardsInList.index(card) , silent : true});
-					
+
 				  }
 
 

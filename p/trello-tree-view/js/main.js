@@ -2,8 +2,9 @@ var API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 var ICON = 'https://jdanque.github.io/p/trello-tree-view/img/logo_white.svg?v=1.0.0';
 
 var openTreeViewOverlay = function (t, opts) {
-  return t.overlay({
-    url: 'https://jdanque.github.io/p/trello-tree-view/view/treeview.html?v=1.0.0'
+  return t.modal({
+    url: 'https://jdanque.github.io/p/trello-tree-view/view/treeview.html?v=1.0.0',
+    fullscreen : false
 //    args: {mainT : t} // optional args to pass
   });
 };

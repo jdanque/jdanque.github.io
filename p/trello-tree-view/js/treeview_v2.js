@@ -161,7 +161,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 	var getBadgeOptions = {
 		due : function(badge){
 			var opts = {};
-			var dueDate = moment(badge.due);
+			var dueDate = moment(badge);
 			var now = moment().local();
 			var diff = now.diff(dueDate,"hours", true);
 
@@ -188,9 +188,9 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 		},
 		members : function(item){
 			var opts = {};
-			opts.title = 'Members assigned: &#10;';
+			opts.title = 'Members assigned: &#10; ';
 			for(var member of item){
-			   opts.title += member.fullName + '('+member.username+'), &#10;';
+			   opts.title += member.fullName + '('+member.username+'), &#10; ';
 			}
 			opts.title = opts.title.substring(0,opts.title.length-7);
 			opts.value = item.length;

@@ -114,7 +114,7 @@ T.render(function(){
 			});
 
 			resolve();
-		};
+		});
 	};
 
 	var enableSortableCards = function(){

@@ -119,7 +119,7 @@ TreeView.Views.List = Backbone.View.extend({
 
 		if(!isExpanded){
 			subnodelist.hide();
-			this.toggleSubnodeCount(isExpanded);
+			this.toggleSubnodeCount(!isExpanded);
 		}
 
 
@@ -181,7 +181,7 @@ TreeView.Views.Board = Backbone.View.extend({
 
 		if(!isExpanded){
 			subnodelist.hide();
-			_this.toggleSubnodeCount(isExpanded);
+			_this.toggleSubnodeCount(!isExpanded);
 		}
 
 		return this;

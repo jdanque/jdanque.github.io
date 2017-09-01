@@ -291,6 +291,24 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 			  //success
 			  function(data){
 				  cardModel.set('_loading',false);
+
+				  if(card.data("prevListID") == newList){
+				  	me._models.main.get('subnodes').at(0)
+						.get('subnodes').findWhere({'id': card.data("prevListID")})
+						.get('subnodes')
+						.move(cardModel,cardsInList.index(card));
+				  }else{
+				  	me._models.main.get('subnodes').at(0)
+						.get('subnodes').findWhere({'id': card.data("prevListID")})
+						.get('subnodes').remove(cardModel);
+
+					me._models.main.get('subnodes').at(0)
+						.get('subnodes').findWhere({'id': d.newList})
+						.add(cardModel,{at: cardsInList.index(card)});
+
+				  }
+
+
 				  return data;
 			  },
 			  //error

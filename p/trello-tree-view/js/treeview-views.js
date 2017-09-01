@@ -49,11 +49,17 @@ TreeView.Views.Card = Backbone.View.extend({
 	initialize: function() {
 		this.template = _.template($('#node-template').html());
         this.listenTo(this.model, "update", this.render);
+        this.listenTo(this.model, 'change:_loading', this.updateLoading);
 
         this.setElement(this.template(this.model.attributes));
     },
     render: function() {
 		return this;
+	},
+	updateLoading : function(){
+		var _this = this;
+		_this.$el.children('.nodelink')
+			.toggleClass('loading',_this.model.get('_loading'));
 	},
 	openCard : function(e){
 		e.preventDefault();

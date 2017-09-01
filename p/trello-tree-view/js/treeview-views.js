@@ -124,6 +124,8 @@ TreeView.Views.List = Backbone.View.extend({
 
 	toggleExpand : function(e){
 		e.preventDefault();
+		var _el = this.$el;
+		var nodelink = _el.children('.nodelink');
 		var subnodelist = this.$el.children('.subnodelist');
 
 		var isExpanded = this.model.get('expanded');
@@ -133,6 +135,11 @@ TreeView.Views.List = Backbone.View.extend({
 		this.model.set('expanded',!isExpanded);
 
 		subnodelist.slideToggle(100, function(){
+			if(isExpanded){
+				nodelink.prepend('<span class="subnodes-count">'+subnodelist.children('.nodecontainer').length+'</span>');
+			}else{
+				_el.children('.subnodes-count').remove();
+			}
 			T.sizeTo('#maincontent');
 		});
 
@@ -172,15 +179,23 @@ TreeView.Views.Board = Backbone.View.extend({
 
 	toggleExpand : function(e){
 		e.preventDefault();
-		var subnodelist = this.$el.children('.subnodelist');
+		var _el = this.$el;
+		var subnodelist = _el.children('.subnodelist');
+		var nodelink = _el.children('.nodelink');
 
 		var isExpanded = this.model.get('expanded');
-		this.$el.children('.expando')
+		_el.children('.expando')
 			.toggleClass('expanded',!isExpanded)
 			.toggleClass('collapsed',isExpanded);
 		this.model.set('expanded',!isExpanded);
 
 		subnodelist.slideToggle(100, function(){
+			if(isExpanded){
+				nodelink.prepend('<span class="subnodes-count">'+subnodelist.children('.nodecontainer').length+'</span>');
+			}else{
+				_el.children('.subnodes-count').remove();
+			}
+
 			T.sizeTo('#maincontent');
 		});
 

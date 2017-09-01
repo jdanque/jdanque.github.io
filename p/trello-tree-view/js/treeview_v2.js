@@ -79,7 +79,7 @@ T.render(function(){
 					!_.isNull(theme) &&
 					!_.isEmpty(theme)
 				){
-					me._models.main.set('theme','blue')
+					me._models.main.set('theme',theme)
 				}
 			});
 	};

@@ -100,7 +100,6 @@ T.render(function(){
 				cursor: "move",
 				tolerance: "intersect",
 				start: function( event, ui ) {
-					Utils.removeHoverMenu();
 					ui.placeholder.height(ui.item.height());
 					var p  = ui.item.parents('.nodecontainer.node-type-board').eq(0);
 					ui.item.toggleClass('grabbing',true)

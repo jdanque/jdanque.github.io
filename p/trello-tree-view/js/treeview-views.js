@@ -140,17 +140,18 @@ TreeView.Views.List = Backbone.View.extend({
 
 	toggleExpand : function(e){
 		e.preventDefault();
-		var _el = this.$el;
+		var _this = this;
+		var _el = _this.$el;
 		var subnodelist = _el.children('.subnodelist');
 
-		var isExpanded = this.model.get('expanded');
-		this.$el.children('.expando')
+		var isExpanded = _this.model.get('expanded');
+		_el.children('.expando')
 			.toggleClass('expanded',!isExpanded)
 			.toggleClass('collapsed',isExpanded);
-		this.model.set('expanded',!isExpanded);
+		_this.model.set('expanded',!isExpanded);
 
 		subnodelist.slideToggle(100, function(){
-			this.toggleSubnodeCount(isExpanded,subnodelist.children('.nodecontainer').length);
+			_this.toggleSubnodeCount(isExpanded,subnodelist.children('.nodecontainer').length);
 			T.sizeTo('#maincontent');
 		});
 
@@ -176,14 +177,15 @@ TreeView.Views.Board = Backbone.View.extend({
 	},
 
 	render : function(){
-		var nodelink = this.$el.children('.nodelink'),
-			subnodelist = this.$el.children('.subnodelist'),
-			isExpanded = this.model.get('expanded')
+		var _this = this,
+			nodelink = _this.$el.children('.nodelink'),
+			subnodelist = _this.$el.children('.subnodelist'),
+			isExpanded = _this.model.get('expanded')
 			;
 
 		if(!isExpanded){
 			subnodelist.hide();
-			this.toggleSubnodeCount(isExpanded, subnodelist.children('.nodecontainer').length);
+			_this.toggleSubnodeCount(isExpanded, subnodelist.children('.nodecontainer').length);
 			nodelink.prepend('<span class="subnodes-count">'+subnodelist.children('.nodecontainer').length+'</span>');
 		}
 
@@ -205,17 +207,18 @@ TreeView.Views.Board = Backbone.View.extend({
 
 	toggleExpand : function(e){
 		e.preventDefault();
-		var _el = this.$el;
-		var subnodelist = _el.children('.subnodelist');
+		var _this = this,
+			_el = _this.$el,
+			subnodelist = _el.children('.subnodelist');
 
-		var isExpanded = this.model.get('expanded');
+		var isExpanded = _this.model.get('expanded');
 		_el.children('.expando')
 			.toggleClass('expanded',!isExpanded)
 			.toggleClass('collapsed',isExpanded);
-		this.model.set('expanded',!isExpanded);
+		_this.model.set('expanded',!isExpanded);
 
 		subnodelist.slideToggle(100, function(){
-			this.toggleSubnodeCount(isExpanded,subnodelist.children('.nodecontainer').length);
+			_this.toggleSubnodeCount(isExpanded,subnodelist.children('.nodecontainer').length);
 
 			T.sizeTo('#maincontent');
 		});

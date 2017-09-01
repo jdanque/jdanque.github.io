@@ -473,7 +473,39 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 		return (newPos==0) ? r/2 : (newPos == -1 || r == 0) ? l+a : (l+r)/2 ;
 	};
 
-	var toggleMainLoading = function(isTrue){
+	var updateTree = {
+		isUpdating : false,
+		intervalHolder : {},
+
+		update : function(){
+			if(!updateTree.isUpdating){
+				updateTree.isUpdating = true;
+
+				updateTree.updateBoard()
+				.then(function(){
+					updateTree.isUpdating = false;
+				});
+
+			}
+		},
+
+		updateBoard : function(){
+			T.board('all').then(function(board){
+				if(Utils.isEmpty(board)){
+					me._models.main.get('subnodes').at(0).trigger('destroy');
+				}
+			});
+		},
+
+		stop : function(){
+			clearInterval(updateTree.intervalHolder);
+		},
+
+		start : function(){
+			updateTree.intervalHolder = setInterval(function(){
+				_.debounce(updateTree.update, 1e4);
+			} ,1e4);
+		}
 
 	};
 
@@ -493,6 +525,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 			.then(renderTheme)
 			.then(enableSortableLists)
 			.then(enableSortableCards)
+			.then(updateTree.start)
 			.then(function(){
 				T.sizeTo('#maincontent');
 			})

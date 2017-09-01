@@ -191,6 +191,7 @@ TreeView.Views.Board = Backbone.View.extend({
 		this.template = _.template($('#node-template').html());
 
 		this.listenTo(this.model.get('subnodes'), 'add', this.addList);
+		this.listenTo(this.model, 'destroy', this.destroy);
 
 		this.setElement(this.template(this.model.attributes));
 	},
@@ -207,6 +208,10 @@ TreeView.Views.Board = Backbone.View.extend({
 		}
 
 		return this;
+	},
+
+	destroy : function(){
+		this.remove();
 	},
 
 	addList : function(listModel){

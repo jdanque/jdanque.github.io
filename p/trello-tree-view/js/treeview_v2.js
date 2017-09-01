@@ -503,7 +503,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 
 		start : function(){
 			updateTree.intervalHolder = setInterval(function(){
-				_.debounce(updateTree.update, 1e4);
+				updateTree.update();
 			} ,1e4);
 		}
 

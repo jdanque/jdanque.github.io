@@ -473,6 +473,10 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 		return (newPos==0) ? r/2 : (newPos == -1 || r == 0) ? l+a : (l+r)/2 ;
 	};
 
+	var toggleMainLoading = function(isTrue){
+
+	};
+
 	me.init = function(){
 		//set focus to main window
 		window.focus();

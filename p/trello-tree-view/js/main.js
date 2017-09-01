@@ -1,5 +1,5 @@
 var API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
-var ICON = 'https://jdanque.github.io/p/trello-tree-view/img/logo_white.svg?v=1.0.0';
+var ICON = 'https://jdanque.github.io/p/trello-tree-view/img/logo_white.png?v=1.0.0';
 
 var openTreeViewOverlay = function (t, opts) {
 

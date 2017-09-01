@@ -202,16 +202,16 @@ TreeView.Views.Main = Backbone.View.extend({
 		this.listenTo(this.model.get('boards'), 'add', this.addBoard);
 
 		this.availableThemes = [
-			'theme-trello-light-gray',
-			'theme-trello-blue',
-			'theme-trello-green',
-			'theme-trello-orange',
-			'theme-trello-red',
-			'theme-trello-yellow',
-			'theme-trello-purple',
-			'theme-trello-pink',
-			'theme-trello-sky',
-			'theme-trello-lime'
+			'theme-gray',
+			'theme-blue',
+			'theme-green',
+			'theme-orange',
+			'theme-red',
+			'theme-yellow',
+			'theme-purple',
+			'theme-pink',
+			'theme-sky',
+			'theme-lime'
 		];
 
 		//set default theme

@@ -2,9 +2,23 @@ var API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
 var ICON = 'https://jdanque.github.io/p/trello-tree-view/img/logo_white.svg?v=1.0.0';
 
 var openTreeViewOverlay = function (t, opts) {
+	var _accentColor = t.get('board', 'private', 'theme'),
+		colorWeight = 100;
+
+	_accentColor = _accentColor.split("-")[1];
+
+	if(_accentColor === 'green' ||
+	 _accentColor === 'orange' ||
+	 _accentColor === 'red' ||
+	 _accentColor === 'purple' ||
+	 )
+
+	_accentColor = window.TrelloPowerUp.util.colors.getHexString(_accentColor, colorWeight);
   return t.modal({
     url: 'https://jdanque.github.io/p/trello-tree-view/view/treeview.html?v=1.0.0',
-    fullscreen : false
+    fullscreen : false,
+    title: 'TreeView for Trello',
+    accentColor : _accentColor
 //    args: {mainT : t} // optional args to pass
   });
 };

@@ -8,11 +8,11 @@ T.render(function(){
 	}
 });
 
-document.addEventListener('click', function(e) {
-  if(e.target.tagName == 'BODY') {
-    T.closeOverlay().done();
-  }
-});
+//document.addEventListener('click', function(e) {
+//  if(e.target.tagName == 'BODY') {
+//    T.closeOverlay().done();
+//  }
+//});
 
 (function($, me){
 	me.API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';

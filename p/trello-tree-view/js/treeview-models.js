@@ -125,7 +125,7 @@ TreeView.Models.CardBadgeMembers = Backbone.Collection.extend({
 
 TreeView.Models.Main = Backbone.Model.extend({
 	defaults : {
-		'theme' : 'theme-trello-light-gray',
+		'theme' : 'theme-gray',
 		'boards' : []
 	},
 	initialize : function(){

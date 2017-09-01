@@ -287,7 +287,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 			});
 		}).then(function(d){
 
-			window.Trello.put("cards/" + d.cardID+ "/?idList="+d.newList+"&pos="+d.newPos+"&token=" + authToken,
+			window.Trello.put("cards/" + d.cardID+ "/?idList="+d.newList+"&pos="+d.newPos+"&token=" + me.authToken,
 			  //success
 			  function(data){
 				  cardModel.set('_loading',false);

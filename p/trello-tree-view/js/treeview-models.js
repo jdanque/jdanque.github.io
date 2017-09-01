@@ -85,7 +85,8 @@ TreeView.Models.CardBadge = Backbone.Model.extend({
     defaults: {
        'title' 	   : '',
        'value'     : '',
-       'iconClass' : ''
+       'iconClass' : '',
+       'type' 	   : ''
     }
 });
 TreeView.Models.CardBadges = Backbone.Collection.extend({
@@ -97,7 +98,8 @@ TreeView.Models.CardBadgeDue = TreeView.Models.CardBadge.extend({
 	defaults :  _.extend({},TreeView.Models.CardBadge.prototype.defaults,{
 		'title' 	: 'Due Date',
 		'format' 	: 'MMM DD',
-		'iconClass' : 'due'
+		'iconClass' : 'due',
+		'type'		: 'due'
 	})
 });
 
@@ -105,7 +107,8 @@ TreeView.Models.CardBadgeAttachment = TreeView.Models.CardBadge.extend({
 	defaults :  _.extend({},TreeView.Models.CardBadge.prototype.defaults,{
 		'title' 	: 'Attachments',
 		'value' 	: 0,
-		'iconClass' : 'attachments'
+		'iconClass' : 'attachments',
+		'type' 	    : 'attachments'
 	})
 });
 
@@ -115,30 +118,26 @@ TreeView.Models.CardBadgeChecklist = TreeView.Models.CardBadge.extend({
 		'value' 			: 0,
 		'checkItemsChecked' : 0,
 		'checkItems' 		: 0,
-		'iconClass' 		: 'checklist'
+		'iconClass' 		: 'checklist',
+		'type' 	    		: 'checklist'
 	})
 });
 
 TreeView.Models.CardBadgeVote = TreeView.Models.CardBadge.extend({
 	defaults :  _.extend({},TreeView.Models.CardBadge.prototype.defaults,{
-		'title'	: 'Votes',
-		'value' : 0,
-		'iconClass' : 'votes'
+		'title'		: 'Votes',
+		'value' 	: 0,
+		'iconClass' : 'votes',
+		'type'		: 'votes'
 	})
 });
-//
-//TreeView.Models.CardBadgeMember = TreeView.Models.CardBadge.extend({
-//	defaults :  _.extend({},TreeView.Models.CardBadge.prototype.defaults,{
-//		'fullName' : '',
-//		'username' : '',
-//		'iconClass' : 'member'
-//	})
-//});
+
 TreeView.Models.CardBadgeMembers = TreeView.Models.CardBadge.extend({
 	defaults :  _.extend({},TreeView.Models.CardBadge.prototype.defaults,{
 		'title' : 'Members',
 		'value' : 0,
 		'iconClass' : 'member',
+		'type' : 'member'
 	})
 });
 

@@ -117,10 +117,12 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 					if(showLabels){
 						//labels
 						for(var label of card.labels){
-							newCard.get('labels').add(new TreeView.Models.CardLabel({
-								'name' : label.name,
-								'color' : label.color
-							}));
+							if(!Utils.isEmpty(label.color)){
+								newCard.get('labels').add(new TreeView.Models.CardLabel({
+									'name' : label.name,
+									'color' : label.color
+								}));
+							}
 						}
 					}
 

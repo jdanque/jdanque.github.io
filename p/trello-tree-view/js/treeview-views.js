@@ -86,6 +86,7 @@ TreeView.Views.List = Backbone.View.extend({
 		this.$expando = this.$('.expando');
 
 		this.listenTo(this.model.get('subnodes'), 'add', this.addCard);
+		this.listenTo(this.model, 'change:_loading', this.updateLoading);
 
 		this.setElement(this.template(this.model.attributes));
 
@@ -105,6 +106,13 @@ TreeView.Views.List = Backbone.View.extend({
 
 		return this;
 	},
+
+	updateLoading : function(){
+		var _this = this;
+		_this.$el.children('.nodelink')
+			.toggleClass('loading',_this.model.get('_loading'));
+	},
+
 	addCard : function(cardModel){
 		var view = new TreeView.Views.Card({ model: cardModel });
 		this.$el.children('.subnodelist').append(view.render().el);

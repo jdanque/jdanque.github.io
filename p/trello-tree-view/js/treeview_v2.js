@@ -117,7 +117,10 @@ _.mixin({
 				},
 				stop: function( event, ui ) {
 					ui.item.toggleClass('grabbing',false);
-					updateListPosition(ui.item);
+					var listModel = me._models.main.get('subnodes').at(0)
+						.get('subnodes')
+						.at(ui.item.data("prevPos"));
+					updateListPosition(listModel,ui.item);
 				}
 			});
 
@@ -125,11 +128,7 @@ _.mixin({
 		});
 	};
 
-	var updateListPosition = function(list){
-		var listModel = me._models.main.get('subnodes').at(0)
-			.get('subnodes')
-			.at(p.find('.nodecontainer.node-type-list').index(ui.item));
-
+	var updateListPosition = function(listModel, list){
 
 		var
             container = list.parents('.nodecontainer.node-type-board').eq(0),
@@ -142,12 +141,24 @@ _.mixin({
             return;
         }
 
-        Utils.elemIsLoading(list.find('.nodelink.node-type-list').eq(0), true);
+        listModel.set('_loading',true);
+
+        me._models.main.get('subnodes').at(0)
+        			.get('subnodes').at(newPos-1)
+        			.get("id")
 
         var
-            leftListID = newPos > 0 ? Utils.getListDataTrelloId(listInBoard.eq(newPos-1)) : -1,
-            rightListID = listInBoard.length === (newPos+1) ? -1 : Utils.getListDataTrelloId(listInBoard.eq(newPos+1)),
-            listID = Utils.getListDataTrelloId(list),
+            leftListID = newPos > 0 ?
+             				me._models.main.get('subnodes').at(0)
+                     			.get('subnodes').at(newPos-1)
+                     			.get("id")
+                     			: -1,
+            rightListID = listInBoard.length === (newPos+1) ?
+							-1 :
+							me._models.main.get('subnodes').at(0)
+								.get('subnodes').at(newPos+1)
+								.get("id"),
+            listID = listModel.get('id'),
             leftListPos = -1,
             rightListPos = -1
             ;
@@ -160,7 +171,7 @@ _.mixin({
 			return Utils.getListPos(rightListID);
 		}).then(function(pos){
 			rightListPos = pos != -1 ? pos._value : -1;
-			listID = Utils.getListDataTrelloId(list)
+			listID = listModel.get('id');
 			newPos = calcPos(newPos,leftListPos, rightListPos);
 
 			return new Promise((resolve, reject) => {
@@ -170,17 +181,16 @@ _.mixin({
 				});
 			});
 		}).then(function(d){
-			var el = list.find('.nodelink.node-type-list').eq(0);
 
-			window.Trello.put("lists/" + d.listID+ "/?pos="+d.newPos+"&token=" + authToken,
+			window.Trello.put("lists/" + d.listID+ "/?pos="+d.newPos+"&token=" + me.authToken,
 			  //success
 			  function(data){
-			      Utils.elemIsLoading(el, false);
+			      listModel.set('_loading',false);
 			      return data;
 			  },
 			  //error
 			  function(reason){
-			      Utils.elemIsLoading(el, false);
+			      listModel.set('_loading',false);
 			      return reason;
 			  }
 			);
@@ -211,10 +221,68 @@ _.mixin({
 				},
 				stop: function( event, ui ) {
 					ui.item.toggleClass('grabbing',false);
-//					updateCardPosition(ui.item);
+					updateCardPosition(ui.item);
 				}
 			});
 			resolve();
+		});
+	};
+
+	var updateCardPosition = function(card){
+
+		var
+			container = card.parents('.nodecontainer.node-type-list').eq(0),
+			cardsInList = container.find('.nodecontainer.node-type-card'),
+			newPos = cardsInList.index(card),
+			newList = Utils.getListDataTrelloId(container)
+			;
+
+		if(card.data("prevPos") == newPos && card.data("prevListID") == newList)
+			return;
+
+		Utils.elemIsLoading(card.find('.nodelink.node-type-card').eq(0), true);
+
+		var
+			leftCardID = newPos > 0 ? Utils.getCardDataTrelloId(cardsInList.eq(newPos-1)) : -1,
+			rightCardID = cardsInList.length === (newPos+1) ? -1 : Utils.getCardDataTrelloId(cardsInList.eq(newPos+1)),
+			cardID = Utils.getCardDataTrelloId(card),
+			leftCardPos = -1,
+			rightCardPos = -1
+			;
+
+
+		Utils.getCardPos(leftCardID)
+		.then(function(pos){
+
+			leftCardPos = pos != -1 ? pos._value : -1;
+
+			return Utils.getCardPos(rightCardID);
+		}).then(function(pos){
+			rightCardPos = pos != -1 ? pos._value : -1;
+			cardID = Utils.getCardDataTrelloId(card)
+			newPos = calcPos(newPos,leftCardPos, rightCardPos);
+
+			return new Promise((resolve, reject) => {
+				resolve({
+					'cardID' : cardID,
+					'newList' : newList,
+					'newPos' : newPos
+				});
+			});
+		}).then(function(d){
+			var el = card.find('.nodelink.node-type-card').eq(0);
+			window.Trello.put("cards/" + d.cardID+ "/?idList="+d.newList+"&pos="+d.newPos+"&token=" + authToken,
+			  //success
+			  function(data){
+				  Utils.elemIsLoading(el, false);
+				  return data;
+			  },
+			  //error
+			  function(reason){
+				  Utils.elemIsLoading(el, false);
+				  return reason;
+			  }
+			);
 		});
 	};
 
@@ -245,7 +313,18 @@ _.mixin({
 				}
 			});
 		},
-	 };
+	};
+
+	var calcPos = function(newPos,leftPos,rightPos){
+		var
+			r = rightPos != -1 ? rightPos : 0,
+			l = leftPos != -1 ? leftPos : 0 ,
+			a = 65536
+			;
+
+		return (newPos==0) ? r/2 : (newPos == -1 || r == 0) ? l+a : (l+r)/2 ;
+	};
+
 
 
 	me.init = function(){

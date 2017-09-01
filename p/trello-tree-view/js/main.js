@@ -5,7 +5,7 @@ var openTreeViewOverlay = function (t, opts) {
   return t.modal({
     url: 'https://jdanque.github.io/p/trello-tree-view/view/treeview.html?v=1.0.0',
     fullscreen : false,
-    height: 100%,
+    height: '100%',
     accentColor : '#fff'
 //    args: {mainT : t} // optional args to pass
   });

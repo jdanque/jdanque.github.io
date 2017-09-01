@@ -190,7 +190,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 			var opts = {};
 			opts.title = 'Members assigned: ';
 			for(var member of item){
-			   opts.title += member.fullName + '('+member.username+'), ';
+			   opts.title += member.fullName + ', ';
 			}
 			opts.title = opts.title.substring(0,opts.title.length-2);
 			opts.value = item.length;

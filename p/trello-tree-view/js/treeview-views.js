@@ -31,9 +31,9 @@ TreeView.Views.CardBadge = Backbone.View.extend({
 		this.template = _.template($('#cardbadge-template').html());
         this.listenTo(this.model, "update", this.render);
 
+        this.setElement(this.template(this.model.attributes));
     },
     render: function() {
-		this.$el.html(this.template(this.model.attributes));
 		return this;
 	}
 

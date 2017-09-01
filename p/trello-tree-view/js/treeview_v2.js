@@ -14,6 +14,9 @@ T.render(function(){
 //  }
 //});
 
+/**
+* Underscore mixin to move array items
+*/
 _.mixin({
 
     move: function (array, fromIndex, toIndex) {
@@ -22,6 +25,21 @@ _.mixin({
     }
 
 });
+/**
+* Moves a model to the given index, if different from its current index. Handy
+* for shuffling models about after they've been pulled into a new position via
+* drag and drop.
+*/
+Backbone.Collection.prototype.move = function(model, toIndex) {
+  var fromIndex = this.indexOf(model)
+  if (fromIndex == -1) {
+    throw new Error("Can't move a model that's not in the collection")
+  }
+  if (fromIndex !== toIndex) {
+    this.models.splice(toIndex, 0, this.models.splice(fromIndex, 1)[0])
+  }
+
+
 
 (function($, me){
 	me.API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
@@ -144,20 +162,11 @@ _.mixin({
         listModel.set('_loading',true);
 
         me._models.main.get('subnodes').at(0)
-        			.get('subnodes').at(newPos-1)
-        			.get("id")
+				.get('subnodes')
 
         var
-            leftListID = newPos > 0 ?
-             				me._models.main.get('subnodes').at(0)
-                     			.get('subnodes').at(newPos-1)
-                     			.get("id")
-                     			: -1,
-            rightListID = listInBoard.length === (newPos+1) ?
-							-1 :
-							me._models.main.get('subnodes').at(0)
-								.get('subnodes').at(newPos+1)
-								.get("id"),
+            leftListID = newPos > 0 ? Utils.getListDataTrelloId(listInBoard.eq(newPos-1)) : -1,
+            rightListID = listInBoard.length === (newPos+1) ? -1 : Utils.getListDataTrelloId(listInBoard.eq(newPos+1)),
             listID = listModel.get('id'),
             leftListPos = -1,
             rightListPos = -1
@@ -294,6 +303,9 @@ _.mixin({
 		},
 		elemIsLoading : function(elem, isTrue){
 			elem.toggleClass('loading',isTrue);
+		},
+		getListDataTrelloId : function(el){
+			return el.find('.nodelink.node-type-list').eq(0).attr('data-trello-id');
 		},
 		getListPos : function(id){
 			return new Promise((resolve, reject) => {

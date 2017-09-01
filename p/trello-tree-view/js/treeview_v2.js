@@ -84,6 +84,71 @@ T.render(function(){
 			});
 	};
 
+	var enableSortableLists = function(){
+		if(_.isUndefined(me.authToken) ||
+			_.isNull(me.authToken) ||
+			_.isEmpty(me.authToken)
+		){
+			return Promise.resolve();
+		}
+
+		return new Promise(function(resolve){
+
+			$('.subnodelist.node-type-board').sortable({
+				placeholder: "list-card placeholder nodecontainer",
+				connectWith: ".subnodelist.node-type-board",
+				cursor: "move",
+				tolerance: "intersect",
+				start: function( event, ui ) {
+					Utils.removeHoverMenu();
+					ui.placeholder.height(ui.item.height());
+					var p  = ui.item.parents('.nodecontainer.node-type-board').eq(0);
+					ui.item.toggleClass('grabbing',true)
+						.data("prevPos",p.find('.nodecontainer.node-type-list').index(ui.item))
+						;
+				},
+				stop: function( event, ui ) {
+					ui.item.toggleClass('grabbing',false);
+//					updateListPosition(ui.item);
+				}
+			});
+
+			resolve();
+		};
+	};
+
+	var enableSortableCards = function(){
+		if(_.isUndefined(me.authToken) ||
+			_.isNull(me.authToken) ||
+			_.isEmpty(me.authToken)
+		){
+			return Promise.resolve();
+		}
+
+		return new Promise(function(resolve){
+			$('.subnodelist.node-type-list').sortable({
+				placeholder: "list-card placeholder nodecontainer",
+				connectWith: ".subnodelist.node-type-list",
+				cursor: "move",
+				tolerance: "intersect",
+				start: function( event, ui ) {
+					ui.placeholder.height(ui.item.height());
+					var p  = ui.item.parents('.nodecontainer.node-type-list').eq(0);
+					ui.item.toggleClass('grabbing',true)
+						.data("prevPos",p.find('.nodecontainer.node-type-card').index(ui.item))
+						;
+//						.data("prevListID",Utils.getListDataTrelloId(p));
+				},
+				stop: function( event, ui ) {
+					ui.item.toggleClass('grabbing',false);
+//					updateCardPosition(ui.item);
+				}
+			});
+			resolve();
+		});
+	};
+
+
 	me.init = function(){
 		//set focus to main window
 		window.focus();
@@ -98,6 +163,8 @@ T.render(function(){
 			.then(renderBoards)
 			.then(renderListsAndCards)
 			.then(renderTheme)
+			.then(enableSortableLists)
+			.then(enableSortableCards)
 			.then(function(){
 				T.sizeTo('#maincontent');
 			})

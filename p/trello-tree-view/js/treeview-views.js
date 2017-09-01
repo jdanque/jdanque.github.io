@@ -89,28 +89,8 @@ TreeView.Views.List = Backbone.View.extend({
 
 		this.setElement(this.template(this.model.attributes));
 
-		this.enableSortable();
 	},
-	enableSortable : function(){
-	//todo
-//		this.$el.sortable({
-//		placeholder: "list-card placeholder nodecontainer",
-//		connectWith: ".subnodelist.node-type-list",
-//		cursor: "move",
-//		tolerance: "intersect",
-//		start: function( event, ui ) {
-//			Utils.removeHoverMenu();
-//			ui.placeholder.height(ui.item.height());
-//			var p  = ui.item.parents('.nodecontainer.node-type-list').eq(0);
-//			ui.item.toggleClass('grabbing',true)
-//				.data("prevPos",p.find('.nodecontainer.node-type-card').index(ui.item))
-//				.data("prevListID",Utils.getListDataTrelloId(p));
-//		},
-//		stop: function( event, ui ) {
-//			ui.item.toggleClass('grabbing',false);
-//			updateCardPosition(ui.item);
-//		}
-	},
+
 	render : function(){
 		var
 			subnodelist = this.$el.children('.subnodelist'),
@@ -146,9 +126,9 @@ TreeView.Views.List = Backbone.View.extend({
 			.toggleClass('expanded',!isExpanded)
 			.toggleClass('collapsed',isExpanded);
 		_this.model.set('expanded',!isExpanded);
+		_this.toggleSubnodeCount(isExpanded);
 
 		subnodelist.slideToggle(100, function(){
-			_this.toggleSubnodeCount(isExpanded);
 			T.sizeTo('#maincontent');
 		});
 
@@ -209,10 +189,9 @@ TreeView.Views.Board = Backbone.View.extend({
 			.toggleClass('expanded',!isExpanded)
 			.toggleClass('collapsed',isExpanded);
 		_this.model.set('expanded',!isExpanded);
+		_this.toggleSubnodeCount(isExpanded);
 
 		subnodelist.slideToggle(100, function(){
-			_this.toggleSubnodeCount(isExpanded);
-
 			T.sizeTo('#maincontent');
 		});
 

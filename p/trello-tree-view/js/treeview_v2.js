@@ -60,12 +60,15 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 	};
 
 	var renderBoards = function(){
-		return T.board('all')
-		.then(function(board){
+		return Promise.all([
+			T.board('all'),
+			T.get('board', 'private', 'expandupto')
+		]).spread(function(board, expandupto){
 			me._models.main.get('subnodes').add(new TreeView.Models.Board({
 				'id'    : board.id,
-        		'name'  : board.name,
-        		'url' 	: board.url
+				'name'  : board.name,
+				'url' 	: board.url,
+				'expanded' : (Utils.isEmpty(expandupto) || expandupto !== '0')
 			}));
 		});
 	};
@@ -75,13 +78,16 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 	just add these lists to the current 'one' board
 	*/
 	var renderListsAndCards = function(){
-		return T.lists('all')
-		.then(function(lists){
+		return Promise.all([
+			T.lists('all'),
+			T.get('board', 'private', 'expandupto')
+		]).spread(function(lists, expandupto){
 			var board = me._models.main.get('subnodes').at(0);
 			for(var list of lists){
 				board.get('subnodes').add(new TreeView.Models.List({
 					'id'   : list.id,
-					'name' : list.name
+					'name' : list.name,
+					'expanded' : ( !Utils.isEmpty(expandupto) && expandupto === '1')
 				}));
 
 				for(var card of list.cards){
@@ -323,9 +329,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 
 	var Utils = {
 		isEmpty : function(x){
-			return (_.isUndefined(x) ||
-				_.isNull(x) ||
-				_.isEmpty(x));
+			return (x === undefined || x === null || x.length == 0);
 		},
 		elemIsLoading : function(elem, isTrue){
 			elem.toggleClass('loading',isTrue);
@@ -383,8 +387,6 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 
 		return (newPos==0) ? r/2 : (newPos == -1 || r == 0) ? l+a : (l+r)/2 ;
 	};
-
-
 
 	me.init = function(){
 		//set focus to main window

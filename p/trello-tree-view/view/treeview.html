@@ -33,7 +33,7 @@
             <% } %>
             <a class="nodelink node-type-<%- type %>" href="<%- url %>" >
                 <% if (hasExpando) { %>
-                <span class="subnodes-count"><%= subnodes.length %></span>
+                <span class="subnodes-count" style="<%= expanded ? 'display: none;' : '' %>" > <%= subnodes.length %></span>
                 <% } %>
                 <!--label-->
                 <span class="node_name"><%= name %></span>

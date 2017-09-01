@@ -113,10 +113,11 @@ TreeView.Views.List = Backbone.View.extend({
 	},
 	render : function(){
 		var nodelink = this.$el.children('.nodelink'),
-			subnodelist = this.$el.children('.subnodelist')
+			subnodelist = this.$el.children('.subnodelist'),
+			isExpanded = this.model.get('expanded')
 			;
 
-		if(!this.model.get('expanded')){
+		if(!isExpanded){
 			subnodelist.hide();
 			this.toggleSubnodeCount(isExpanded, subnodelist.children('.nodecontainer').length);
 			nodelink.prepend('<span class="subnodes-count">'+subnodelist.children('.nodecontainer').length+'</span>');
@@ -176,10 +177,11 @@ TreeView.Views.Board = Backbone.View.extend({
 
 	render : function(){
 		var nodelink = this.$el.children('.nodelink'),
-			subnodelist = this.$el.children('.subnodelist')
+			subnodelist = this.$el.children('.subnodelist'),
+			isExpanded = this.model.get('expanded')
 			;
 
-		if(!this.model.get('expanded')){
+		if(!isExpanded){
 			subnodelist.hide();
 			this.toggleSubnodeCount(isExpanded, subnodelist.children('.nodecontainer').length);
 			nodelink.prepend('<span class="subnodes-count">'+subnodelist.children('.nodecontainer').length+'</span>');

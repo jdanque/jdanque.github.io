@@ -94,7 +94,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 
 				for(var card of list.cards){
 					board.get('subnodes').get({id : list.id}).get('subnodes')
-					.add(treeFactory.newCard(card, showlabels, showBadges));
+					.add(treeFactory.newCard(card, showLabels, showBadges));
 
 					var newCard = board.get('subnodes')
 						.get({id : list.id})

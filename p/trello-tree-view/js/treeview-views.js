@@ -196,6 +196,7 @@ TreeView.Views.Board = Backbone.View.extend({
 		this.template = _.template($('#node-template').html());
 
 		this.listenTo(this.model.get('subnodes'), 'add', this.addList);
+		this.listenTo(this.model.get('subnodes'), 'move', this.moveList);
 		this.listenTo(this.model, 'destroy', this.destroy);
 
 		this.setElement(this.template(this.model.attributes));
@@ -218,6 +219,12 @@ TreeView.Views.Board = Backbone.View.extend({
 	destroy : function(){
 		this.$el.html('This board has been closed.');
 		this.remove();
+	},
+
+	moveList : function(listModel, collection, options){
+		console.log(listModel);
+		console.log(collection);
+		console.log(options);
 	},
 
 	addList : function(listModel, collection, options){

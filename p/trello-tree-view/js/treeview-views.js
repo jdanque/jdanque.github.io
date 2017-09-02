@@ -226,7 +226,8 @@ TreeView.Views.Board = Backbone.View.extend({
 		if(_.isUndefined(options.at) || !options.at){
 			this.$el.children('.subnodelist').append(view.render().el);
 		}else{
-			this.$el.children('.subnodelist').eq(options.at).after(view.render().el);
+			var at = options.at > 0 ? options.at - 1 : 0;
+			this.$el.children('.subnodelist').children('.nodecontainer').eq(at).after(view.render().el);
 		}
 
 		this.$el.children('.nodelink').children('.subnodes-count').html(this.model.get('subnodes').length);

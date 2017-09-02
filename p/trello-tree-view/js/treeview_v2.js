@@ -499,8 +499,40 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 		},
 
 		updateLists : function(){
-			return T.lists('all').then(function(lists){
-				console.log(lists);
+			return Promise.all([
+					T.lists('all'),
+					T.get('board', 'private', 'expandupto'),
+					T.get('board', 'private', 'showlabels'),
+					T.get('board', 'private', 'showbadges')
+				]).spread(function(lists, expandupto, showLabels, showBadges){
+
+				var board = me._models.main.get('subnodes').at(0),
+					showLabels = Utils.isEmpty(showLabels) ? true : showLabels,
+					showBadges = Utils.isEmpty(showBadges) ? true : showBadges
+					;
+
+				for(var i = 0; i < lists.length; i++){
+					var list = lists[i];
+
+					//check for new lists
+					var uList = TreeView._models.main
+						.get('subnodes').at(0)
+						.get('subnodes')
+						.findWhere({'id':  list.id});
+
+					if(Utils.isEmpty(uList)){
+						uList = new TreeView.Models.List({
+							'id'   : list.id,
+							'name' : list.name,
+							'expanded' : ( !Utils.isEmpty(expandupto) && expandupto === '2')
+						});
+						//add new list to the board
+						TreeView._models.main
+							.get('subnodes').at(0)
+							.get('subnodes').add(uList);
+					}
+				}
+
 			});
 		},
 
@@ -509,9 +541,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 		},
 
 		start : function(){
-			updateTree.intervalHolder = setInterval(function(){
-				updateTree.update();
-			} ,1e4);
+			updateTree.intervalHolder = setInterval(_.debounce(updateTree.update, 1e4),1e4);
 		}
 
 	};
@@ -532,7 +562,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 			.then(renderTheme)
 			.then(enableSortableLists)
 			.then(enableSortableCards)
-			.then(updateTree.start)
+//			.then(updateTree.start)
 			.then(function(){
 				T.sizeTo('#maincontent');
 			})

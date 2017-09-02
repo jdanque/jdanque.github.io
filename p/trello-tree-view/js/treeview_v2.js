@@ -515,10 +515,11 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 					//deleted list
 					if(listNewIndex == -1){
 						boardLists.remove(listInBoard);
+						listInBoard.trigger('deleted');
 					}else if(listNewIndex != listInBoardIndex){
 					//moved list
 						boardLists.add(listInBoard.clone(), { at : listNewIndex } );
-						boardLists.remove(listInBoard);
+						listInBoard.trigger('deleted');
 					}
 				});
 

@@ -524,8 +524,8 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 
 				//check for new lists
 				for(var i = 0; i < lists.length; i++){
-
-					var pList = boardLists.findWhere({'id':  lists[i].id});
+					var list = lists[i];
+					var pList = boardLists.findWhere({'id':  list.id});
 
 					if(Utils.isEmpty(pList)){
 						pList = new TreeView.Models.List({

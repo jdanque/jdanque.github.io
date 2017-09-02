@@ -221,7 +221,7 @@ TreeView.Views.Board = Backbone.View.extend({
 		this.remove();
 	},
 
-	moveList : function(listModel, collection, options){
+	moveList : function(newIndex, collection, options){
 		console.log(listModel);
 		console.log(collection);
 		console.log(options);

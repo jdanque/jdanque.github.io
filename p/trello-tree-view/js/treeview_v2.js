@@ -516,29 +516,31 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 					if(listNewIndex == -1){
 						boardLists.remove(listInBoard);
 						listInBoard.trigger('deleted');
-					}else if(listNewIndex != listInBoardIndex){
+					}
+
+					//check for new lists
+					for(var i = 0; i < lists.length; i++){
+						var list = lists[i];
+						var pList = boardLists.findWhere({'id':  list.id});
+
+						if(Utils.isEmpty(pList)){
+							pList = new TreeView.Models.List({
+								'id'   : list.id,
+								'name' : list.name,
+								'expanded' : ( !Utils.isEmpty(expandupto) && expandupto === '2')
+							});
+
+							//add new list to the board
+							boardLists.add(pList, { at : i } );
+						}
+					}
+
 					//moved list
+				 	if(listNewIndex > -1 && listNewIndex != listInBoardIndex){
 						boardLists.add(listInBoard.clone(), { at : listNewIndex } );
 						listInBoard.trigger('deleted');
 					}
 				});
-
-				//check for new lists
-				for(var i = 0; i < lists.length; i++){
-					var list = lists[i];
-					var pList = boardLists.findWhere({'id':  list.id});
-
-					if(Utils.isEmpty(pList)){
-						pList = new TreeView.Models.List({
-							'id'   : list.id,
-							'name' : list.name,
-							'expanded' : ( !Utils.isEmpty(expandupto) && expandupto === '2')
-						});
-
-						//add new list to the board
-						boardLists.add(pList, { at : i } );
-					}
-				}
 
 			});
 		},

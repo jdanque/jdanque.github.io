@@ -221,10 +221,11 @@ TreeView.Views.Board = Backbone.View.extend({
 		this.remove();
 	},
 
-	moveList : function(newIndex, collection, options){
-		console.log(listModel);
-		console.log(collection);
-		console.log(options);
+	moveList : function(listModel, fromIndex, toIndex){
+		var at = toIndex > 0 ? toIndex - 1 : 0,
+			lists = this.$el.children('.subnodelist').children('.nodecontainer'),
+			content = lists.eq(fromIndex);
+		$(lists).eq(at).after(content);
 	},
 
 	addList : function(listModel, collection, options){

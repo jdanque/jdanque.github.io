@@ -90,24 +90,11 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 				;
 
 			for(var list of lists){
-				board.get('subnodes').add(new TreeView.Models.List({
-					'id'   : list.id,
-					'name' : list.name,
-					'expanded' : ( !Utils.isEmpty(expandupto) && expandupto === '2')
-				}));
+				board.get('subnodes').add(treeFactory.newList(list, expandupto));
 
 				for(var card of list.cards){
-					board.get('subnodes').get({id : list.id})
-					.get('subnodes')
-					.add(new TreeView.Models.Card({
-						'id'  	 : card.id,
-						'name'	 : card.name,
-						'url' 	 : card.url,
-						'desc'	 : card.desc,
-						'closed' : card.closed,
-						'showLabels' : showLabels,
-						'showBadges' : showBadges
-					}));
+					board.get('subnodes').get({id : list.id}).get('subnodes')
+					.add(treeFactory.newCard(card, showlabels, showBadges));
 
 					var newCard = board.get('subnodes')
 						.get({id : list.id})
@@ -116,86 +103,119 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 
 					if(showLabels){
 						//labels
-						for(var label of card.labels){
-							if(!Utils.isEmpty(label.color)){
-								newCard.get('labels').add(new TreeView.Models.CardLabel({
-									'name' : label.name,
-									'color' : label.color
-								}));
-							}
-						}
+						treeFactory.addCardLabels(newCard, card.labels);
 					}
 
 					if(showBadges){
 						//badges
-						if(!Utils.isEmpty(card.badges.due)){
-							newCard.get('badges').add(new TreeView.Models.CardBadgeDue(
-								getBadgeOptions.due(card.badges.due)));
-						}
-
-						if(card.badges.attachments > 0){
-							newCard.get('badges').add(new TreeView.Models.CardBadgeAttachment(
-								getBadgeOptions.attachments(card.badges.attachments)));
-						}
-
-						if(card.badges.checkItems > 0){
-							newCard.get('badges').add(new TreeView.Models.CardBadgeChecklist(
-								getBadgeOptions.checklist({checkItems : card.badges.checkItems, checkItemsChecked : card.badges.checkItemsChecked})));
-						}
-
-						if(card.badges.votes > 0){
-							newCard.get('badges').add(new TreeView.Models.CardBadgeVote(
-								getBadgeOptions.votes(card.badges.votes)));
-						}
-
-						if(!Utils.isEmpty(card.members) && card.members.length > 0){
-							newCard.get('badges').add(new TreeView.Models.CardBadgeMembers(
-								getBadgeOptions.members(card.members)));
-						}
+						treeFactory.addCardBadges(newCard, card);
 					}
 				}
 			}
 		});
 	};
 
-	var getBadgeOptions = {
-		due : function(badge){
-			var opts = {};
-			var dueDate = moment(badge);
-			var now = moment().local();
-			var diff = now.diff(dueDate,"hours", true);
+	var treeFactory = {
+		/**
+		* Creates a new list object model from a list object that trello returns
+		*/
+		newList : function(list, expandupto){
+			return new TreeView.Models.List({
+				'id'   : list.id,
+				'name' : list.name,
+				'expanded' : ( !Utils.isEmpty(expandupto) && expandupto === '2')
+			});
+		},
 
-			opts.value = dueDate.format('MMM DD');
-			opts.iconClass = diff < 0 && diff > -25 ? 'due-soon' : diff <= 36 && diff >= 0 ? 'due-now' : diff > 36 ? 'past-due' : '';
-			opts.title = opts.iconClass.length > 0 ? opts.iconClass.replace("-"," ") : 'Due on: '+opts.value;
-			return opts;
+		newCard : function(card, showLabels, showBadges){
+			return new TreeView.Models.Card({
+				'id'  	 : card.id,
+				'name'	 : card.name,
+				'url' 	 : card.url,
+				'desc'	 : card.desc,
+				'closed' : card.closed,
+				'showLabels' : showLabels,
+				'showBadges' : showBadges
+			});
 		},
-		attachments : function(badge){
-			var opts = {};
-			opts.value = badge;
-			return opts;
-		},
-		checklist : function(badge){
-			var opts = {};
-			opts.value = ''+badge.checkItemsChecked+'/'+badge.checkItems+'';
-			opts.iconClass = badge.checkItems - badge.checkItemsChecked == 0 ? 'checklist-complete' : '';
-			return opts;
-		},
-		votes : function(badge){
-			var opts = {};
-			opts.value = badge;
-			return opts;
-		},
-		members : function(item){
-			var opts = {};
-			opts.title = 'Members assigned: ';
-			for(var member of item){
-			   opts.title += member.fullName + ', ';
+
+		addCardLabels : function(card, labels){
+			for(var label of labels){
+				if(!Utils.isEmpty(label.color)){
+					card.get('labels')
+					.add(new TreeView.Models.CardLabel({
+						'name' : label.name,
+						'color' : label.color
+					}));
+				}
 			}
-			opts.title = opts.title.substring(0,opts.title.length-2);
-			opts.value = item.length;
 
-			return opts;
+			return card;
+		},
+
+		addCardBadges : function(cardObj, card){
+			var cardBadges = cardObj.get('badges');
+			if(!Utils.isEmpty(card.badges.due)){
+				cardBadges.add(treeFactory.newCardBadge.due(card.badges.due));
+			}
+
+			if(card.badges.attachments > 0){
+				cardBadges.add(treeFactory.newCardBadge.attachments(card.badges.attachments));
+			}
+
+			if(card.badges.checkItems > 0){
+				cardBadges.add(treeFactory.newCardBadge.checklist({checkItems : card.badges.checkItems, checkItemsChecked : card.badges.checkItemsChecked}));
+			}
+
+			if(card.badges.votes > 0){
+				cardBadges.add(treeFactory.newCardBadge.votes(card.badges.votes));
+			}
+
+			if(!Utils.isEmpty(card.members) && card.members.length > 0){
+				cardBadges.add(treeFactory.newCardBadge.members(card.members));
+			}
+		},
+
+		newCardBadge : {
+			due : function(badge){
+				var opts = {};
+				var dueDate = moment(badge);
+				var now = moment().local();
+				var diff = now.diff(dueDate,"hours", true);
+
+				opts.value = dueDate.format('MMM DD');
+				opts.iconClass = diff < 0 && diff > -25 ? 'due-soon' : diff <= 36 && diff >= 0 ? 'due-now' : diff > 36 ? 'past-due' : '';
+				opts.title = opts.iconClass.length > 0 ? opts.iconClass.replace("-"," ") : 'Due on: '+opts.value;
+
+				return new TreeView.Models.CardBadgeDue(opts);
+			},
+			attachments : function(badge){
+				var opts = {};
+				opts.value = badge;
+				return new TreeView.Models.CardBadgeAttachment(opts);
+			},
+			checklist : function(badge){
+				var opts = {};
+				opts.value = ''+badge.checkItemsChecked+'/'+badge.checkItems+'';
+				opts.iconClass = badge.checkItems - badge.checkItemsChecked == 0 ? 'checklist-complete' : '';
+				return new TreeView.Models.CardBadgeChecklist(opts);
+			},
+			votes : function(badge){
+				var opts = {};
+				opts.value = badge;
+				return new TreeView.Models.CardBadgeVote(opts);
+			},
+			members : function(item){
+				var opts = {};
+				opts.title = 'Members assigned: ';
+				for(var member of item){
+				   opts.title += member.fullName + ', ';
+				}
+				opts.title = opts.title.substring(0,opts.title.length-2);
+				opts.value = item.length;
+
+				return new TreeView.Models.CardBadgeMembers(opts);
+			}
 		}
 	};
 
@@ -521,17 +541,32 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 					//check for new lists
 					for(var i = 0; i < lists.length; i++){
 						var list = lists[i];
-						var pList = boardLists.findWhere({'id':  list.id});
 
-						if(Utils.isEmpty(pList)){
-							pList = new TreeView.Models.List({
-								'id'   : list.id,
-								'name' : list.name,
-								'expanded' : ( !Utils.isEmpty(expandupto) && expandupto === '2')
-							});
+						if(Utils.isEmpty(boardLists.findWhere({'id':  list.id}))){
 
 							//add new list to the board
-							boardLists.add(pList, { at : i } );
+							boardLists.add(
+								treeFactory.newList(list, expandupto),
+								{ at : i }
+							);
+
+							var boardListCards = boardLists.get({id : list.id}).get('subnodes');
+
+							for(var card of list.cards){
+								boardListCards.add(treeFactory.newCard(card, showlabels, showBadges));
+
+								var newCard = boardListCards.get({id : card.id});
+
+								if(showLabels){
+									//labels
+									treeFactory.addCardLabels(newCard, card.labels);
+								}
+
+								if(showBadges){
+									//badges
+									treeFactory.addCardBadges(newCard, card);
+								}
+							}
 						}
 					}
 
@@ -550,7 +585,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 		},
 
 		start : function(){
-			updateTree.intervalHolder = setInterval(_.throttle(updateTree.update, 9e3),3e3);
+			updateTree.intervalHolder = setInterval(_.throttle(updateTree.update, 1e4),3e3);
 		}
 
 	};

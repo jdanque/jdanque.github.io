@@ -514,11 +514,11 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 
 					//deleted list
 					if(listNewIndex == -1){
-						listInBoard.trigger('deleted');
+						boardLists.remove(listInBoard);
 					}else if(listNewIndex != listInBoardIndex){
 					//moved list
 						boardLists.add(listInBoard.clone(), { at : listNewIndex } );
-						listInBoard.trigger('deleted');
+						boardLists.remove(listInBoard);
 					}
 				});
 

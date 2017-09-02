@@ -118,7 +118,6 @@ TreeView.Views.List = Backbone.View.extend({
 
 		this.listenTo(this.model.get('subnodes'), 'add', this.addCard);
 		this.listenTo(this.model, 'change:_loading', this.updateLoading);
-		this.listenTo(this.model, 'deleted', this.deleteList);
 
 		this.setElement(this.template(this.model.attributes));
 
@@ -137,10 +136,6 @@ TreeView.Views.List = Backbone.View.extend({
 
 
 		return this;
-	},
-
-	deleteList : function(){
-		this.remove();
 	},
 
 	updateLoading : function(){

@@ -118,6 +118,7 @@ TreeView.Views.List = Backbone.View.extend({
 
 		this.listenTo(this.model.get('subnodes'), 'add', this.addCard);
 		this.listenTo(this.model, 'change:_loading', this.updateLoading);
+		this.listenTo(this.model, 'deleted', this.deleteList);
 
 		this.setElement(this.template(this.model.attributes));
 
@@ -136,6 +137,10 @@ TreeView.Views.List = Backbone.View.extend({
 
 
 		return this;
+	},
+
+	deleteList : function(){
+		this.remove();
 	},
 
 	updateLoading : function(){
@@ -211,12 +216,19 @@ TreeView.Views.Board = Backbone.View.extend({
 	},
 
 	destroy : function(){
+		this.$el.html('This board has been closed.');
 		this.remove();
 	},
 
-	addList : function(listModel){
+	addList : function(listModel, collection, options){
 		var view = new TreeView.Views.List({ model: listModel });
-		this.$el.children('.subnodelist').append(view.render().el);
+
+		if(_.isUndefined(options.at) || !options.at){
+			this.$el.children('.subnodelist').append(view.render().el);
+		}else{
+			this.$el.children('.subnodelist').eq(options.at).after(view.render().el);
+		}
+
 		this.$el.children('.nodelink').children('.subnodes-count').html(this.model.get('subnodes').length);
 	},
 

@@ -474,20 +474,15 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 	};
 
 	var updateTree = {
-		isUpdating : false,
 		intervalHolder : {},
 
 		update : function(){
-			if(!updateTree.isUpdating){
-				updateTree.isUpdating = true;
 
-				updateTree.updateBoard()
-				.then(updateTree.updateLists)
-				.then(function(){
-					updateTree.isUpdating = false;
-				});
+			updateTree.updateBoard()
+			.then(updateTree.updateLists)
+			.then(function(){
+			});
 
-			}
 		},
 
 		updateBoard : function(){
@@ -507,29 +502,40 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 				]).spread(function(lists, expandupto, showLabels, showBadges){
 
 				var board = me._models.main.get('subnodes').at(0),
+					boardLists = board.get('subnodes'),
 					showLabels = Utils.isEmpty(showLabels) ? true : showLabels,
 					showBadges = Utils.isEmpty(showBadges) ? true : showBadges
 					;
 
+				//deleted / moved list
+				boardLists.forEach(function(listInBoard,listInBoardIndex){
+					var pId = listInBoard.get('id');
+					var listNewIndex = _.findIndex(lists,{ 'id': pId});
+
+					//deleted list
+					if(listNewIndex == -1){
+						listInBoard.trigger('deleted');
+					}else if(listNewIndex != listInBoardIndex){
+					//moved list
+						boardLists.add(listInBoard.clone(), { at : listNewIndex } );
+						listInBoard.trigger('deleted');
+					}
+				});
+
+				//check for new lists
 				for(var i = 0; i < lists.length; i++){
-					var list = lists[i];
 
-					//check for new lists
-					var uList = TreeView._models.main
-						.get('subnodes').at(0)
-						.get('subnodes')
-						.findWhere({'id':  list.id});
+					var pList = boardLists.findWhere({'id':  lists[i].id});
 
-					if(Utils.isEmpty(uList)){
-						uList = new TreeView.Models.List({
+					if(Utils.isEmpty(pList)){
+						pList = new TreeView.Models.List({
 							'id'   : list.id,
 							'name' : list.name,
 							'expanded' : ( !Utils.isEmpty(expandupto) && expandupto === '2')
 						});
+
 						//add new list to the board
-						TreeView._models.main
-							.get('subnodes').at(0)
-							.get('subnodes').add(uList);
+						boardLists.add(pList, { at : i } );
 					}
 				}
 
@@ -541,7 +547,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 		},
 
 		start : function(){
-			updateTree.intervalHolder = setInterval(_.debounce(updateTree.update, 1e4),1e4);
+			updateTree.intervalHolder = setInterval(_.throttle(updateTree.update, 9e3),3e3);
 		}
 
 	};
@@ -562,7 +568,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 			.then(renderTheme)
 			.then(enableSortableLists)
 			.then(enableSortableCards)
-//			.then(updateTree.start)
+			.then(updateTree.start)
 			.then(function(){
 				T.sizeTo('#maincontent');
 			})

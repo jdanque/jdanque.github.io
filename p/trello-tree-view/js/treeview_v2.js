@@ -482,6 +482,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 				updateTree.isUpdating = true;
 
 				updateTree.updateBoard()
+				.then(updateTree.updateLists)
 				.then(function(){
 					updateTree.isUpdating = false;
 				});
@@ -494,6 +495,12 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 				if(Utils.isEmpty(board)){
 					me._models.main.get('subnodes').at(0).trigger('destroy');
 				}
+			});
+		},
+
+		updateLists : function(){
+			return T.lists('all').then(function(lists){
+				console.log(lists);
 			});
 		},
 

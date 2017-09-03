@@ -679,7 +679,7 @@ _.mixin({
 
 					}else{
 						_card.savedList.get('subnodes')
-							.move(_card.savedCard, _card.savedCard.indexInList, _card.updatedCard.indexInList);
+							.move(_card.savedCard,  _card.updatedCard.indexInList);
 					}
 
 

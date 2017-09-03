@@ -117,7 +117,7 @@ _.mixin({
 		newCard : function(card, showLabels, showBadges){
 			return new TreeView.Models.Card({
 				'id'  	 : card.id,
-				'idList' : card.idList
+				'idList' : card.idList,
 				'name'	 : card.name,
 				'url' 	 : card.url,
 				'desc'	 : card.desc,

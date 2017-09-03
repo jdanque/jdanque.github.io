@@ -8,10 +8,12 @@ TreeView.Views = TreeView.Views || {};
 jQuery.fn.insertAt = function(index, element) {
   var lastIndex = this.size() - 1;
 
-  if(index == lastIndex){
+  if(index == 0){
+	this.first().before(element);
+  }else if(index == lastIndex){
     this.last().after(element);
-  }else if(index >= 0){
-    this.eq(index).before(element);
+  }else if(index > 0 && index < lastIndex){
+    this.eq(index-1).after(element);
   }
 
   return this;

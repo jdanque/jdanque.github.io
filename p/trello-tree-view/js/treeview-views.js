@@ -49,9 +49,9 @@ TreeView.Views.Card = Backbone.View.extend({
 		this.template = _.template($('#node-template').html());
         this.listenTo(this.model, "update", this.render);
         this.listenTo(this.model, 'change:_loading', this.updateLoading);
+        this.listenTo(this.model, 'deleted', this.deleteCard);
         this.listenTo(this.model.get('labels'), 'add', this.addLabel);
         this.listenTo(this.model.get('badges'), 'add', this.addBadge);
-        this.listenTo(this.model, 'deleted', this.deleteCard);
 
         this.setElement(this.template(this.model.attributes));
     },
@@ -124,9 +124,12 @@ TreeView.Views.List = Backbone.View.extend({
 		this.listenTo(this.model.get('subnodes'), 'add', this.addCard);
 		this.listenTo(this.model, 'change:_loading', this.updateLoading);
 		this.listenTo(this.model, 'deleted', this.deleteList);
+		this.listenTo(this.model.get('subnodes'), 'move', this.moveCard);
+		this.listenTo(this.model.get('subnodes'), 'transferIn', this.transferCardIn);
+		this.listenTo(this.model.get('subnodes'), 'transferOut', this.transferCardOut);
+
 
 		this.setElement(this.template(this.model.attributes));
-
 	},
 
 	render : function(){
@@ -142,6 +145,25 @@ TreeView.Views.List = Backbone.View.extend({
 
 
 		return this;
+	},
+
+
+	transferCardOut : function(cardModel, fromIndex, toIndex){
+		this.$el.children('.subnodelist')
+			.children('.nodecontainer')
+			.eq(fromIndex).remove();
+	},
+
+	transferCardIn : function(cardModel, fromIndex, toIndex){
+		var view = new TreeView.Views.Card({ model: cardModel });
+		this.$el.children('.subnodelist').children('.nodecontainer').eq(toIndex).after(view.render().el);
+		this.$el.children('.nodelink').children('.subnodes-count').html(this.model.get('subnodes').length);
+	},
+
+	moveCard : function(cardModel, fromIndex, toIndex){
+		var cards = this.$el.children('.subnodelist').children('.nodecontainer'),
+			content = cards.eq(fromIndex);
+		$(cards).eq(toIndex).after(content);
 	},
 
 	deleteList : function(){

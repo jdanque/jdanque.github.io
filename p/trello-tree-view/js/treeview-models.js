@@ -21,6 +21,19 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
   }
 };
 
+/**
+* Moves a model from a collection into another collection
+* Triggers 'transferOut' from original collection and 'transferIn'
+* to target collection
+*/
+Backbone.Collection.prototype.transfer = function(model, toCollection, toIndex) {
+  var fromIndex = this.indexOf(model);
+
+	toCollection.splice(toIndex, 0, this.models.splice(fromIndex, 1)[0]);
+	this.trigger("transferOut", model, fromIndex, toIndex);
+	toCollection.trigger("transferIn", model, fromIndex, toIndex);
+};
+
 TreeView.Models.Node = Backbone.Model.extend({
 	defaults: {
 		'type' 	     : '',

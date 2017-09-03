@@ -679,9 +679,9 @@ _.mixin({
 					}
 
 					if(_card.savedCardIDList !== _card.updatedCard.idList){
-						_card.savedList.transfer(
+						_card.savedList.get('subnodes').transfer(
 							_card.savedCard,
-							_card.updatedList,
+							_card.updatedList.get('subnodes'),
 							_card.updatedCard.indexInList
 						);
 

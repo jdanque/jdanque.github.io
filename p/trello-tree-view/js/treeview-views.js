@@ -178,13 +178,20 @@ TreeView.Views.List = Backbone.View.extend({
 
 	addCard : function(cardModel,collection, options){
 		var view = new TreeView.Views.Card({ model: cardModel });
+
+		if(!_.isUndefined(options.at)){
+			var at = options.at > 0 ? options.at - 1 : 0;
+
+			var target = this.$el.children('.subnodelist').children('.nodecontainer').eq(at);
+
+			target.before(view.render().el);
+
+		}else
 		if(_.isUndefined(options.noAppend) ||
 			!options.noAppend){
 			this.$el.children('.subnodelist').append(view.render().el);
-		}else if(!_.isUndefined(options.at)){
-			var at = options.at > 0 ? options.at - 1 : 0;
-			this.$el.children('.subnodelist').children('.nodecontainer').eq(at).after(view.render().el);
 		}
+
 		this.$el.children('.nodelink').children('.subnodes-count').html(this.model.get('subnodes').length);
 	},
 

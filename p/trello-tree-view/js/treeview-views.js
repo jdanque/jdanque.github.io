@@ -13,7 +13,7 @@ jQuery.fn.insertAt = function(index, element) {
   }else if(index == lastIndex){
     this.last().after(element);
   }else if(index > 0 && index < lastIndex){
-    this.eq(index-1).after(element);
+    this.eq(index).after(element);
   }
 
   return this;

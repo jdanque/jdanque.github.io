@@ -64,6 +64,7 @@ TreeView.Models.Boards = Backbone.Collection.extend({
 TreeView.Models.List = TreeView.Models.Node.extend({
 	defaults :  _.extend({},TreeView.Models.Node.prototype.defaults,{
 		'type'  : 'list',
+		'name' : '',
 		'subnodes': []
 	}),
 	initialize : function(){
@@ -80,6 +81,7 @@ TreeView.Models.Card = TreeView.Models.Node.extend({
 	defaults :  _.extend({},TreeView.Models.Node.prototype.defaults,{
 		'type' : 'card',
 		'idList' : '',
+		'name' : '',
 		'hasExpando' : false,
 		'closed' : false,
 		'labels' : [],

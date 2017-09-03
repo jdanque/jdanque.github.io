@@ -63,6 +63,7 @@ TreeView.Views.Card = Backbone.View.extend({
 		this.template = _.template($('#node-template').html());
         this.listenTo(this.model, "update", this.render);
         this.listenTo(this.model, 'change:_loading', this.updateLoading);
+        this.listenTo(this.model, 'change:name', this.changeName);
         this.listenTo(this.model, 'deleted', this.deleteCard);
         this.listenTo(this.model.get('labels'), 'add', this.addLabel);
         this.listenTo(this.model.get('badges'), 'add', this.addBadge);
@@ -79,6 +80,10 @@ TreeView.Views.Card = Backbone.View.extend({
 
 	deleteCard : function(){
 		this.remove();
+	},
+
+	changeName : function(newName){
+		this.$el.children('.nodelink').children('.node_name').html(newName);
 	},
 
 	addLabel : function(label, collection, options){
@@ -137,6 +142,7 @@ TreeView.Views.List = Backbone.View.extend({
 
 		this.listenTo(this.model.get('subnodes'), 'add', this.addCard);
 		this.listenTo(this.model, 'change:_loading', this.updateLoading);
+		this.listenTo(this.model, 'change:name', this.changeName);
 		this.listenTo(this.model, 'deleted', this.deleteList);
 		this.listenTo(this.model.get('subnodes'), 'move', this.moveCard);
 		this.listenTo(this.model.get('subnodes'), 'transferIn', this.transferCardIn);
@@ -166,11 +172,26 @@ TreeView.Views.List = Backbone.View.extend({
 		this.$el.children('.subnodelist')
 			.children('.nodecontainer')
 			.eq(fromIndex).remove();
+		this.models.remove(cardModel);
+		cardModel.trigger('deleted');
+		updateSubnodesCount();
 	},
 
 	transferCardIn : function(cardModel, fromIndex, toIndex){
-		var view = new TreeView.Views.Card({ model: cardModel });
-		this.$el.children('.subnodelist').children('.nodecontainer').eq(toIndex).after(view.render().el);
+//		var view = new TreeView.Views.Card({ model: cardModel });
+//		this.$el.children('.subnodelist')
+//			.children('.nodecontainer')
+//			.insertAt(toIndex,view.render().el);
+//		updateSubnodesCount();
+
+		this.addCard(cardModel, {at : toIndex});
+	},
+
+	changeName : function(newName){
+		this.$el.children('.nodelink').children('.node_name').html(newName);
+	},
+
+	updateSubnodesCount : function(){
 		this.$el.children('.nodelink').children('.subnodes-count').html(this.model.get('subnodes').length);
 	},
 
@@ -180,11 +201,6 @@ TreeView.Views.List = Backbone.View.extend({
 
 			cards.insertAt(toIndex, content);
 
-//			if(cards.length-1 == toIndex){
-//				$(cards).last().after(content);
-//			}else{
-//				$(cards).eq(toIndex).before(content);
-//			}
 	},
 
 	deleteList : function(){
@@ -201,7 +217,7 @@ TreeView.Views.List = Backbone.View.extend({
 		var view = new TreeView.Views.Card({ model: cardModel });
 
 		if(!_.isUndefined(options.at)){
-			var nodecontainers = this.$el.children('.subnodelist').children('.nodecontainer')
+			var nodecontainers = this.$el.children('.subnodelist').children('.nodecontainer');
 			if(nodecontainers.length == options.at){
 				this.$el.children('.subnodelist').append(view.render().el);
 			}else{
@@ -214,7 +230,7 @@ TreeView.Views.List = Backbone.View.extend({
 			this.$el.children('.subnodelist').append(view.render().el);
 		}
 
-		this.$el.children('.nodelink').children('.subnodes-count').html(this.model.get('subnodes').length);
+		updateSubnodesCount();
 	},
 
 	toggleSubnodeCount : function(isShow){
@@ -285,13 +301,6 @@ TreeView.Views.Board = Backbone.View.extend({
 			content = lists.eq(fromIndex);
 
 			lists.insertAt(toIndex, content);
-//		if(lists.length-1 == toIndex){
-//			$(lists).last().after(content);
-//		}else{
-//			$(lists).eq(toIndex).before(content);
-//		}
-//		$(lists).eq(toIndex).after(content);
-
 	},
 
 	addList : function(listModel, collection, options){
@@ -303,10 +312,13 @@ TreeView.Views.Board = Backbone.View.extend({
 			var at = options.at > 0 ? options.at - 1 : 0;
 			this.$el.children('.subnodelist').children('.nodecontainer').eq(at).after(view.render().el);
 		}
-
-		this.$el.children('.nodelink').children('.subnodes-count').html(this.model.get('subnodes').length);
+		updateSubnodesCount();
 	},
 
+
+	updateSubnodesCount : function(){
+		this.$el.children('.nodelink').children('.subnodes-count').html(this.model.get('subnodes').length);
+	},
 
 	toggleSubnodeCount : function(isShow){
 		this.$el.children('.nodelink').children('.subnodes-count').toggleClass('hidden',!isShow);

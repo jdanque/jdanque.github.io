@@ -618,7 +618,7 @@ _.mixin({
 				//get index in list
 				for(var j=0;j<lists.length;j++){
 					for(var k=0;k<lists[j].cards.length;k++){
-						if(lists[j].cards.id === newCardId){
+						if(lists[j].cards[k].id === newCardId){
 							indexInList = k;
 						}
 					}
@@ -649,6 +649,7 @@ _.mixin({
 				return u.get('subnodes').models;
 			}));
 
+			//todo delete this
 			savedCards= [];
 
 			for(var i = 0; i < savedCards.length; i++){

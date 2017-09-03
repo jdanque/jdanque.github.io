@@ -664,7 +664,7 @@ _.mixin({
 					//check if it's on the same list
 					for(var j=0;j<lists.length;j++){
 						for(var k=0;k<lists[j].cards.length;k++){
-							if(lists[j].cards.id === _card.savedCardID){
+							if(lists[j].cards[k].id === _card.savedCardID){
 								_card.updatedCard.indexInList = k;
 							}
 						}

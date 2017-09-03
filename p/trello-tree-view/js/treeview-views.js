@@ -6,15 +6,14 @@ var TreeView = TreeView || {};
 TreeView.Views = TreeView.Views || {};
 
 jQuery.fn.insertAt = function(index, element) {
-  var lastIndex = this.children().size();
-  if (index < 0) {
-    index = Math.max(0, lastIndex + 1 + index);
+  var lastIndex = this.size() - 1;
+
+  if(index == lastIndex){
+    this.last().after(element);
+  }else if(index >= 0){
+    this.eq(index).before(element);
   }
 
-  this.children().last().after(element);
-  if (index < lastIndex) {
-    this.children().eq(index).before(this.children().last());
-  }
   return this;
 }
 
@@ -173,7 +172,7 @@ TreeView.Views.List = Backbone.View.extend({
 		this.$el.children('.nodelink').children('.subnodes-count').html(this.model.get('subnodes').length);
 	},
 
-	moveCard : function(cardModel, fromIndex, toIndex){
+ 	moveCard : function(cardModel, fromIndex, toIndex){
 		var cards = this.$el.children('.subnodelist').children('.nodecontainer'),
 			content = cards.eq(fromIndex);
 
@@ -282,12 +281,14 @@ TreeView.Views.Board = Backbone.View.extend({
 	moveList : function(listModel, fromIndex, toIndex){
 		var lists = this.$el.children('.subnodelist').children('.nodecontainer'),
 			content = lists.eq(fromIndex);
-		if(lists.length-1 == toIndex){
-			$(lists).last().after(content);
-		}else{
-			$(lists).eq(toIndex).before(content);
-		}
-		$(lists).eq(toIndex).after(content);
+
+			lists.insertAt(toIndex, content);
+//		if(lists.length-1 == toIndex){
+//			$(lists).last().after(content);
+//		}else{
+//			$(lists).eq(toIndex).before(content);
+//		}
+//		$(lists).eq(toIndex).after(content);
 
 	},
 

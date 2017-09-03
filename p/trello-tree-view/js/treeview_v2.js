@@ -585,13 +585,16 @@ _.mixin({
 			var updatedCardsIds = _.map(updatedCards, function(u){return u.id});
 
 			//deleted cards
-			var deletedCardsIds = _.difference(savedCardsIds,  updatedCardsIds);
-			for(var deletedCardId of deletedCardsIds){
+			var deletedCards = {};
+			deletedCards.idArr = _.difference(savedCardsIds,  updatedCardsIds);
+			for(var deletedCardId of deletedCards.idArr){
 				boardLists.forEach(function(_list, _listIndex){
-					var cardToDelete = _list.get('subnodes').findWhere({'id' : deletedCardId });
-					if(!Utils.isEmpty(cardToDelete)){
-						boardLists.remove(cardToDelete);
-						cardToDelete.trigger('deleted');
+					deletedCards.card = _list.get('subnodes').findWhere({'id' : deletedCardId });
+
+					if(!Utils.isEmpty(deletedCards.card)){
+						deletedCards.cardInList = boardLists.findWhere({'id': deletedCards.card.get('idList')});
+						deletedCards.cardInList.remove(deletedCards.card);
+						deletedCards.card.trigger('deleted');
 						savedCardsIds.splice(_.indexOf(savedCardsIds,deletedCardId),1);
 					}
 				});
@@ -675,7 +678,7 @@ _.mixin({
 
 		start : function(){
 			return Promise.resolve().then(function(){
-				updateTree.intervalHolder = setInterval(_.throttle(updateTree.update, 5e3),2e3);
+				updateTree.intervalHolder = setInterval(_.throttle(updateTree.update, 5e3),5e3);
 			});
 		}
 

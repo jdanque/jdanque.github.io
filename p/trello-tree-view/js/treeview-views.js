@@ -5,6 +5,19 @@ var TreeView = TreeView || {};
 
 TreeView.Views = TreeView.Views || {};
 
+jQuery.fn.insertAt = function(index, element) {
+  var lastIndex = this.children().size();
+  if (index < 0) {
+    index = Math.max(0, lastIndex + 1 + index);
+  }
+
+  this.children().last().after(element);
+  if (index < lastIndex) {
+    this.children().eq(index).before(this.children().last());
+  }
+  return this;
+}
+
 TreeView.Views.CardLabel = Backbone.View.extend({
 	tagName : 'div',
 
@@ -163,11 +176,14 @@ TreeView.Views.List = Backbone.View.extend({
 	moveCard : function(cardModel, fromIndex, toIndex){
 		var cards = this.$el.children('.subnodelist').children('.nodecontainer'),
 			content = cards.eq(fromIndex);
-			if(cards.length-1 == toIndex){
-				$(cards).last().after(content);
-			}else{
-				$(cards).eq(toIndex).before(content);
-			}
+
+			cards.insertAt(toIndex, content);
+
+//			if(cards.length-1 == toIndex){
+//				$(cards).last().after(content);
+//			}else{
+//				$(cards).eq(toIndex).before(content);
+//			}
 	},
 
 	deleteList : function(){

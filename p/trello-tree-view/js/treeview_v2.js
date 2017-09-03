@@ -495,7 +495,7 @@ _.mixin({
 			]).spread(function(board, lists, expandupto, showLabels, showBadges){
 				updateTree.updateBoard(board);
 				updateTree.updateLists(lists, expandupto, showLabels, showBadges);
-//				updateTree.updateCards(lists, expandupto, showLabels, showBadges);
+				updateTree.updateCards(lists, expandupto, showLabels, showBadges);
 			}).then(function(){
 				//noop
 			});

@@ -163,7 +163,7 @@ TreeView.Views.List = Backbone.View.extend({
 	moveCard : function(cardModel, fromIndex, toIndex){
 		var cards = this.$el.children('.subnodelist').children('.nodecontainer'),
 			content = cards.eq(fromIndex);
-			if(cards.length == toIndex){
+			if(cards.length-1 == toIndex){
 				$(cards).last().after(content);
 			}else{
 				$(cards).eq(toIndex).before(content);
@@ -266,13 +266,13 @@ TreeView.Views.Board = Backbone.View.extend({
 	moveList : function(listModel, fromIndex, toIndex){
 		var lists = this.$el.children('.subnodelist').children('.nodecontainer'),
 			content = lists.eq(fromIndex);
-		if(lists.length == toIndex){
+		if(lists.length-1 == toIndex){
 			$(lists).last().after(content);
 		}else{
 			$(lists).eq(toIndex).before(content);
 		}
 		$(lists).eq(toIndex).after(content);
-		
+
 	},
 
 	addList : function(listModel, collection, options){

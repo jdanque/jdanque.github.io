@@ -498,17 +498,9 @@ _.mixin({
 				T.get('board', 'private', 'showlabels'),
 				T.get('board', 'private', 'showbadges')
 			]).spread(function(board, lists, expandupto, showLabels, showBadges){
-				return Promise.resolve().then(function(){
 					updateTree.updateBoard(board);
-				});
-			}).then(function(){
-				return Promise.resolve().then(function(){
 					updateTree.updateLists(lists, expandupto, showLabels, showBadges);
-				});
-			}).then(function(){
-				return Promise.resolve().then(function(){
 					updateTree.updateCards(lists, expandupto, showLabels, showBadges);
-				});
 			}).then(function(){
 				updateTree.ongoing = false;
 				//noop

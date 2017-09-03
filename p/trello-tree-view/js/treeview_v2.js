@@ -682,7 +682,9 @@ _.mixin({
 							.move(_card.savedCard,  _card.updatedCard.indexInList);
 					}
 
-
+					savedCards = _.flatten(_.map(boardLists.models, function(u){
+						return u.get('subnodes').models;
+					}));
 					i=0;
 				}
 			}

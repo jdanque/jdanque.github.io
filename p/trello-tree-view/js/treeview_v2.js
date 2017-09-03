@@ -649,6 +649,8 @@ _.mixin({
 				return u.get('subnodes').models;
 			}));
 
+			savedCards= [];
+
 			for(var i = 0; i < savedCards.length; i++){
 				if(savedCards[i].get('id') !== updatedCards[i].id){
 					var _card = {};

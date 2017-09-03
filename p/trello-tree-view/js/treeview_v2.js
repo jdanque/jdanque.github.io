@@ -613,10 +613,21 @@ _.mixin({
 					return x.id === newCardId;
 				});
 
+				var indexInList = -1;
+
+				//get index in list
+				for(var j=0;j<lists.length;j++){
+					for(var k=0;k<lists[j].cards.length;k++){
+						if(lists[j].cards.id === newCardId){
+							indexInList = k;
+						}
+					}
+				}
+
 				//find what list to add
 				var listToAddCard = boardLists.findWhere({'id': newCard.idList});
 				listToAddCard = listToAddCard.get('subnodes');
-				listToAddCard.add(treeFactory.newCard(newCard, showLabels, showBadges));
+				listToAddCard.add(treeFactory.newCard(newCard, showLabels, showBadges),{at : indexInList});
 
 				var addedCard = listToAddCard.get({id : newCardId});
 

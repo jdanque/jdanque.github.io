@@ -117,6 +117,7 @@ _.mixin({
 		newCard : function(card, showLabels, showBadges){
 			return new TreeView.Models.Card({
 				'id'  	 : card.id,
+				'idList' : card.idList
 				'name'	 : card.name,
 				'url' 	 : card.url,
 				'desc'	 : card.desc,
@@ -485,85 +486,153 @@ _.mixin({
 
 		update : function(){
 
-			updateTree.updateBoard()
-			.then(updateTree.updateLists)
-			.then(function(){
-			});
-
-		},
-
-		updateBoard : function(){
-			return T.board('all').then(function(board){
-				if(Utils.isEmpty(board)){
-					me._models.main.get('subnodes').at(0).trigger('destroy');
-				}
-			});
-		},
-
-		updateLists : function(){
 			return Promise.all([
-					T.lists('all'),
-					T.get('board', 'private', 'expandupto'),
-					T.get('board', 'private', 'showlabels'),
-					T.get('board', 'private', 'showbadges')
-				]).spread(function(lists, expandupto, showLabels, showBadges){
+				T.board('all'),
+				T.lists('all'),
+				T.get('board', 'private', 'expandupto'),
+				T.get('board', 'private', 'showlabels'),
+				T.get('board', 'private', 'showbadges')
+			]).spread(function(board, lists, expandupto, showLabels, showBadges){
+				updateTree.updateBoard(board);
+				updateTree.updateLists(lists, expandupto, showLabels, showBadges);
+//				updateTree.updateCards(lists, expandupto, showLabels, showBadges);
+			}).then(function(){
+				//noop
+			});
+		},
 
-				var board = me._models.main.get('subnodes').at(0),
-					boardLists = board.get('subnodes'),
-					showLabels = Utils.isEmpty(showLabels) ? true : showLabels,
-					showBadges = Utils.isEmpty(showBadges) ? true : showBadges
-					;
+		updateBoard : function(board){
+			if(Utils.isEmpty(board)){
+				me._models.main.get('subnodes').at(0).trigger('destroy');
+			}
+		},
 
-				//deleted / moved list
-				boardLists.forEach(function(listInBoard,listInBoardIndex){
-					var pId = listInBoard.get('id');
-					var listNewIndex = _.findIndex(lists,{ 'id': pId});
+		updateLists : function(lists, expandupto, showLabels, showBadges){
+			var board = me._models.main.get('subnodes').at(0),
+				boardLists = board.get('subnodes'),
+				showLabels = Utils.isEmpty(showLabels) ? true : showLabels,
+				showBadges = Utils.isEmpty(showBadges) ? true : showBadges
+				;
 
-					//deleted list
-					if(listNewIndex == -1){
-						boardLists.remove(listInBoard);
-						listInBoard.trigger('deleted');
-					}
+			//deleted / moved list
+			boardLists.forEach(function(listInBoard,listInBoardIndex){
+				if(Utils.isEmpty(listInBoard)) return;
+				var pId = listInBoard.get('id');
+				var listNewIndex = _.findIndex(lists,{'id': pId});
 
-					//check for new lists
-					for(var i = 0; i < lists.length; i++){
-						var list = lists[i];
+				//deleted list
+				if(listNewIndex == -1){
+					boardLists.remove(listInBoard);
+					listInBoard.trigger('deleted');
+				}
 
-						if(Utils.isEmpty(boardLists.findWhere({'id':  list.id}))){
+				//check for new lists
+				for(var i = 0; i < lists.length; i++){
+					var list = lists[i];
 
-							//add new list to the board
-							boardLists.add(
-								treeFactory.newList(list, expandupto),
-								{ at : i }
-							);
+					if(Utils.isEmpty(boardLists.findWhere({'id':  list.id}))){
 
-							var boardListCards = boardLists.get({id : list.id}).get('subnodes');
+						//add new list to the board
+						boardLists.add(
+							treeFactory.newList(list, expandupto),
+							{ at : i }
+						);
 
-							for(var card of list.cards){
-								boardListCards.add(treeFactory.newCard(card, showLabels, showBadges));
+						var boardListCards = boardLists.get({id : list.id}).get('subnodes');
 
-								var newCard = boardListCards.get({id : card.id});
+						for(var card of list.cards){
+							boardListCards.add(treeFactory.newCard(card, showLabels, showBadges));
 
-								if(showLabels){
-									//labels
-									treeFactory.addCardLabels(newCard, card.labels);
-								}
+							var newCard = boardListCards.get({id : card.id});
 
-								if(showBadges){
-									//badges
-									treeFactory.addCardBadges(newCard, card);
-								}
+							if(showLabels){
+								//labels
+								treeFactory.addCardLabels(newCard, card.labels);
+							}
+
+							if(showBadges){
+								//badges
+								treeFactory.addCardBadges(newCard, card);
 							}
 						}
 					}
+				}
 
-					//moved list
-				 	if(listNewIndex > -1 && listNewIndex != listInBoardIndex){
-				 	    boardLists.move(listInBoard, listNewIndex);
+				//moved list
+			    if(listNewIndex > -1 && listNewIndex != listInBoardIndex){
+			        boardLists.move(listInBoard, listNewIndex);
+				}
+			});
+
+		},
+
+		updateCards : function(lists, expandupto, showLabels, showBadges){
+			var board = me._models.main.get('subnodes').at(0),
+				boardLists = board.get('subnodes'),
+				showLabels = Utils.isEmpty(showLabels) ? true : showLabels,
+				showBadges = Utils.isEmpty(showBadges) ? true : showBadges
+				;
+
+			var savedCards = _.flatten(_.map(boardLists.models, function(u){
+				return u.get('subnodes').models;
+			}));
+
+			var updatedCards = _.flatten(_.map(lists, function(u){
+				return u.cards;
+			}));
+
+			var savedCardsIds = _.map(savedCards, function(u){return u.id});
+			var updatedCardsIds = _.map(updatedCards, function(u){return u.id});
+
+			//deleted cards
+			var deletedCardsIds = _.difference(savedCardsIds,  updatedCardsIds);
+			for(var deletedCardId of deletedCardsIds){
+				boardLists.forEach(function(_list, _listIndex){
+					var cardToDelete = _list.get('subnodes').findWhere({'id' : deletedCardId });
+					if(!Utils.isEmpty(cardToDelete)){
+						boardLists.remove(cardToDelete);
+						cardToDelete.trigger('deleted');
+						savedCardsIds.splice(_.indexOf(savedCardsIds,deletedCardId),1);
 					}
 				});
+			}
 
-			});
+			//new cards
+			var newCardsIds = _.without( updatedCardsIds, savedCardsIds);
+			for(var newCardId of newCardsIds){
+				var newCard = _.find(updatedCards, function(x){
+					return x.id === newCardId;
+				});
+
+				//find what list to add
+				var listToAddCard = boardLists.findWhere({'id': newCard.idList});
+				listToAddCard = listToAddCard.get('subnodes');
+				listToAddCard.add(treeFactory.newCard(newCard, showLabels, showBadges));
+
+				var addedCard = listToAddCard.get({id : newCardId});
+
+				if(showLabels){
+					//labels
+					treeFactory.addCardLabels(addedCard, newCard.labels);
+				}
+
+				if(showBadges){
+					//badges
+					treeFactory.addCardBadges(addedCard, newCard);
+				}
+
+				savedCardsIds.splice(_.indexOf(updatedCardsIds,newCardId),0,newCardId);
+			}
+
+			//moved cards
+			for(var i = 0; i < savedCardsIds.length; i++){
+				if(savedCardsIds[i] !== updatedCardsIds[i]){
+					var savedCardList = boardLists.findWhere({'id': savedCardsIds[i]});
+					var updatedCardList = boardLists.findWhere({'id': updatedCardsIds[i]});
+					i=0;
+				}
+			}
+
 		},
 
 		stop : function(){
@@ -571,7 +640,9 @@ _.mixin({
 		},
 
 		start : function(){
-			updateTree.intervalHolder = setInterval(_.throttle(updateTree.update, 1e4),3e3);
+			return Promise.resolve().then(function(){
+				updateTree.intervalHolder = setInterval(_.throttle(updateTree.update, 5e3),2e3);
+			});
 		}
 
 	};

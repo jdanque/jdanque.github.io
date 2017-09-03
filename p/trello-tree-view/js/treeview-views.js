@@ -51,6 +51,7 @@ TreeView.Views.Card = Backbone.View.extend({
         this.listenTo(this.model, 'change:_loading', this.updateLoading);
         this.listenTo(this.model.get('labels'), 'add', this.addLabel);
         this.listenTo(this.model.get('badges'), 'add', this.addBadge);
+        this.listenTo(this.model, 'deleted', this.deleteCard);
 
         this.setElement(this.template(this.model.attributes));
     },
@@ -60,6 +61,10 @@ TreeView.Views.Card = Backbone.View.extend({
     	_this.$el.children('.nodelink').children('.badges-wrapper').toggleClass('hidden',!_this.model.get('showBadges'));
 
 		return _this;
+	},
+
+	deleteCard : function(){
+		this.remove();
 	},
 
 	addLabel : function(label, collection, options){

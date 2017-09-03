@@ -180,11 +180,12 @@ TreeView.Views.List = Backbone.View.extend({
 		var view = new TreeView.Views.Card({ model: cardModel });
 
 		if(!_.isUndefined(options.at)){
-			var at = options.at > 0 ? options.at - 1 : 0;
-
-			var target = this.$el.children('.subnodelist').children('.nodecontainer').eq(at);
-
-			target.before(view.render().el);
+			var nodecontainers = this.$el.children('.subnodelist').children('.nodecontainer')
+			if(nodecontainers.length == options.at){
+				this.$el.children('.subnodelist').append(view.render().el);
+			}else{
+				nodecontainers.eq(options.at).before(view.render().el);
+			}
 
 		}else
 		if(_.isUndefined(options.noAppend) ||

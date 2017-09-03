@@ -484,7 +484,12 @@ _.mixin({
 	var updateTree = {
 		intervalHolder : {},
 
+		ongoing : false,
+
 		update : function(){
+			if(updateTree.ongoing) return;
+
+			updateTree.ongoing = true;
 
 			return Promise.all([
 				T.board('all'),
@@ -497,6 +502,7 @@ _.mixin({
 				updateTree.updateLists(lists, expandupto, showLabels, showBadges);
 				updateTree.updateCards(lists, expandupto, showLabels, showBadges);
 			}).then(function(){
+				updateTree.ongoing = false;
 				//noop
 			});
 		},
@@ -593,7 +599,7 @@ _.mixin({
 
 					if(!Utils.isEmpty(deletedCards.card)){
 						deletedCards.cardInList = boardLists.findWhere({'id': deletedCards.card.get('idList')});
-						deletedCards.cardInList.remove(deletedCards.card);
+						deletedCards.cardInList.get('subnodes').remove(deletedCards.card);
 						deletedCards.card.trigger('deleted');
 						savedCardsIds.splice(_.indexOf(savedCardsIds,deletedCardId),1);
 					}

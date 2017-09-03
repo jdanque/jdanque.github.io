@@ -598,7 +598,7 @@ _.mixin({
 			}
 
 			//new cards
-			var newCardsIds = _.without( updatedCardsIds, savedCardsIds);
+			var newCardsIds = _.difference( updatedCardsIds, savedCardsIds);
 			for(var newCardId of newCardsIds){
 				var newCard = _.find(updatedCards, function(x){
 					return x.id === newCardId;

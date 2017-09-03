@@ -649,9 +649,6 @@ _.mixin({
 				return u.get('subnodes').models;
 			}));
 
-			//todo delete this
-			savedCards= [];
-
 			for(var i = 0; i < savedCards.length; i++){
 				if(savedCards[i].get('id') !== updatedCards[i].id){
 					var _card = {};

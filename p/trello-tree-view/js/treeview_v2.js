@@ -262,6 +262,8 @@ _.mixin({
         }
 
         listModel.set('_loading',true);
+        me._models.main.get('subnodes').at(0)
+		.get('subnodes').move(listModel,listInBoard.index(list));
 
         var
             leftListID = newPos > 0 ? Utils.getListDataTrelloId(listInBoard.eq(newPos-1)) : -1,
@@ -291,6 +293,7 @@ _.mixin({
 		}).then(function(d){
 			updateTree.prevent(true);
 
+
 			return new Promise(function(resolve, reject){
 				window.Trello.put("lists/" + d.listID+ "/?pos="+d.newPos+"&token=" + me.authToken,
 				  //success
@@ -310,7 +313,7 @@ _.mixin({
 				);
 			});
 		}).then(function(data){
-//		    listModel.set('_loading',false);
+		    listModel.set('_loading',false);
 //			me._models.main.get('subnodes').at(0)
 //			.get('subnodes').move(listModel,listInBoard.index(list));
 			updateTree.prevent(false);

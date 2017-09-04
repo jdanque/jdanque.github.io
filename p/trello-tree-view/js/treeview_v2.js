@@ -642,7 +642,7 @@ _.mixin({
 				showLabels = Utils.isEmpty(showLabels) ? true : showLabels,
 				showBadges = Utils.isEmpty(showBadges) ? true : showBadges
 				;
-
+/*
 			var savedCards = _.flatten(_.map(boardLists.models, function(u){
 				return u.get('subnodes').models;
 			}));
@@ -708,48 +708,43 @@ _.mixin({
 				savedCardsIds.splice(_.indexOf(updatedCardsIds,newCardId),0,newCardId);
 			}
 
-			//moved cards
-			savedCards = _.flatten(_.map(boardLists.models, function(u){
-				return u.get('subnodes').models;
-			}));
+			*/
 
-			for(var i = 0; i < savedCards.length; i++){
-				if(savedCards[i].get('id') !== updatedCards[i].id){
-					var _card = {};
-					_card.savedCard = savedCards[i];
-					_card.savedCardID = _card.savedCard.get('id');
-					_card.savedCardIDList = _card.savedCard.get('idList');
-					_card.savedCard.indexInList = _card.savedCard.collection.indexOf(_card.savedCard);
-					_card.savedList = boardLists.findWhere({'id': _card.savedCardIDList});
-					_card.updatedCard = _.find(updatedCards, function(x){ return x.id === _card.savedCardID; });
-					_card.updatedCard.indexInList = -1;
-					_card.updatedList = boardLists.findWhere({'id': _card.updatedCard.idList});
+			for(var list of lists){
+				var listObj = board.get('subnodes').get({id : list.id}),
+					listObjSubnodes = listObj.get('subnodes')
+					;
 
-					for(var j=0;j<lists.length;j++){
-						for(var k=0;k<lists[j].cards.length;k++){
-							if(lists[j].cards[k].id === _card.savedCardID){
-								_card.updatedCard.indexInList = k;
-							}
-						}
+				var _dArr = [];
+				for(var _d of listObjSubnodes.models){
+					_dArr.push(_d);
+					_d.trigger('deleted');
+				}
+				listObjSubnodes.remove(_dArr);
+
+				for(var card of list.cards){
+					listObj.add(treeFactory.newCard(card, showLabels, showBadges));
+
+					var newCard = board.get('subnodes')
+						.get({id : list.id})
+						.get('subnodes')
+						.get({id : card.id});
+
+					if(showLabels){
+						//labels
+						treeFactory.addCardLabels(newCard, card.labels);
 					}
 
-					_card.savedList.get('subnodes').transfer(
-						_card.savedCard,
-						_card.updatedList.get('subnodes'),
-						_card.updatedCard.indexInList
-					);
-
-					savedCards = _.flatten(_.map(me._models.main.get('subnodes').at(0).get('subnodes').models, function(u){
-						return u.get('subnodes').models;
-					}));
-					i=0;
-
-				}else if(savedCards[i].get('name') !== updatedCards[i].name){
-					savedCards[i].set('name', updatedCards[i].name);
+					if(showBadges){
+						//badges
+						treeFactory.addCardBadges(newCard, card);
+					}
 				}
-
 			}
-//
+
+//          savedCards = _.flatten(_.map(boardLists.models, function(u){
+//				return u.get('subnodes').models;
+//			}));
 //			for(var i = 0; i < savedCards.length; i++){
 //				if(savedCards[i].get('id') !== updatedCards[i].id){
 //					var _card = {};

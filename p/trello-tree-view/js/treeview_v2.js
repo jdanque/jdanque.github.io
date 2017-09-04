@@ -802,7 +802,7 @@ _.mixin({
 
 		start : function(){
 			return Promise.resolve().then(function(){
-				updateTree.intervalHolder = setInterval(_.throttle(updateTree.update, 5e3),5e3);
+				updateTree.intervalHolder = setInterval(_.throttle(updateTree.update, 5e3,{trailing:false}),5e3);
 			});
 		}
 

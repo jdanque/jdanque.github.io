@@ -290,22 +290,30 @@ _.mixin({
 			});
 		}).then(function(d){
 			updateTree.prevent(true);
-			window.Trello.put("lists/" + d.listID+ "/?pos="+d.newPos+"&token=" + me.authToken,
-			  //success
-			  function(data){
-			      listModel.set('_loading',false);
-			      me._models.main.get('subnodes').at(0)
-				  	.get('subnodes').move(listModel,listInBoard.index(list));
-				    updateTree.prevent(false);
-			      return data;
-			  },
-			  //error
-			  function(reason){
-			      listModel.set('_loading',false);
-			      updateTree.prevent(false);
-			      return reason;
-			  }
-			);
+
+			return new Promise(function(resolve, reject){
+				window.Trello.put("lists/" + d.listID+ "/?pos="+d.newPos+"&token=" + me.authToken,
+				  //success
+				  function(data){
+//				      listModel.set('_loading',false);
+//				      me._models.main.get('subnodes').at(0)
+//					    .get('subnodes').move(listModel,listInBoard.index(list));
+//					    updateTree.prevent(false);
+					  resolve(data);
+				  },
+				  //error
+				  function(reason){
+//				      listModel.set('_loading',false);
+//				      updateTree.prevent(false);
+				      reject(reason);
+				  }
+				);
+			});
+		}).then(function(data){
+		    listModel.set('_loading',false);
+			me._models.main.get('subnodes').at(0)
+			.get('subnodes').move(listModel,listInBoard.index(list));
+			updateTree.prevent(false);
 		});
 	};
 

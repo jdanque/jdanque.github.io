@@ -221,7 +221,7 @@ _.mixin({
 			return Promise.resolve();
 		}
 
-		return new Promise(function(resolve){
+		return new Promise.resolve().then(function(){
 
 			$('.subnodelist.node-type-board').sortable({
 				placeholder: "list-card placeholder nodecontainer",
@@ -246,7 +246,6 @@ _.mixin({
 				}
 			});
 
-			resolve();
 		});
 	};
 
@@ -316,7 +315,7 @@ _.mixin({
 			return Promise.resolve();
 		}
 
-		return new Promise(function(resolve){
+		return new Promise.resolve().then(function(){
 			$('.subnodelist.node-type-list').sortable({
 				placeholder: "list-card placeholder nodecontainer",
 				connectWith: ".subnodelist.node-type-list",
@@ -345,7 +344,6 @@ _.mixin({
 					updateTree.prevent(false);
 				}
 			});
-			resolve();
 		});
 	};
 

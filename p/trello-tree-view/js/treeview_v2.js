@@ -295,8 +295,10 @@ _.mixin({
 			  //success
 			  function(data){
 			      listModel.set('_loading',false);
+			       /*
 			      me._models.main.get('subnodes').at(0)
 				  	.get('subnodes').move(listModel,listInBoard.index(list));
+				  	*/
 				    updateTree.prevent(false);
 			      return data;
 			  },
@@ -394,7 +396,7 @@ _.mixin({
 			  //success
 			  function(data){
 				  cardModel.set('_loading',false);
-
+/*
 				  if(card.data("prevListID") == newList){
 				  	me._models.main.get('subnodes').at(0)
 						.get('subnodes').findWhere({'id': card.data("prevListID")})
@@ -411,7 +413,7 @@ _.mixin({
 						.add(cardModel,{at: cardsInList.index(card), noAppend : true});
 
 				  }
-
+*/
 				  updateTree.prevent(false);
 				  return data;
 			  },

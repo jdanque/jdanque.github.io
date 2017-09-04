@@ -46,7 +46,6 @@ $(document).ready(function(){
 		var isEnabled = _this.attr('data-enabled') === "yes";
 
 		toggleItem(_this, !isEnabled);
-
 	});
 
 });

@@ -746,7 +746,7 @@ _.mixin({
 							.move(_card.savedCard,  _card.updatedCard.indexInList);
 					}
 
-					savedCards = _.flatten(_.map(boardLists.models, function(u){
+					savedCards = _.flatten(_.map(me._models.main.get('subnodes').at(0).get('subnodes').models, function(u){
 						return u.get('subnodes').models;
 					}));
 					i=0;

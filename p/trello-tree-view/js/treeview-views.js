@@ -184,7 +184,9 @@ TreeView.Views.List = Backbone.View.extend({
 //			.insertAt(toIndex,view.render().el);
 //		updateSubnodesCount();
 
-		this.model.get('subnodes').add(cardModel, {at : toIndex});
+		this.addCard(cardModel, {at : toIndex});
+
+//		this.model.get('subnodes').add(cardModel, {at : toIndex});
 	},
 
 	changeName : function(newName){

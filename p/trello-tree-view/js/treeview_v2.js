@@ -242,7 +242,6 @@ _.mixin({
 						.get('subnodes')
 						.at(ui.item.data("prevPos"));
 					updateListPosition(listModel,ui.item);
-					updateTree.prevent(false);
 				}
 			});
 
@@ -645,7 +644,7 @@ _.mixin({
 
 		start : function(){
 			return Promise.resolve().then(function(){
-				updateTree.intervalHolder = setInterval(_.throttle(updateTree.update, 5e3,{trailing:false}),5e3);
+				updateTree.intervalHolder = setInterval(_.throttle(updateTree.update, 5e3,{leading:false,trailing:false}),3e3);
 			});
 		}
 

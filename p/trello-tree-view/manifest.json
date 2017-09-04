@@ -1,7 +1,7 @@
 {
   "name": "TreeView",
   "description": "",
-  "details": "Displays Trello lists and cards in a tree view for easier visualization.\nUsers can:    - See total cards in a list.    - Collapse lists,cards and board without archiving    - Remove viewing of labels and badges    - Customize theme\n\n *Needs Authorization to enable card drag and drop*\n\n\n\n\n##Screenshots##\n\nTree Style View ------ ![TreeStyleViews](https://trello-treeview.s3.amazonaws.com/screenshots/ss5.png)\n\nThemes ------ ![Themes](https://trello-treeview.s3.amazonaws.com/screenshots/ss4.png)\n\n Customize ------ ![Custom Themes](https://trello-treeview.s3.amazonaws.com/screenshots/ss1.png)",
+  "details": "Displays Trello lists and cards in a tree view for easier visualization.\nUsers can:    - See total cards in a list.    - Collapse lists,cards and board without archiving    - Remove viewing of labels and badges    - Drag and drop lists and cards    - Customize theme\n\n *Needs Authorization to enable card drag and drop*\n\n\n\n\n##Screenshots##\n\nTree Style View ------ ![TreeStyleViews](https://trello-treeview.s3.amazonaws.com/screenshots/ss5.png)\n\nThemes ------ ![Themes](https://trello-treeview.s3.amazonaws.com/screenshots/ss4.png)\n\n Customize ------ ![Custom Themes](https://trello-treeview.s3.amazonaws.com/screenshots/ss1.png)",
   "icon": {
     "url": "https://d1ipfkx2xm6eh3.cloudfront.net/img/logo.png?v=1.5.7"
   },

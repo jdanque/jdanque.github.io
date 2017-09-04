@@ -510,6 +510,7 @@ _.mixin({
 					updateTree.updateLists(lists, expandupto, showLabels, showBadges);
 					updateTree.updateCards(lists, expandupto, showLabels, showBadges);
 			}).then(function(){
+				T.sizeTo('#maincontent');
 				//noop
 			});
 		},
@@ -585,6 +586,7 @@ _.mixin({
 				if(saved.lists_bbObj[i].get('id') !== updated.lists_tObj[i].id){
 					var listNewIndex = _.findIndex(updated.lists_ids, function(y){ return y == saved.lists_bbObj[i].get('id')});
 				    boardLists.move(saved.lists_bbObj[i], listNewIndex);
+				    i=0;
 				}else if(saved.lists_bbObj[i].get('name') !== updated.lists_tObj[i].name){
 					saved.lists_bbObj[i].set('name', updated.lists_tObj[i].name);
 				}

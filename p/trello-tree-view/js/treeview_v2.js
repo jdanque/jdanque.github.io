@@ -488,7 +488,6 @@ _.mixin({
 
 		update : function(){
 			if(updateTree.ongoing) return;
-			updateTree.stop();
 
 			updateTree.ongoing = true;
 
@@ -504,7 +503,6 @@ _.mixin({
 					updateTree.updateCards(lists, expandupto, showLabels, showBadges);
 			}).then(function(){
 				updateTree.ongoing = false;
-				updateTree.start();
 				//noop
 			});
 		},

@@ -723,7 +723,7 @@ _.mixin({
 				listObjSubnodes.remove(_dArr);
 
 				for(var card of list.cards){
-					listObj.add(treeFactory.newCard(card, showLabels, showBadges));
+					listObjSubnodes.add(treeFactory.newCard(card, showLabels, showBadges));
 
 					var newCard = board.get('subnodes')
 						.get({id : list.id})

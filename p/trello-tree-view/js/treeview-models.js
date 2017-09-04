@@ -29,7 +29,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 Backbone.Collection.prototype.transfer = function(model, toCollection, toIndex) {
   var fromIndex = this.indexOf(model);
 
-	toCollection.models.splice(toIndex, 0, this.models.splice(fromIndex, 1)[0]);
+	this.models.splice(toIndex, 0, this.models.splice(fromIndex, 1)[0]);
 	this.trigger("transferOut", model, fromIndex, toIndex);
 	toCollection.trigger("transferIn", model, fromIndex, toIndex);
 };

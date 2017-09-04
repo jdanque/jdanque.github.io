@@ -172,7 +172,7 @@ TreeView.Views.List = Backbone.View.extend({
 		this.$el.children('.subnodelist')
 			.children('.nodecontainer')
 			.eq(fromIndex).remove();
-		this.model.get('subnodes').remove(cardModel);
+//		this.model.get('subnodes').remove(cardModel);
 		cardModel.trigger('deleted');
 		this.updateSubnodesCount();
 	},

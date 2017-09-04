@@ -668,6 +668,8 @@ _.mixin({
 			.then(enableSortableCards)
 			.then(updateTree.start)
 			.then(function(){
+				$('.charging').remove();
+				$('#treeviewmain').show();
 				T.sizeTo('#maincontent');
 			})
 			;

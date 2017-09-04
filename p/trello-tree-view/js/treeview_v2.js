@@ -510,6 +510,7 @@ _.mixin({
 			})
 			.then(enableSortableLists)
 			.then(enableSortableCards)
+			.then(renderTheme)
 			.then(function(){
 				T.sizeTo('#maincontent');
 			});

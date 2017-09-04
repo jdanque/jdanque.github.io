@@ -263,7 +263,7 @@ _.mixin({
 
         listModel.set('_loading',true);
         me._models.main.get('subnodes').at(0)
-		.get('subnodes').move(listModel,listInBoard.index(list));
+		.get('subnodes').move(listModel,listInBoard.index(list),{noAppend: true});
 
         var
             leftListID = newPos > 0 ? Utils.getListDataTrelloId(listInBoard.eq(newPos-1)) : -1,

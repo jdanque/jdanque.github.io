@@ -294,10 +294,8 @@ _.mixin({
 			  //success
 			  function(data){
 			      listModel.set('_loading',false);
-			       /*
 			      me._models.main.get('subnodes').at(0)
 				  	.get('subnodes').move(listModel,listInBoard.index(list));
-				  	*/
 				    updateTree.prevent(false);
 			      return data;
 			  },

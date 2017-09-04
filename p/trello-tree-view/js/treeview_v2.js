@@ -518,6 +518,8 @@ _.mixin({
 		updateBoard : function(board){
 			if(Utils.isEmpty(board)){
 				me._models.main.get('subnodes').at(0).trigger('destroy');
+			}else{
+				me._models.main.get('subnodes').at(0).set('name',board.name);
 			}
 		},
 

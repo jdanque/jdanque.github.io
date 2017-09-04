@@ -267,6 +267,7 @@ TreeView.Views.Board = Backbone.View.extend({
 
 		this.listenTo(this.model.get('subnodes'), 'add', this.addList);
 		this.listenTo(this.model.get('subnodes'), 'move', this.moveList);
+		this.listenTo(this.model, 'change:name', this.changeName);
 		this.listenTo(this.model, 'destroy', this.destroy);
 
 		this.setElement(this.template(this.model.attributes));
@@ -284,6 +285,10 @@ TreeView.Views.Board = Backbone.View.extend({
 		}
 
 		return this;
+	},
+
+	changeName : function(){
+		this.$el.children('.nodelink').children('.node_name').html(this.model.get('name'));
 	},
 
 	destroy : function(){

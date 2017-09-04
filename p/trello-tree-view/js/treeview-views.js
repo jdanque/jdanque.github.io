@@ -172,25 +172,18 @@ TreeView.Views.List = Backbone.View.extend({
 		this.$el.children('.subnodelist')
 			.children('.nodecontainer')
 			.eq(fromIndex).remove();
-//		this.model.get('subnodes').remove(cardModel);
 		cardModel.trigger('deleted');
 		this.updateSubnodesCount();
 	},
 
 	transferCardIn : function(cardModel, fromIndex, toIndex){
-//		var view = new TreeView.Views.Card({ model: cardModel });
-//		this.$el.children('.subnodelist')
-//			.children('.nodecontainer')
-//			.insertAt(toIndex,view.render().el);
-//		updateSubnodesCount();
 
 		this.addCard(cardModel, null ,{at : toIndex});
 
-//		this.model.get('subnodes').add(cardModel, {at : toIndex});
 	},
 
-	changeName : function(newName){
-		this.$el.children('.nodelink').children('.node_name').html(newName);
+	changeName : function(){
+		this.$el.children('.nodelink').children('.node_name').html(this.model.get('name'));
 	},
 
 	updateSubnodesCount : function(){

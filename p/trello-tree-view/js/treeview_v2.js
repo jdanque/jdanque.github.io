@@ -509,9 +509,11 @@ _.mixin({
 					updateTree.updateBoard(board);
 					updateTree.updateLists(lists, expandupto, showLabels, showBadges);
 					updateTree.updateCards(lists, expandupto, showLabels, showBadges);
-			}).then(function(){
+			})
+			.then(enableSortableLists)
+			.then(enableSortableCards)
+			.then(function(){
 				T.sizeTo('#maincontent');
-				//noop
 			});
 		},
 

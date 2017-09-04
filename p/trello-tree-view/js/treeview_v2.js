@@ -234,6 +234,7 @@ _.mixin({
 					ui.item.toggleClass('grabbing',true)
 						.data("prevPos",p.find('.nodecontainer.node-type-list').index(ui.item))
 						;
+					updateTree.prevent(true);
 				},
 				stop: function( event, ui ) {
 					ui.item.toggleClass('grabbing',false);
@@ -241,6 +242,7 @@ _.mixin({
 						.get('subnodes')
 						.at(ui.item.data("prevPos"));
 					updateListPosition(listModel,ui.item);
+					updateTree.prevent(false);
 				}
 			});
 
@@ -289,18 +291,20 @@ _.mixin({
 				});
 			});
 		}).then(function(d){
-
+			updateTree.prevent(true);
 			window.Trello.put("lists/" + d.listID+ "/?pos="+d.newPos+"&token=" + me.authToken,
 			  //success
 			  function(data){
 			      listModel.set('_loading',false);
 			      me._models.main.get('subnodes').at(0)
 				  	.get('subnodes').move(listModel,listInBoard.index(list));
+				    updateTree.prevent(false);
 			      return data;
 			  },
 			  //error
 			  function(reason){
 			      listModel.set('_loading',false);
+			      updateTree.prevent(false);
 			      return reason;
 			  }
 			);
@@ -325,6 +329,7 @@ _.mixin({
 						.data("prevPos",p.find('.nodecontainer.node-type-card').index(ui.item))
 						.data("prevListID",Utils.getListDataTrelloId(p))
 						;
+					updateTree.prevent(true);
 				},
 				stop: function( event, ui ) {
 					ui.item.toggleClass('grabbing',false);
@@ -337,6 +342,7 @@ _.mixin({
 						;
 
 					updateCardPosition(cardModel,ui.item);
+					updateTree.prevent(false);
 				}
 			});
 			resolve();
@@ -385,7 +391,7 @@ _.mixin({
 				});
 			});
 		}).then(function(d){
-
+			updateTree.prevent(true);
 			window.Trello.put("cards/" + d.cardID+ "/?idList="+d.newList+"&pos="+d.newPos+"&token=" + me.authToken,
 			  //success
 			  function(data){
@@ -408,12 +414,13 @@ _.mixin({
 
 				  }
 
-
+				  updateTree.prevent(false);
 				  return data;
 			  },
 			  //error
 			  function(reason){
 				  cardModel.set('_loading',false);
+				  updateTree.prevent(false);
 				  return reason;
 			  }
 			);
@@ -484,12 +491,13 @@ _.mixin({
 	var updateTree = {
 		intervalHolder : {},
 
-		ongoing : false,
+		_prevent : false,
+		prevent : function(isPrevent){
+			updateTree._prevent = isPrevent;
+		},
 
 		update : function(){
-			if(updateTree.ongoing) return;
-
-			updateTree.ongoing = true;
+			if(updateTree._prevent) return;
 
 			return Promise.all([
 				T.board('all'),
@@ -502,7 +510,6 @@ _.mixin({
 					updateTree.updateLists(lists, expandupto, showLabels, showBadges);
 					updateTree.updateCards(lists, expandupto, showLabels, showBadges);
 			}).then(function(){
-				updateTree.ongoing = false;
 				//noop
 			});
 		},
@@ -583,57 +590,6 @@ _.mixin({
 				}
 			}
 
-/*
-			//deleted / moved list
-			boardLists.forEach(function(listInBoard,listInBoardIndex){
-				if(Utils.isEmpty(listInBoard)) return;
-				var pId = listInBoard.get('id');
-				var listNewIndex = _.findIndex(lists,{'id': pId});
-
-				//deleted list
-				if(listNewIndex == -1){
-					boardLists.remove(listInBoard);
-					listInBoard.trigger('deleted');
-				}
-
-				//check for new lists
-				for(var i = 0; i < lists.length; i++){
-					var list = lists[i];
-
-					if(Utils.isEmpty(boardLists.findWhere({'id':  list.id}))){
-
-						//add new list to the board
-						boardLists.add(
-							treeFactory.newList(list, expandupto),
-							{ at : i }
-						);
-
-						var boardListCards = boardLists.get({id : list.id}).get('subnodes');
-
-						for(var card of list.cards){
-							boardListCards.add(treeFactory.newCard(card, showLabels, showBadges));
-
-							var newCard = boardListCards.get({id : card.id});
-
-							if(showLabels){
-								//labels
-								treeFactory.addCardLabels(newCard, card.labels);
-							}
-
-							if(showBadges){
-								//badges
-								treeFactory.addCardBadges(newCard, card);
-							}
-						}
-					}
-				}
-
-				//moved list
-			    if(listNewIndex > -1 && listNewIndex != listInBoardIndex){
-			        boardLists.move(listInBoard, listNewIndex);
-				}
-			});
-*/
 		},
 
 		updateCards : function(lists, expandupto, showLabels, showBadges){
@@ -642,73 +598,6 @@ _.mixin({
 				showLabels = Utils.isEmpty(showLabels) ? true : showLabels,
 				showBadges = Utils.isEmpty(showBadges) ? true : showBadges
 				;
-/*
-			var savedCards = _.flatten(_.map(boardLists.models, function(u){
-				return u.get('subnodes').models;
-			}));
-
-			var updatedCards = _.flatten(_.map(lists, function(u){
-				return u.cards;
-			}));
-
-			var savedCardsIds = _.map(savedCards, function(u){return u.id});
-			var updatedCardsIds = _.map(updatedCards, function(u){return u.id});
-
-			//deleted cards
-			var deletedCards = {};
-			deletedCards.idArr = _.difference(savedCardsIds,  updatedCardsIds);
-			for(var deletedCardId of deletedCards.idArr){
-				boardLists.forEach(function(_list, _listIndex){
-					deletedCards.card = _list.get('subnodes').findWhere({'id' : deletedCardId });
-
-					if(!Utils.isEmpty(deletedCards.card)){
-						deletedCards.cardInList = boardLists.findWhere({'id': deletedCards.card.get('idList')});
-						deletedCards.cardInList.get('subnodes').remove(deletedCards.card);
-						deletedCards.card.trigger('deleted');
-						savedCardsIds.splice(_.indexOf(savedCardsIds,deletedCardId),1);
-					}
-				});
-			}
-
-			//new cards
-			var newCardsIds = _.difference( updatedCardsIds, savedCardsIds);
-			for(var newCardId of newCardsIds){
-				var newCard = _.find(updatedCards, function(x){
-					return x.id === newCardId;
-				});
-
-				var indexInList = -1;
-
-				//get index in list
-				for(var j=0;j<lists.length;j++){
-					for(var k=0;k<lists[j].cards.length;k++){
-						if(lists[j].cards[k].id === newCardId){
-							indexInList = k;
-						}
-					}
-				}
-
-				//find what list to add
-				var listToAddCard = boardLists.findWhere({'id': newCard.idList});
-				listToAddCard = listToAddCard.get('subnodes');
-				listToAddCard.add(treeFactory.newCard(newCard, showLabels, showBadges),{at : indexInList});
-
-				var addedCard = listToAddCard.get({id : newCardId});
-
-				if(showLabels){
-					//labels
-					treeFactory.addCardLabels(addedCard, newCard.labels);
-				}
-
-				if(showBadges){
-					//badges
-					treeFactory.addCardBadges(addedCard, newCard);
-				}
-
-				savedCardsIds.splice(_.indexOf(updatedCardsIds,newCardId),0,newCardId);
-			}
-
-			*/
 
 			for(var list of lists){
 				var listObj = board.get('subnodes').get({id : list.id}),
@@ -741,51 +630,6 @@ _.mixin({
 					}
 				}
 			}
-
-//          savedCards = _.flatten(_.map(boardLists.models, function(u){
-//				return u.get('subnodes').models;
-//			}));
-//			for(var i = 0; i < savedCards.length; i++){
-//				if(savedCards[i].get('id') !== updatedCards[i].id){
-//					var _card = {};
-//					_card.savedCard = savedCards[i];
-//					_card.savedCardID = _card.savedCard.get('id');
-//					_card.savedCardIDList = _card.savedCard.get('idList');
-//					_card.savedCard.indexInList = _card.savedCard.collection.indexOf(_card.savedCard)
-//					_card.savedList = boardLists.findWhere({'id': _card.savedCardIDList});
-//					_card.updatedCard = _.find(updatedCards, function(x){ return x.id === _card.savedCardID; });
-//					_card.updatedCard.indexInList = -1;
-//					_card.updatedList = boardLists.findWhere({'id': _card.updatedCard.idList});
-//
-//					//check if it's on the same list
-//					for(var j=0;j<lists.length;j++){
-//						for(var k=0;k<lists[j].cards.length;k++){
-//							if(lists[j].cards[k].id === _card.savedCardID){
-//								_card.updatedCard.indexInList = k;
-//							}
-//						}
-//					}
-//
-//					if(_card.savedCardIDList !== _card.updatedCard.idList){
-//						_card.savedList.get('subnodes').transfer(
-//							_card.savedCard,
-//							_card.updatedList.get('subnodes'),
-//							_card.updatedCard.indexInList
-//						);
-//
-//					}else{
-//						_card.savedList.get('subnodes')
-//							.move(_card.savedCard,  _card.updatedCard.indexInList);
-//					}
-//
-//					savedCards = _.flatten(_.map(me._models.main.get('subnodes').at(0).get('subnodes').models, function(u){
-//						return u.get('subnodes').models;
-//					}));
-//					i=0;
-//				}else if(savedCards[i].get('name') !== updatedCards[i].name){
-//					savedCards[i].set('name', updatedCards[i].name);
-//				}
-//			}
 
 		},
 

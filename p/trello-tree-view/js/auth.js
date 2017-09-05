@@ -1,7 +1,7 @@
 var Promise = TrelloPowerUp.Promise;
 var t = TrelloPowerUp.iframe();
-var r_url = encodeURIComponent('https://jdanque.github.io/p/trello-tree-view/view/auth-success.html?v=1.5.7');
-//var r_url = encodeURIComponent('https://jdanque.github.io/p/trello-tree-view/view/auth-success.html');
+var r_url = encodeURIComponent('https://d1ipfkx2xm6eh3.cloudfront.net/view/auth-success.html?v=1.6.2');
+//var r_url = encodeURIComponent('https://d1ipfkx2xm6eh3.cloudfront.net/view/auth-success.html');
 
 var trelloAuthUrl = 'https://trello.com/1/authorize?expiration=never&name=Tree%20View%20for%20Trello&scope=read,write&key=e3e4df7f95e0b1942c0b82a9a2c301f6&callback_method=fragment&return_url='+r_url;
 

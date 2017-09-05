@@ -18,4 +18,62 @@ u="actions cards checklists boards lists members organizations lists".split(" ")
 b){if(null===b)return delete t["trello_"+a];try{return t["trello_"+a]=b}catch(e){}}):y=w=function(){}};deferred={};ready={};waitUntil=function(b,f){return null!=ready[b]?f(ready[b]):(null!=deferred[b]?deferred[b]:deferred[b]=[]).push(f)};isReady=function(b,f){var a,h,e,p;ready[b]=f;if(deferred[b])for(h=deferred[b],delete deferred[b],e=0,p=h.length;e<p;e++)a=h[e],a(f)};isFunction=function(b){return"function"===typeof b};wrapper(window,jQuery,opts);
 })();
 
-var API_KEY='e3e4df7f95e0b1942c0b82a9a2c301f6',ICON='https://jdanque.github.io/p/trello-tree-view/img/logo_white.png?v=1.5.7',openTreeViewOverlay=function(a){a.get('board','private','theme').then(function(c){c=c===void 0?'theme-gray':c,c=c.split('-')[1];var d='gray'===c?200:700;try{c=window.TrelloPowerUp.util.colors.getHexString(c,d)}catch(f){c=window.TrelloPowerUp.util.colors.getHexString('gray',200)}return a.modal({url:'https://jdanque.github.io/p/trello-tree-view/view/treeview.html?v=1.5.7',fullscreen:!1,title:'TreeView for Trello',height:500,accentColor:c})})};TrelloPowerUp.initialize({'board-buttons':function(){return[{icon:ICON,text:'TreeView',callback:openTreeViewOverlay}]},'authorization-status':function(a){return a.get('member','private','token').then(function(c){return{authorized:null!=c}})},'show-authorization':function(a){return a.popup({title:'Authorize Account',url:'https://jdanque.github.io/p/trello-tree-view/view/auth.html?v=1.5.7',height:140})},'show-settings':function(a){return a.popup({title:'TreeView Settings',url:'https://jdanque.github.io/p/trello-tree-view/view/settings.html?v=1.5.7',height:184})}});
+var API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
+var ICON = 'https://d1ipfkx2xm6eh3.cloudfront.net/img/logo_white.png?v=1.6.2';
+
+var openTreeViewOverlay = function (t, opts) {
+
+	t.get('board', 'private', 'theme').then(function(_accentColor){
+		_accentColor = (_accentColor !== undefined) ? _accentColor : 'theme-gray';
+		_accentColor = _accentColor.split("-")[1];
+		var colorWeight = (_accentColor === 'gray') ? 200 : 700;
+		try{
+			_accentColor = window.TrelloPowerUp.util.colors.getHexString(_accentColor, colorWeight);
+		}catch(e){
+			_accentColor = window.TrelloPowerUp.util.colors.getHexString('gray', 200);
+		}
+	  return t.modal({
+		url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/treeview.html?v=1.6.2',
+		fullscreen : false,
+		title: 'TreeView for Trello',
+		height: 500,
+		accentColor : _accentColor
+	  });
+	});
+
+
+
+
+};
+
+TrelloPowerUp.initialize({
+
+	'board-buttons': function (t, opts) {
+		return [{
+			icon: ICON,
+			text: 'TreeView',
+			callback: openTreeViewOverlay
+		}];
+	},
+	'authorization-status': function(t, options){
+		return t.get('member', 'private', 'token')
+			.then(function(authToken) {
+				return { authorized: authToken != null }
+			});
+	},
+	'show-authorization': function(t, options){
+		return t.popup({
+			title: 'Authorize Account',
+			url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/auth.html?v=1.6.2',
+			height: 140,
+		});
+	},
+	'show-settings': function(t, options){
+		return t.popup({
+			title: 'TreeView Settings',
+			url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/settings.html?v=1.6.2',
+			height: 184
+		});
+	}
+
+});

@@ -166,10 +166,15 @@ body.page-template-page-fullsingle-split {
     font-weight: 400;
     text-transform: uppercase;
     font-size: 16px;
-    line-height: 16px;
+    line-height: 1em;
     margin-bottom: 40px;
     letter-spacing: 0.4px;
-    color: #47bec7; }
+    color: #47bec7;
+    float: left;
+    position: relative;
+    top: 1.5em;
+    margin-left: 1em;
+    }
   .split-intro .tagline {
     color: #CCCCCC; }
 
@@ -183,7 +188,7 @@ body.page-template-page-fullsingle-split {
     .split-bio {
       padding: 20px 0; } }
   .split-bio p {
-    color: #848d96; }
+    color: #848d96; font-family: sans-serif;}
   .split-bio a {
     color: #848d96;
     transition-duration: 0.5s;
@@ -297,3 +302,10 @@ video.video {
     width: 100%;
     max-width: 100%;
 }
+
+.title-main:after {content:'';clear:both;display:table;}
+
+.title-main img{float: left;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;}

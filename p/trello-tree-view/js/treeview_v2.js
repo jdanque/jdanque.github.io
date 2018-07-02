@@ -53,7 +53,7 @@ _.mixin({
 		]).spread(function(board, expandupto){
 			me._models.main.get('subnodes').add(new TreeView.Models.Board({
 				'id'    : board.id,
-				'name'  : t.safe(board.name),
+				'name'  : T.safe(board.name),
 				'url' 	: board.url,
 				'expanded' : (Utils.isEmpty(expandupto) || expandupto !== '0')
 			}));
@@ -109,7 +109,7 @@ _.mixin({
 		newList : function(list, expandupto){
 			return new TreeView.Models.List({
 				'id'   : list.id,
-				'name' : t.safe(list.name),
+				'name' : T.safe(list.name),
 				'expanded' : ( !Utils.isEmpty(expandupto) && expandupto === '2')
 			});
 		},
@@ -118,9 +118,9 @@ _.mixin({
 			return new TreeView.Models.Card({
 				'id'  	 : card.id,
 				'idList' : card.idList,
-				'name'	 : t.safe(card.name),
+				'name'	 : T.safe(card.name),
 				'url' 	 : card.url,
-				'desc'	 : t.safe(card.desc),
+				'desc'	 : T.safe(card.desc),
 				'closed' : card.closed,
 				'showLabels' : showLabels,
 				'showBadges' : showBadges
@@ -132,7 +132,7 @@ _.mixin({
 				if(!Utils.isEmpty(label.color)){
 					card.get('labels')
 					.add(new TreeView.Models.CardLabel({
-						'name' : t.safe(label.name),
+						'name' : T.safe(label.name),
 						'color' : label.color
 					}));
 				}
@@ -529,7 +529,7 @@ _.mixin({
 			if(Utils.isEmpty(board)){
 				me._models.main.get('subnodes').at(0).trigger('destroy');
 			}else{
-				me._models.main.get('subnodes').at(0).set('name',t.safe(board.name));
+				me._models.main.get('subnodes').at(0).set('name',T.safe(board.name));
 			}
 		},
 
@@ -599,8 +599,8 @@ _.mixin({
 					var listNewIndex = _.findIndex(updated.lists_ids, function(y){ return y == saved.lists_bbObj[i].get('id')});
 				    boardLists.move(saved.lists_bbObj[i], listNewIndex);
 				    i=0;
-				}else if(t.safe(saved.lists_bbObj[i].get('name')) !== t.safe(updated.lists_tObj[i].name)){
-					saved.lists_bbObj[i].set('name', t.safe(updated.lists_tObj[i].name));
+				}else if(T.safe(saved.lists_bbObj[i].get('name')) !== T.safe(updated.lists_tObj[i].name)){
+					saved.lists_bbObj[i].set('name', T.safe(updated.lists_tObj[i].name));
 				}
 			}
 

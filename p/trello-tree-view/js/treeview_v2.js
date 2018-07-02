@@ -53,7 +53,7 @@ _.mixin({
 		]).spread(function(board, expandupto){
 			me._models.main.get('subnodes').add(new TreeView.Models.Board({
 				'id'    : board.id,
-				'name'  : board.name,
+				'name'  : t.safe(board.name),
 				'url' 	: board.url,
 				'expanded' : (Utils.isEmpty(expandupto) || expandupto !== '0')
 			}));
@@ -109,7 +109,7 @@ _.mixin({
 		newList : function(list, expandupto){
 			return new TreeView.Models.List({
 				'id'   : list.id,
-				'name' : list.name,
+				'name' : t.safe(list.name),
 				'expanded' : ( !Utils.isEmpty(expandupto) && expandupto === '2')
 			});
 		},
@@ -118,9 +118,9 @@ _.mixin({
 			return new TreeView.Models.Card({
 				'id'  	 : card.id,
 				'idList' : card.idList,
-				'name'	 : card.name,
+				'name'	 : t.safe(card.name),
 				'url' 	 : card.url,
-				'desc'	 : card.desc,
+				'desc'	 : t.safe(card.desc),
 				'closed' : card.closed,
 				'showLabels' : showLabels,
 				'showBadges' : showBadges
@@ -132,7 +132,7 @@ _.mixin({
 				if(!Utils.isEmpty(label.color)){
 					card.get('labels')
 					.add(new TreeView.Models.CardLabel({
-						'name' : label.name,
+						'name' : t.safe(label.name),
 						'color' : label.color
 					}));
 				}
@@ -529,7 +529,7 @@ _.mixin({
 			if(Utils.isEmpty(board)){
 				me._models.main.get('subnodes').at(0).trigger('destroy');
 			}else{
-				me._models.main.get('subnodes').at(0).set('name',board.name);
+				me._models.main.get('subnodes').at(0).set('name',t.safe(board.name));
 			}
 		},
 
@@ -599,8 +599,8 @@ _.mixin({
 					var listNewIndex = _.findIndex(updated.lists_ids, function(y){ return y == saved.lists_bbObj[i].get('id')});
 				    boardLists.move(saved.lists_bbObj[i], listNewIndex);
 				    i=0;
-				}else if(saved.lists_bbObj[i].get('name') !== updated.lists_tObj[i].name){
-					saved.lists_bbObj[i].set('name', updated.lists_tObj[i].name);
+				}else if(t.safe(saved.lists_bbObj[i].get('name')) !== t.safe(updated.lists_tObj[i].name)){
+					saved.lists_bbObj[i].set('name', t.safe(updated.lists_tObj[i].name));
 				}
 			}
 

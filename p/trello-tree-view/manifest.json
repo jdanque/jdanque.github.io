@@ -1,9 +1,9 @@
 {
   "name": "TreeView",
   "description": "",
-  "details": "[TreeView](https://jdanque.github.io/p/treeview/) displays Trello lists and cards in a tree view for easier visualization.\n\nUsers can:\n\n* See total cards in a list.\n* Collapse lists,cards and board without archiving\n* Remove viewing of labels and badges\n* Drag and drop lists and cards\n* Customize theme\n* Sync with your trello board upon drag and drop\n* Update tree upon recieving updates from Trello\n\n *Needs Authorization to enable card drag and drop*\n\n\n\n\n##Screenshots##\n\nTree Style View ------ ![TreeStyleViews](https://d1ipfkx2xm6eh3.cloudfront.net/screenshots/ss5.png)\n\nThemes ------ ![Themes](https://d1ipfkx2xm6eh3.cloudfront.net/screenshots/ss4.png)\n\n Collapsable ------ ![Collapsable](https://d1ipfkx2xm6eh3.cloudfront.net/screenshots/ss6.png)",
+  "details": "[TreeView](https://jdanque.github.io/p/treeview/) displays Trello lists and cards in a tree view for easier visualization.\n\nUsers can:\n\n* See total cards in a list.\n* Collapse lists,cards and board without archiving\n* Remove viewing of labels and badges\n* Drag and drop lists and cards\n* Customize theme\n* Sync with your trello board upon drag and drop\n* Update tree upon recieving updates from Trello\n\n *Needs Authorization to enable card drag and drop*\n\n\n\n\n##Screenshots##\n\nTree Style View ------ ![TreeStyleViews](https://jdanque.github.io/p/trello-tree-view/screenshots/ss5.png)\n\nThemes ------ ![Themes](https://jdanque.github.io/p/trello-tree-view/screenshots/ss4.png)\n\n Collapsable ------ ![Collapsable](https://jdanque.github.io/p/trello-tree-view/screenshots/ss6.png)",
   "icon": {
-    "url": "https://d1ipfkx2xm6eh3.cloudfront.net/img/logo.png?v=1.6.2"
+    "url": "https://jdanque.github.io/p/trello-tree-view/img/logo.png?v=1.6.2"
   },
   "author": "Jobo Danque",
   "capabilities": [
@@ -16,7 +16,7 @@
   ],
   "connectors": {
     "iframe": {
-      "url": "https://d1ipfkx2xm6eh3.cloudfront.net/index.html?v=1.6.2"
+      "url": "https://jdanque.github.io/p/trello-tree-view/index.html?v=1.6.2"
     }
   },
   "recommend": {
@@ -24,25 +24,25 @@
   },
 	"screenshots": [
     {
-      "src": "https://d1ipfkx2xm6eh3.cloudfront.net/screenshots/ss1.png?v=1.6.2"
+      "src": "https://jdanque.github.io/p/trello-tree-view/screenshots/ss1.png?v=1.6.2"
     },
     {
-      "src": "https://d1ipfkx2xm6eh3.cloudfront.net/screenshots/ss2.png?v=1.6.2"
+      "src": "https://jdanque.github.io/p/trello-tree-view/screenshots/ss2.png?v=1.6.2"
     },
     {
-      "src": "https://d1ipfkx2xm6eh3.cloudfront.net/screenshots/ss3.png?v=1.6.2"
+      "src": "https://jdanque.github.io/p/trello-tree-view/screenshots/ss3.png?v=1.6.2"
     },
     {
-      "src": "https://d1ipfkx2xm6eh3.cloudfront.net/screenshots/ss4.png?v=1.6.2"
+      "src": "https://jdanque.github.io/p/trello-tree-view/screenshots/ss4.png?v=1.6.2"
     },
     {
-      "src": "https://d1ipfkx2xm6eh3.cloudfront.net/screenshots/ss5.png?v=1.6.2"
+      "src": "https://jdanque.github.io/p/trello-tree-view/screenshots/ss5.png?v=1.6.2"
     },
     {
-      "src": "https://d1ipfkx2xm6eh3.cloudfront.net/screenshots/ss6.png?v=1.6.2"
+      "src": "https://jdanque.github.io/p/trello-tree-view/screenshots/ss6.png?v=1.6.2"
     },
     {
-      "src": "https://d1ipfkx2xm6eh3.cloudfront.net/screenshots/ss7.png?v=1.6.2"
+      "src": "https://jdanque.github.io/p/trello-tree-view/screenshots/ss7.png?v=1.6.2"
     }
   ]
  

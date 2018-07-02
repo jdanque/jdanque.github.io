@@ -19,7 +19,7 @@ b){if(null===b)return delete t["trello_"+a];try{return t["trello_"+a]=b}catch(e)
 })();
 
 var API_KEY = 'e3e4df7f95e0b1942c0b82a9a2c301f6';
-var ICON = 'https://d1ipfkx2xm6eh3.cloudfront.net/img/logo_white.png?v=1.6.2';
+var ICON = 'https://d1ipfkx2xm6eh3.cloudfront.net/img/logo_white.png?v=1.7.2';
 
 var openTreeViewOverlay = function (t, opts) {
 
@@ -33,7 +33,7 @@ var openTreeViewOverlay = function (t, opts) {
 			_accentColor = window.TrelloPowerUp.util.colors.getHexString('gray', 200);
 		}
 	  return t.modal({
-		url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/treeview.html?v=1.6.2',
+		url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/treeview.html?v=1.7.2',
 		fullscreen : false,
 		title: 'TreeView for Trello',
 		height: 500,
@@ -64,14 +64,14 @@ TrelloPowerUp.initialize({
 	'show-authorization': function(t, options){
 		return t.popup({
 			title: 'Authorize Account',
-			url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/auth.html?v=1.6.2',
+			url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/auth.html?v=1.7.2',
 			height: 140,
 		});
 	},
 	'show-settings': function(t, options){
 		return t.popup({
 			title: 'TreeView Settings',
-			url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/settings.html?v=1.6.2',
+			url: 'https://d1ipfkx2xm6eh3.cloudfront.net/view/settings.html?v=1.7.2',
 			height: 184
 		});
 	}

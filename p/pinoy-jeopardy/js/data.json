@@ -99,12 +99,64 @@
       "category_id": 4,
       "question": "Nagkampi ang Spain at Philippines para labanan ang mananakop na ito noong 1600, 1609, 1616 at 1646",
       "answer": "What is Netherlands?"
+    },
+    {
+      "category_id": 5,
+      "question": "Isang mang-aawit, artista, at mananayaw na Pilipino. Karaniwang kasama ni Nadine Lustre",
+      "answer": "Who is James Reid?"
+    },
+    {
+      "category_id": 5,
+      "question": "Aktor ni Victor Magtanggol",
+      "answer": "Who is Alden Richards?"
+    },
+    {
+      "category_id": 5,
+      "question": "Nagsimula siya sa iba't ibang serye sa telebisyon at pelikula, kabilang ang Wansapanataym , Kung Ako'y Iiwan Mo, She's the One , Must Be... Love",
+      "answer": "Who is Liza Soberano?"
+    },
+    {
+      "category_id": 5,
+      "question": "nanalo ng Most promising Female star sa pelikulang Sana Maulit Muli",
+      "answer": "Who is Kim Chiu?"
+    },
+    {
+      "category_id": 5,
+      "question": "King of Comedy ng Pilipinas",
+      "answer": "Who is Dolphy?"
+    },
+    {
+      "category_id": 6,
+      "question": "boksingero at pulitiko, na kasalukuyang nagsisilbi bilang Senador ng Pilipinas.",
+      "answer": "Who is Manny Pacquiao?"
+    },
+    {
+      "category_id": 6,
+      "question": "volleyball player at host ng telebisyon. Naglaro siya para sa Ateneo Lady Eagles mula 2008-2013",
+      "answer": "Who is Gretchen Ho?"
+    },
+    {
+      "category_id": 6,
+      "question": "Pool Player na sinasabing Magician at Bata",
+      "answer": "Who is Efren Reyes?"
+    },
+    {
+      "category_id": 6,
+      "question": "Filipino-British na putbolista na naglalaro para sa Davao Aguilas at ang pambansang koponan ng Pilipinas",
+      "answer": "Who is Phil Younghusband?"
+    },
+    {
+      "category_id": 6,
+      "question": "Boksingerong Komedyante sa Show me da Manny at Tropang Trumpo. Madalas kilala bilang maliit na boksingero",
+      "answer": "Who is Onyok Velasco?"
     }
   ],
   "categories": [
     { "id": 1, "category": "General Knowledge" },
     { "id": 2, "category": "Palarong Pinoy" },
     { "id": 3, "category": "Palarong Pinoy" },
-    { "id": 4, "category": "Angkop na Mananakop" }
+    { "id": 4, "category": "Angkop na Mananakop" },
+    { "id": 5, "category": "Acting Pinoy" },
+    { "id": 6, "category": "Lakas Pinoy" }
   ]
 }

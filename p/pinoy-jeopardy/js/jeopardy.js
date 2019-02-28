@@ -13,10 +13,10 @@ function loadJSON(path, success, error) {
   xhr.send();
 }
 
-function loadCategory() {
+function initTable() {
   //   var category = JSON.parse(data);
   loadJSON(
-    "https://jdanque.github.io/p/pinoy-jeopardy/data.json",
+    "https://raw.githubusercontent.com/jdanque/jdanque.github.io/master/p/pinoy-jeopardy/data.json",
     function(data) {
       console.log(data);
     },

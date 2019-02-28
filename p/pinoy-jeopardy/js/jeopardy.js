@@ -26,4 +26,4 @@ function initTable() {
   );
 }
 
-loadCategory();
+initTable();

@@ -1,0 +1,110 @@
+{
+  "questions": [
+    {
+      "category_id": 1,
+      "question": "Number of islands in the Philippines.",
+      "answer": "What is 7,101 or 7,641?"
+    },
+    {
+      "category_id": 1,
+      "question": "Longest River in the Philippines",
+      "answer": "What is Cagayan River?"
+    },
+    {
+      "category_id": 1,
+      "question": "Espanyol na pagkaen na ginagawa sa baboy na pinapaikot habang iniihaw",
+      "answer": "What is Lechon?"
+    },
+    {
+      "category_id": 1,
+      "question": "Tagalog ng Rock Paper and Scissors",
+      "answer": "What is Jack n' Poy?"
+    },
+    {
+      "category_id": 1,
+      "question": "The 13th President of the Republic of the Philippines.",
+      "answer": "Who is Joseph Ejercito Estrada?"
+    },
+    {
+      "category_id": 2,
+      "question": "Dalawang tao may hawak ng isang garter habang tumatawid ang ibang manlalaro.",
+      "answer": "What is Chinese Garter?"
+    },
+    {
+      "category_id": 2,
+      "question": "Isang taya ang maghahabol sa mga manlalaro na nasa patag na daan. Maari tayaain ang mga nasa mas mababang tungtungan.",
+      "answer": "What is Langit Lupa?"
+    },
+    {
+      "category_id": 2,
+      "question": "Role playing game na umaarte ang mga bata na isang pamilya",
+      "answer": "What is Bahay-Bahayan?"
+    },
+    {
+      "category_id": 2,
+      "question": "Parang luksong tinik pero imbes na kamay, katawan ang tinatalunan ng mga manglalaro.",
+      "answer": "What is Luksong Baka?"
+    },
+    {
+      "category_id": 2,
+      "question": "Isang bamboo pole na pinahiran ng grasa ay pipiliting akyatin ng mga manlalaro.",
+      "answer": "What is palosebo?"
+    },
+    {
+      "category_id": 3,
+      "question": "Ang dalawang manlalaro ay nagsisilbing batayan ng tinik sa pamamagitan ng paglagay ng mga kanan o kaliwang paa o kamay",
+      "answer": "What is Luksong Tinik?"
+    },
+    {
+      "category_id": 3,
+      "question": "subukan na tumawid sa linya nang hindi pinapayagan mahuli",
+      "answer": "What is Patintero?"
+    },
+    {
+      "category_id": 3,
+      "question": "Tagalog ng hopscotch.",
+      "answer": "What is Piko?"
+    },
+    {
+      "category_id": 3,
+      "question": "Tatakpan ng isa ang mata gamit ang mga kamay habang ang isa ay pipitikin ito.",
+      "answer": "What is Pitik Bulag?"
+    },
+    {
+      "category_id": 3,
+      "question": "Binabato ng tsinelas ang isang lata na gwardyado ng taya.",
+      "answer": "What is Tumbang Preso?"
+    },
+    {
+      "category_id": 4,
+      "question": "Pinakamatagal na mananakop ng Pinas. 333 years",
+      "answer": "What is Spain?"
+    },
+    {
+      "category_id": 4,
+      "question": "Nagkampi ang amerika at pilipinas para labanan ang mananakop na to",
+      "answer": "What is Japan?"
+    },
+    {
+      "category_id": 4,
+      "question": "Mananakop ng pinas mula 1899 hanggang 1913",
+      "answer": "What is America?"
+    },
+    {
+      "category_id": 4,
+      "question": "Sinakop ang pilipinas mula 1762 hanggang 1764",
+      "answer": "What is Great Britain?"
+    },
+    {
+      "category_id": 4,
+      "question": "Nagkampi ang Spain at Philippines para labanan ang mananakop na ito noong 1600, 1609, 1616 at 1646",
+      "answer": "What is Netherlands?"
+    }
+  ],
+  "categories": [
+    { "id": 1, "category": "General Knowledge" },
+    { "id": 2, "category": "Palarong Pinoy" },
+    { "id": 3, "category": "Palarong Pinoy" },
+    { "id": 4, "category": "Angkop na Mananakop" }
+  ]
+}

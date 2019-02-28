@@ -16,7 +16,7 @@ function loadJSON(path, success, error) {
 function initTable() {
   //   var category = JSON.parse(data);
   loadJSON(
-    "https://raw.githubusercontent.com/jdanque/jdanque.github.io/master/p/pinoy-jeopardy/data.json",
+    "https://raw.githubusercontent.com/jdanque/jdanque.github.io/master/p/pinoy-jeopardy/js/data.json",
     function(data) {
       console.log(data);
     },

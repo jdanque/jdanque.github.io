@@ -1,5 +1,56 @@
 .title {
   text-align: center;
   font-family: monospace;
-  font-size: 2em;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #e4e4e4;
+  letter-spacing: 0.7em;
+  position: absolute;
+  top: 0;
+  left: 10;
+}
+
+body {
+  background-color: #2a3698;
+  font-family: monospace;
+  padding: 1em;
+}
+
+.jeopardy-table-wrapper {
+  margin: 1em 0;
+}
+
+.jeopardy-table {
+  margin: auto;
+}
+
+.jeopardy-table td {
+  width: 6em;
+  height: 4em;
+}
+
+.jeopardy-table thead > tr td {
+  border: 0.5em solid black;
+  text-align: center;
+  padding: 1.5em 0.5em;
+  color: #e4e4e4;
+  font-size: 1.3em;
+  height: 2em;
+}
+
+.jeopardy-table tbody td {
+  /* padding: 1em; */
+  color: #e4e4e4;
+  border: 0.5em solid black;
+  vertical-align: middle;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+tbody:before {
+  content: "-";
+  display: block;
+  line-height: 1em;
+  color: transparent;
 }

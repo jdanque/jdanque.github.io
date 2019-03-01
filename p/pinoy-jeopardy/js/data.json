@@ -149,6 +149,135 @@
       "category_id": 6,
       "question": "Boksingerong Komedyante sa Show me da Manny at Tropang Trumpo. Madalas kilala bilang maliit na boksingero",
       "answer": "Who is Onyok Velasco?"
+    },
+    {
+      "category_id": 7,
+      "question": "Where was the remains of the late President Ferdinand Marcos buried on October 18, 2016? ",
+      "answer": "Libingan ng mga Bayani "
+    },
+    {
+      "category_id": 7,
+      "question": "Last April 26, 2018, this world- famous island was closed to tourists for six months and will undergo rehabilitation. ",
+      "answer": "Boracay island "
+    },
+    {
+      "category_id": 7,
+      "question": "On September 22, 2018, a special barangay and SK elections was held in this city.",
+      "answer": "Marawi City"
+    },
+    {
+      "category_id": 7,
+      "question": "The DOJ indicted 11 members of the________fraternity over the fatal hazing of University of Santo Tomas (UST) law freshman student Horacio 'Atio' Castillo III in September last year.",
+      "answer": "Aegis Juris"
+    },
+    {
+      "category_id": 7,
+      "question": "On September 21, 2017, President Duterte through Proclamation No. 319, declared the ____________________________. ",
+      "answer": "National Day of Protest "
+    },
+
+    {
+      "category_id": 8,
+      "question": "The Philippines is composed of approximately how many islands?",
+      "answer": "7,107</p><p>It still depends, if it is low tide or high tide."
+    },
+    {
+      "category_id": 8,
+      "question": "Where is the highest peak in the Philippines?",
+      "answer": "Mt. Apo"
+    },
+    {
+      "category_id": 8,
+      "question": "What is the largest province in the Philippines in terms of land area?",
+      "answer": "Palawan"
+    },
+    {
+      "category_id": 8,
+      "question": "During World War Two, it was known as 'The Rock' due to its fortress and the strong resistance of the USAFFE (United States Army Forces in the Far East) forces. What is the name of this island?",
+      "answer": "Corregidor</p><p>After the fall of Bataan it was the last resistance of the Filipino and USAFFE forces."
+    },
+    {
+      "category_id": 8,
+      "question": "What province is nearest to Sabah, Malaysia?",
+      "answer": "Tawi-Tawi</p><p>Tawi-Tawi is the southernmost province of the Philippines. The Turtle Islands which are part of the province of Tawi-Tawi are just 20 kilometers from Sabah. In fact, the people of Tawi-Tawi have a commercial relationship with the people of Sabah."
+    },
+
+    {
+      "category_id": 9,
+      "question": "Girlfriend breaks up with her boyfriend because he deprives her of fried chicken skin. The two of them get back together after a common friend drinks shampoo.",
+      "answer": "One More Chance"
+    },
+    {
+      "category_id": 9,
+      "question": "Wife crushes the patriarchy and basically becomes girl boss after husband fails to pay Meralco bill.",
+      "answer": "A Second Chance"
+    },
+    {
+      "category_id": 9,
+      "question": "Just a lot of Filipino historical figures cussing and killing each other.",
+      "answer": "Heneral Luna"
+    },
+    {
+      "category_id": 9,
+      "question": "A woman in her twenties willingly goes to a remote town in Sagada with a stranger. Surprisingly gets home safe and sound.",
+      "answer": "That Thing Called Tadhana"
+    },
+    {
+      "category_id": 9,
+      "question": "A little girl looks like she’s constantly throwing up the dinuguan she had for lunch.",
+      "answer": "Seklusyon"
+    },
+
+    {
+      "category_id": 10,
+      "question": "Annoyingly cute young couple makes buying plane tickets and chasing each other in airports a hobby.",
+      "answer": "On the Wings of Love"
+    },
+    {
+      "category_id": 10,
+      "question": "An heir to a big family business and a farmer girl place the fate of their relationship on a myth about a twin highland fruit. Somehow makes it work.",
+      "answer": "Forevermore"
+    },
+    {
+      "category_id": 10,
+      "question": "A woman constantly asks for 'stone' from her younger brother so that she can 'save the world.'",
+      "answer": "Darna"
+    },
+    {
+      "category_id": 10,
+      "question": "Just a bunch of angry humanoid birds fighting each other.",
+      "answer": "Mulawin"
+    },
+    {
+      "category_id": 10,
+      "question": "A mother of four asks her daughters to keep “important crystals” safe in order to maintain peace in their “fantasy world.”",
+      "answer": "Encantadia"
+    },
+
+    {
+      "category_id": 11,
+      "question": "Tumapak ako sa impyerno; Maya maya, nasa langit na ako.",
+      "answer": "Elevator"
+    },
+    {
+      "category_id": 11,
+      "question": "Kung kailan mo pinatay, saka pa humaba ang buhay.",
+      "answer": "Kandila"
+    },
+    {
+      "category_id": 11,
+      "question": "Dumaan ang hari, nagkagatan ang mga pari.",
+      "answer": "Zipper"
+    },
+    {
+      "category_id": 11,
+      "question": "Malaking supot ni Mang Jacob, kung sisidlan ay pataob.",
+      "answer": "Kulambo"
+    },
+    {
+      "category_id": 11,
+      "question": "Duguang buhok ni Leticia, sinipsip ng kaniyang bisita.",
+      "answer": "Spaghetti"
     }
   ],
   "categories": [
@@ -157,6 +286,11 @@
     { "id": 3, "category": "Palarong Pinoy" },
     { "id": 4, "category": "Angkop na Mananakop" },
     { "id": 5, "category": "Acting Pinoy" },
-    { "id": 6, "category": "Lakas Pinoy" }
+    { "id": 6, "category": "Lakas Pinoy" },
+    { "id": 7, "category": "Current Events" },
+    { "id": 8, "category": "Geography" },
+    { "id": 9, "category": "Movies" },
+    { "id": 10, "category": "TV Shows" },
+    { "id": 11, "category": "Bugtong Bugtong" }
   ]
 }

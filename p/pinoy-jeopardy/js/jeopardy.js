@@ -45,11 +45,15 @@ function initTable() {
   loadJSON(
     "https://jdanque.github.io/p/pinoy-jeopardy/js/data.json",
     function(data) {
-      var categories = initCategories(3, data.categories);
+      var categories = initCategories(5, data.categories);
       let $tableHeadRow = $(".jeopardy-table").find("thead>tr");
 
       $.each(categories, (i, c) => {
-        $tableHeadRow.append(`<td data-id="${c.id}">${c.category}</td>`);
+        $tableHeadRow.append(
+          `<td data-id="${c.id}" data-category="${c.category}">${
+            c.category
+          }</td>`
+        );
         let questionsPerCategory = _.filter(
           data.questions,
           q => q.category_id === c.id
@@ -60,11 +64,11 @@ function initTable() {
           if ($(`.jeopardy-table > tbody > tr:eq(${i})`).length == 0) {
             $(".jeopardy-table > tbody").append(`<tr></tr>`);
           }
-
+          var currentPrize = (i + 1) * prize;
           $(`.jeopardy-table > tbody > tr:eq(${i})`).append(
-            `<td class="jeopardy-question" data-ans="${q.answer}" data-ques="${
-              q.question
-            }">${(i + 1) * prize}</td>`
+            `<td class="jeopardy-question" data-prize="${currentPrize}" data-ans="${
+              q.answer
+            }" data-ques="${q.question}">${currentPrize}</td>`
           );
         });
       });
@@ -77,4 +81,60 @@ function initTable() {
   );
 }
 
-initTable();
+function initClickQuestionHandler() {
+  $("body").on("click", "button.show-answer", e => {
+    $(
+      ".jeopardy-question-window .jeopardy-question-window--answer"
+    ).slideDown();
+    $(e.target).hide();
+    $(".jeopardy-question-window").on("click.closeonce", () => {
+      $(".jeopardy-question-window").dialog("close");
+    });
+  });
+
+  $("body").on("click", ".jeopardy-question", e => {
+    var $this = $(e.target);
+
+    var category = $(`.jeopardy-table thead>tr>td:eq(${$this.index()})`).attr(
+      "data-category"
+    );
+
+    $(".jeopardy-question-window .jeopardy-question-window--question").html(
+      $this.attr("data-ques")
+    );
+
+    $(".jeopardy-question-window .jeopardy-question-window--answer").html(
+      $this.attr("data-ans")
+    );
+
+    $(".jeopardy-question-window").dialog({
+      title: `${category} for ${$this.attr("data-prize")}`,
+      width: $(window).width() - 10,
+      height: $(window).height() - 50,
+      position: { my: "left top", at: "left top" },
+      classes: {
+        "ui-dialog": "jeopardy-background"
+      },
+      show: {
+        effect: "scale",
+        duration: 200
+      },
+      hide: {
+        effect: "clip",
+        duration: 200
+      },
+      close: (event, ui) => {
+        $(
+          ".jeopardy-question-window .jeopardy-question-window--answer"
+        ).slideUp();
+        $(".jeopardy-question-window button.show-answer").show();
+        $(".jeopardy-question-window").off("click.closeonce");
+      }
+    });
+  });
+}
+
+$(document).ready(() => {
+  initTable();
+  initClickQuestionHandler();
+});
